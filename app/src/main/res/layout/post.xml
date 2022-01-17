@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        app:srcCompat="@drawable/back"
+        tools:layout_editor_absoluteX="@dimen/_10sdp"
+        tools:layout_editor_absoluteY="@dimen/_25sdp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="@dimen/_55sdp"
+        android:layout_height="@dimen/_28sdp"
+        android:text="Post"
+        android:textColor="#FAFAFA"
+        android:textSize="11dp"
+        app:backgroundTint="#92E7EF"
+        app:cornerRadius="18dp"
+        tools:layout_editor_absoluteX="@dimen/_235sdp"
+        tools:layout_editor_absoluteY="@dimen/_25sdp" />
+
+    <View
+        android:id="@+id/myRectangleView"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_130sdp"
+        android:background="@drawable/rectangle"
+        tools:layout_editor_absoluteX="@dimen/_1sdp"
+        tools:layout_editor_absoluteY="@dimen/_97sdp" />
+
+    <EditText
+        android:id="@+id/textArea_information"
+        android:layout_width="@dimen/_293sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:background="@null"
+        android:gravity="top|left"
+        android:inputType="textMultiLine"
+        android:lines="6"
+        android:overScrollMode="always"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:scrollHorizontally="false"
+        android:text="Type here..."
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#B1AEAE"
+        tools:layout_editor_absoluteX="@dimen/_4sdp"
+        tools:layout_editor_absoluteY="@dimen/_100sdp" />
+
+    <ImageView
+        android:layout_width="@dimen/_110sdp"
+        android:layout_height="@dimen/_110sdp"
+        app:srcCompat="@drawable/jiatu"
+        tools:layout_editor_absoluteX="@dimen/_7sdp"
+        tools:layout_editor_absoluteY="@dimen/_251sdp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

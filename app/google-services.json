@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "228002462537",
+    "firebase_url": "https://image-sharing-9d0fa-default-rtdb.firebaseio.com",
+    "project_id": "image-sharing-9d0fa",
+    "storage_bucket": "image-sharing-9d0fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228002462537:android:864f339dbd64a32373f898",
+        "android_client_info": {
+          "package_name": "com.example.dietycare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228002462537-bpu063njgt9idfdc550j7tt6nnhvfftd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAM2f40Fs0PLhd1Y9aNY4tsegkg7mRe40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228002462537-bpu063njgt9idfdc550j7tt6nnhvfftd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
