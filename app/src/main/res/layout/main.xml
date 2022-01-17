@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/main_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_160sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/top" />
+
+    <TextView
+        android:id="@+id/text_your_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:text="Your diet goal is:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_top" />
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="@dimen/_290sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginStart="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_your_goal">
+
+        <RadioButton
+            android:id="@+id/radioButton_muscle"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="0dp"
+            android:text="build muscles"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <RadioButton
+            android:id="@+id/radioButton_weight"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="0dp"
+            android:text="lose weight"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <RadioButton
+            android:id="@+id/radioButton_shape"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="0dp"
+            android:text="remain shape"
+            tools:ignore="TouchTargetSizeCheck" />
+    </RadioGroup>
+
+    <View
+        android:id="@+id/calorie_info"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_140sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="#FAFAFA"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radio_group" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_1sdp"
+        android:background="#D4C5C5"
+        app:layout_constraintBottom_toTopOf="@+id/calorie_info"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_1sdp"
+        android:background="#D4C5C5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calorie_info" />
+
+    <TextView
+        android:id="@+id/text_protein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:alpha="53"
+        android:text="Protein"
+        android:textColor="#87000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <TextView
+        android:id="@+id/text_fat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_45sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:alpha="53"
+        android:text="Fat"
+        android:textColor="#87000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/text_protein"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <TextView
+        android:id="@+id/text_carbo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_45sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:alpha="53"
+        android:text="Carbohydrate"
+        android:textColor="#87000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/text_fat"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <View
+        android:id="@+id/protein_"
+        android:layout_width="@dimen/_65sdp"
+        android:layout_height="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_22sdp"
+        android:background="#0386D0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_protein" />
+
+    <View
+        android:id="@+id/fat_"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:background="#FFECE1"
+        app:layout_constraintStart_toEndOf="@+id/protein_"
+        app:layout_constraintTop_toBottomOf="@+id/text_fat" />
+
+    <View
+        android:id="@+id/carbo_"
+        android:layout_width="@dimen/_105sdp"
+        android:layout_height="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_28sdp"
+        android:background="#D4C5C5"
+        app:layout_constraintStart_toEndOf="@+id/fat_"
+        app:layout_constraintTop_toBottomOf="@+id/text_carbo" />
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/_70sdp"
+        android:background="#A6A6A6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/icons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/home"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_home"
+            android:tint="@color/purple_500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/progress"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_progress"
+            app:layout_constraintStart_toEndOf="@id/home"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/meal"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_meal"
+            app:layout_constraintStart_toEndOf="@id/progress"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/community"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_community"
+            app:layout_constraintStart_toEndOf="@id/meal"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/account"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_account"
+            app:layout_constraintStart_toEndOf="@id/community"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_calorie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:text="Calorie"
+        android:textColor="#00155F"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+    <TextView
+        android:id="@+id/text_kcal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:text="Unit: Kcal"
+        android:textColor="#637DD5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+    <TextView
+        android:id="@+id/text_suggested"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:text="Suggested"
+        android:textColor="#637DD5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_calorie" />
+
+    <TextView
+        android:id="@+id/text_intake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:text="Intake"
+        android:textColor="#637DD5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_kcal" />
+
+    <TextView
+        android:id="@+id/text_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_140sdp"
+        android:layout_marginTop="@dimen/_70sdp"
+        android:text="Left"
+        android:textColor="#637DD5"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view1" />
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_112sdp"
+        android:background="@drawable/circle"
+        app:layout_constraintStart_toStartOf ="parent"
+        app:layout_constraintTop_toTopOf ="@id/calorie_info" >
+        <TextView
+            android:id="@+id/text_val_left"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_45sdp"
+            android:gravity="center"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/text_val_suggested"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_17sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_suggested" />
+
+    <TextView
+        android:id="@+id/text_val_intake"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_19sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_intake" />
+
+    <TextView
+        android:id="@+id/text_val_protein"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/protein_" />
+
+    <TextView
+        android:id="@+id/text_val_fat"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_19sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@id/text_val_protein"
+        app:layout_constraintTop_toBottomOf="@id/fat_" />
+
+    <TextView
+        android:id="@+id/text_val_carbo"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_43sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@id/text_val_fat"
+        app:layout_constraintTop_toBottomOf="@id/carbo_" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
