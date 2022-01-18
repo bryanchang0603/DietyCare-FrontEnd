@@ -317,7 +317,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="96dp"
         android:layout_marginTop="64dp"
-        android:text="TextView"
+        android:text="Your Birthday"
         android:textColor="@color/black"
         android:textSize="@dimen/_15sdp"
         app:layout_constraintStart_toEndOf="@+id/textView15"

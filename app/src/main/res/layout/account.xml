@@ -173,7 +173,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
@@ -182,7 +182,7 @@
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
@@ -191,7 +191,7 @@
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:layout_marginTop="17dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
@@ -200,7 +200,7 @@
     <View
         android:id="@+id/view3"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
@@ -209,7 +209,7 @@
     <View
         android:id="@+id/view4"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:layout_marginTop="18dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
@@ -218,7 +218,7 @@
     <View
         android:id="@+id/view5"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:layout_marginTop="13dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
@@ -270,65 +270,45 @@
 
     <LinearLayout
         android:id="@+id/icons"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp"
-        android:layout_marginEnd="2dp"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/home"
-            android:layout_width="@dimen/_50sdp"
+        <ImageButton
+            android:id="@+id/menu_btn_home_account"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:padding="@dimen/_5sdp"
-            android:src="@drawable/ic_home"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_home" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/progress"
-            android:layout_width="@dimen/_50sdp"
+        <ImageButton
+            android:id="@+id/menu_btn_community_account"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:padding="@dimen/_5sdp"
-            android:src="@drawable/ic_progress"
-            app:layout_constraintStart_toEndOf="@id/home" />
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_community" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/meal"
-            android:layout_width="@dimen/_50sdp"
+        <ImageButton
+            android:id="@+id/menu_btn_meal_account"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:padding="@dimen/_5sdp"
-            android:src="@drawable/ic_meal"
-            app:layout_constraintStart_toEndOf="@id/progress" />
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_meal" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/community"
-            android:layout_width="@dimen/_50sdp"
+        <ImageButton
+            android:id="@+id/main_btn_account_account"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:padding="@dimen/_5sdp"
-            android:src="@drawable/ic_community"
-            app:layout_constraintStart_toEndOf="@id/meal" />
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_account" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/account"
-            android:layout_width="@dimen/_50sdp"
+        <ImageButton
+            android:id="@+id/menu_btn_progress_account"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:padding="@dimen/_5sdp"
-            android:src="@drawable/ic_account"
-            android:tint="@color/purple_500"
-            app:layout_constraintStart_toEndOf="@id/community" />
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_progress" />
 
     </LinearLayout>
 

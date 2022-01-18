@@ -29,34 +29,23 @@ import android.widget.EditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class progress extends AppCompatActivity {
+public class shareActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.progress);
+        setContentView(R.layout.share);
 
-        ImageButton home_btn, meal_btn, community_btn, account_btn;
+        ImageButton home_btn, meal_btn, progress_btn, account_btn;
 
-        home_btn = findViewById(R.id.menu_btn_home_progress);
-        meal_btn = findViewById(R.id.menu_btn_meal_progress);
-        community_btn = findViewById(R.id.menu_btn_community_progress);
-        account_btn = findViewById(R.id.main_btn_account_progress);
+        home_btn = findViewById(R.id.menu_btn_home_share);
+        meal_btn = findViewById(R.id.menu_btn_meal_share);
+        progress_btn = findViewById(R.id.menu_btn_progress_share);
+        account_btn = findViewById(R.id.main_btn_account_share);
 
         home_btn.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                Intent intent = new Intent(progress.this, MainActivity.class);
-                                                //Starting of the Intent
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        }
-        );
-
-        meal_btn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            Intent intent = new Intent(progress.this, mealRcmdActivity.class);
+                                            Intent intent = new Intent(shareActivity.this, MainActivity.class);
                                             //Starting of the Intent
                                             startActivity(intent);
                                             finish();
@@ -64,10 +53,21 @@ public class progress extends AppCompatActivity {
                                     }
         );
 
-        community_btn.setOnClickListener(new View.OnClickListener() {
+        meal_btn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intent = new Intent(shareActivity.this, mealRcmdActivity.class);
+                                            //Starting of the Intent
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }
+        );
+
+        progress_btn.setOnClickListener(new View.OnClickListener() {
                                              @Override
                                              public void onClick(View view) {
-                                                 Intent intent = new Intent(progress.this, shareActivity.class);
+                                                 Intent intent = new Intent(shareActivity.this, progress.class);
                                                  //Starting of the Intent
                                                  startActivity(intent);
                                                  finish();
@@ -78,7 +78,7 @@ public class progress extends AppCompatActivity {
         account_btn.setOnClickListener(new View.OnClickListener() {
                                            @Override
                                            public void onClick(View view) {
-                                               Intent intent = new Intent(progress.this, accountActivity.class);
+                                               Intent intent = new Intent(shareActivity.this, accountActivity.class);
                                                //Starting of the Intent
                                                startActivity(intent);
                                                finish();

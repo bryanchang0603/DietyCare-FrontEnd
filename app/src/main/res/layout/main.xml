@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/main_top"
@@ -28,9 +27,10 @@
 
     <RadioGroup
         android:id="@+id/radio_group"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_90sdp"
-        android:layout_marginStart="30dp"
+        android:layout_width="@dimen/_290sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginStart="10dp"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_your_goal">
 
@@ -40,17 +40,15 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="0dp"
             android:text="build muscles"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_your_goal" />
+            tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
             android:id="@+id/radioButton_weight"
-            android:layout_width="@dimen/_100sdp"
+            android:layout_width="@dimen/_90sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="0dp"
             android:text="lose weight"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton_muscle" />
+            tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
             android:id="@+id/radioButton_shape"
@@ -58,8 +56,7 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="0dp"
             android:text="remain shape"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton_weight" />
+            tools:ignore="TouchTargetSizeCheck" />
     </RadioGroup>
 
     <View
@@ -170,35 +167,35 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/menu_btn_home"
+            android:id="@+id/menu_btn_home_main"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_home" />
 
         <ImageButton
-            android:id="@+id/menu_btn_community"
+            android:id="@+id/menu_btn_community_main"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_community" />
 
         <ImageButton
-            android:id="@+id/menu_btn_meal"
+            android:id="@+id/menu_btn_meal_main"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_meal" />
 
         <ImageButton
-            android:id="@+id/main_btn_account"
+            android:id="@+id/main_btn_account_main"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_account" />
 
         <ImageButton
-            android:id="@+id/menu_btn_progress"
+            android:id="@+id/menu_btn_progress_main"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
@@ -252,7 +249,7 @@
         app:layout_constraintTop_toBottomOf="@id/text_kcal" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/text_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_140sdp"
@@ -262,6 +259,73 @@
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view1" />
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_112sdp"
+        android:background="@drawable/circle"
+        app:layout_constraintStart_toStartOf ="parent"
+        app:layout_constraintTop_toTopOf ="@id/calorie_info" >
+        <TextView
+            android:id="@+id/text_val_left"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_45sdp"
+            android:gravity="center"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/text_val_suggested"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_17sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_suggested" />
+
+    <TextView
+        android:id="@+id/text_val_intake"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_19sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_intake" />
+
+    <TextView
+        android:id="@+id/text_val_protein"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/protein_" />
+
+    <TextView
+        android:id="@+id/text_val_fat"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_19sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@id/text_val_protein"
+        app:layout_constraintTop_toBottomOf="@id/fat_" />
+
+    <TextView
+        android:id="@+id/text_val_carbo"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_43sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@id/text_val_fat"
+        app:layout_constraintTop_toBottomOf="@id/carbo_" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
