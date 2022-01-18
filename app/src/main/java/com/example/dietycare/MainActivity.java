@@ -1,39 +1,35 @@
 package com.example.dietycare;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import android.content.Intent;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-import android.os.Bundle;
-import android.widget.EditText;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Scanner;
+import android.content.Intent;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
     private double height;
     private double bodyFat;
     private double weight;
+    private char gender;
+    private String bodyType;
+    private int birthYear;
+    private int birthMonth;
+    private int birthDate;
+    private int age;
+    private String outputStr;
+    private newHandler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,12 +122,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void main_page_event() {
+    public void main_page_event(){
 
-        String path = getApplicationContext().getFilesDir().toString() + "/personInfo.txt";
+        String path = getApplicationContext().getFilesDir().toString()+"/personInfo.txt";
         File file = new File(path);
         HashMap<String, String> personInfo = new HashMap<String, String>();
-        try {
+        try{
             Scanner reader = new Scanner(file);
             while (reader.hasNextLine()) {
                 String data = reader.nextLine();
@@ -133,57 +137,104 @@ public class MainActivity extends AppCompatActivity {
             height = Double.parseDouble(personInfo.get("Height"));
             weight = Double.parseDouble(personInfo.get("Weight"));
             targetWeight = Double.parseDouble(personInfo.get("Target_Weight"));
-            bodyFat = Double.parseDouble(personInfo.get("Body_Fat"));
+            bodyFat = Double.parseDouble(personInfo.get("Body_Fat"))/100;
+            birthYear = Integer.parseInt(personInfo.get("Year"));
+            birthMonth = Integer.parseInt(personInfo.get("Month"));
+            birthDate = Integer.parseInt(personInfo.get("Day"));
+            gender = personInfo.get("Sex").charAt(0);
+            bodyType = personInfo.get("Body_Type").toLowerCase();
         } catch (FileNotFoundException e) {
-            display(0, 0, 0, 0, 0,
-                    0, 0, 0);
+            display(0,0,0,0,0,
+                    0,0,0);
         }
 
-        final RadioGroup radGroup = findViewById(R.id.radio_group);
+        handler = new newHandler();
 
+        final RadioGroup radGroup= findViewById(R.id.radio_group);
         radGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup rg, int id) {
                 RadioButton rb = findViewById(id);
                 dietGoalIs = rb.getText().toString();
+                Calendar cal = Calendar.getInstance();
+                int currentYear = cal.get(Calendar.YEAR);
+                int currentMonth = cal.get(Calendar.MONTH)+1;
+                int currentDate = cal.get(Calendar.DATE);
+                age = currentYear - birthYear;
+
+                if (currentMonth < birthMonth) {
+                    age--;
+                } else if (currentMonth == birthMonth) {
+                    if (currentDate < birthDate) {
+                        age--;
+                    }
+                }
+
                 if (dietGoalIs.equals("build muscles")) {
-                    suggestedCal = 30;
+
                     intakeCal = 11.1;
 
                     consumedProtein = 49.5;
                     consumedFat = 32.1;
                     consumedCarbo = 66;
 
-                    suggestedProtein = 100;
-                    suggestedFat = 50;
-                    suggestedCarbo = 80;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            String temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
+                                    age, weight, height, gender,5,bodyFat,bodyType);
+                            String url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?"+temp;
+
+                            String output = requestData(url, "GET");
+                            Message msg = handler.obtainMessage();
+                            msg.obj = output;
+                            handler.sendMessage(msg);
+                            System.out.println(output);
+                        }
+                    }).start();
 
                 } else if (dietGoalIs.equals("lose weight")) {
-                    suggestedCal = 10;
-                    intakeCal = 5.5;
+                    intakeCal = 11.1;
 
-                    consumedProtein = 9;
-                    consumedFat = 11;
-                    consumedCarbo = 12;
+                    consumedProtein = 49.5;
+                    consumedFat = 32.1;
+                    consumedCarbo = 66;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
+                                    age, weight, height, gender,targetWeight,bodyFat);
+                            String url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?"+temp;
 
-                    suggestedProtein = 120;
-                    suggestedFat = 30;
-                    suggestedCarbo = 77;
+                            String output = requestData(url, "GET");
+                            Message msg = handler.obtainMessage();
+                            msg.obj = output;
+                            handler.sendMessage(msg);
+                            System.out.println(height);
+                        }
+                    }).start();
 
                 } else if (dietGoalIs.equals("remain shape")) {
-                    suggestedCal = 30;
-                    intakeCal = 10;
+                    intakeCal = 11.1;
 
-                    consumedProtein = 15;
-                    consumedFat = 44;
-                    consumedCarbo = 32.9;
+                    consumedProtein = 49.5;
+                    consumedFat = 32.1;
+                    consumedCarbo = 66;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
+                                    age, weight, height, gender,weight,bodyFat);
+                            String url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?"+temp;
 
-                    suggestedProtein = 87;
-                    suggestedFat = 55;
-                    suggestedCarbo = 99.9;
+                            String output = requestData(url, "GET");
+                            Message msg = handler.obtainMessage();
+                            msg.obj = output;
+                            handler.sendMessage(msg);
+                        }
+                    }).start();
                 }
-                display(suggestedCal, intakeCal, consumedProtein, consumedFat, consumedCarbo,
-                        suggestedProtein, suggestedFat, suggestedCarbo);
             }
         });
     }
@@ -198,12 +249,67 @@ public class MainActivity extends AppCompatActivity {
         TextView textValFat = findViewById(R.id.text_val_fat);
         TextView textValCarbo = findViewById(R.id.text_val_carbo);
         leftCal = suggestedCal - intakeCal;
-        textValSuggested.setText(Double.toString(suggestedCal));
-        textValIntake.setText(Double.toString(intakeCal));
-        textValLeft.setText(Double.toString(leftCal));
-        textValProtein.setText(Double.toString(consumedProtein) + '/' + Double.toString(suggestedProtein));
-        textValFat.setText(Double.toString(consumedFat) + '/' + Double.toString(suggestedFat));
-        textValCarbo.setText(Double.toString(consumedCarbo) + '/' + Double.toString(suggestedCarbo));
+        textValSuggested.setText(String.format("%.1f",suggestedCal));
+        textValIntake.setText(String.format("%.1f",intakeCal));
+        textValLeft.setText(String.format("%.1f",leftCal));
+        textValProtein.setText(String.format("%.1f",consumedProtein)+'/'+String.format("%.1f",suggestedProtein));
+        textValFat.setText(String.format("%.1f",consumedFat)+'/'+String.format("%.1f",suggestedFat));
+        textValCarbo.setText(String.format("%.1f",consumedCarbo)+'/'+String.format("%.1f",suggestedCarbo));
+    }
+    public String requestData(String inputURL, String reqMethod) {
+        HttpURLConnection connection;
+        InputStream in;
+        InputStreamReader inReader;
+        BufferedReader br;
+        try {
+            URL url = new URL(inputURL);
+            connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod(reqMethod);
+
+            connection.connect();
+            connection.setConnectTimeout(6000);
+            connection.setReadTimeout(6000);
+
+            in = connection.getInputStream();
+            inReader = new InputStreamReader(in);
+            br = new BufferedReader(inReader);
+            String s;
+            StringBuffer strBuf = new StringBuffer();
+            while((s = br.readLine()) != null) {
+                strBuf.append(s);
+            }
+            connection.disconnect();
+            return strBuf.toString();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "None";
+    }
+
+    class newHandler extends Handler {
+        public String outputStr;
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            outputStr = msg.obj.toString();
+
+            try {
+                JSONObject jobj = new JSONObject(outputStr);
+                suggestedCal = Double.parseDouble(jobj.get("suggest_cal").toString());
+                suggestedProtein = Double.parseDouble(jobj.get("suggest_pro").toString());
+                suggestedFat = Double.parseDouble(jobj.get("suggest_fat").toString());
+                suggestedCarbo = Double.parseDouble(jobj.get("suggest_ch").toString());
+                leftCal = suggestedCal - intakeCal;
+                display(suggestedCal, intakeCal, consumedProtein, consumedFat, consumedCarbo,
+                        suggestedProtein, suggestedFat, suggestedCarbo);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
