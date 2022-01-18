@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MealRecommendationActivity">
+
+<androidx.appcompat.widget.AppCompatImageView
+    android:id="@+id/iconMeal"
+    android:layout_width="@dimen/_30sdp"
+    android:layout_height="@dimen/_30sdp"
+    android:layout_marginStart="@dimen/_30sdp"
+    android:layout_marginTop="@dimen/_30sdp"
+    android:padding="@dimen/_5sdp"
+    android:src="@drawable/ic_meal"
+    android:tint="@color/purple_200"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"/>
+
+<androidx.appcompat.widget.AppCompatImageView
+    android:id="@+id/iconSearch"
+    android:layout_width="@dimen/_30sdp"
+    android:layout_height="@dimen/_30sdp"
+    android:layout_marginEnd="@dimen/_30sdp"
+    android:padding="@dimen/_5sdp"
+    android:src="@drawable/ic_search"
+    app:layout_constraintStart_toStartOf="@id/iconMeal"
+    app:layout_constraintTop_toTopOf="@id/iconPhoto"/>
+
+<androidx.appcompat.widget.AppCompatImageView
+    android:id="@+id/iconPhoto"
+    android:layout_width="@dimen/_30sdp"
+    android:layout_height="@dimen/_30sdp"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_30sdp"
+    android:padding="@dimen/_5sdp"
+    android:src="@drawable/ic_photo"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="@id/keyword"/>
+
+
+<TextView
+    android:id="@+id/dishFood"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/_30sdp"
+    android:text="Dish/Food"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:textSize="@dimen/_15ssp"
+    android:textColor="@color/black"
+    android:textStyle="bold"
+    app:layout_constraintTop_toTopOf="@id/iconMeal"
+    app:layout_constraintStart_toEndOf="@id/iconMeal"/>
+
+<EditText
+    android:id="@+id/keyword"
+    android:layout_width="0dp"
+    android:layout_height="@dimen/_40sdp"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_30sdp"
+    android:background="@drawable/background_search_input"
+    android:hint="Search"
+    android:imeOptions="actionDone"
+    android:importantForAutofill="no"
+    android:inputType="text"
+    android:paddingStart="@dimen/_16sdp"
+    android:paddingEnd="@dimen/_16sdp"
+    android:textColor="@color/black"
+    android:textColorHint="@color/secondary_text"
+    app:layout_constraintTop_toBottomOf="@id/dishFood"
+    app:layout_constraintStart_toEndOf="@id/iconSearch"
+    app:layout_constraintEnd_toEndOf="@id/iconPhoto"/>
+
+<TextView
+    android:id="@+id/suggest"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/_30sdp"
+    android:text="Meal Recommendation"
+    android:layout_marginTop="@dimen/_30sdp"
+    android:textSize="@dimen/_18ssp"
+    android:textColor="@color/black"
+    android:textStyle="bold"
+    app:layout_constraintTop_toBottomOf="@id/iconSearch"
+    app:layout_constraintStart_toStartOf="@id/iconMeal"/>
+
+
+
+<LinearLayout
+    android:id="@+id/icons"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_70sdp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/home"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/ic_home"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/progress"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/ic_progress"
+        app:layout_constraintStart_toEndOf="@id/home"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/meal"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/ic_meal"
+        android:tint="@color/purple_500"
+        app:layout_constraintStart_toEndOf="@id/progress"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/community"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/ic_community"
+        app:layout_constraintStart_toEndOf="@id/meal"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/account"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/ic_account"
+        app:layout_constraintStart_toEndOf="@id/community"/>
+
+</LinearLayout>
+
+<Button
+    android:id="@+id/regenerate"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:text="Regenerate"
+    android:textColor="@color/black"
+    android:backgroundTint="@color/grey"
+    app:layout_constraintTop_toBottomOf="@id/suggest"
+    app:layout_constraintStart_toStartOf="@id/suggest"/>
+
+<Spinner
+    android:id="@+id/mealSelection"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/btn_dropdown"
+    android:spinnerMode="dropdown"
+    app:layout_constraintEnd_toEndOf="@id/iconPhoto"
+    app:layout_constraintTop_toTopOf="@id/regenerate"/>
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_260sdp"
+    app:layout_constraintTop_toBottomOf="@id/regenerate">
+
+    <TextView
+        android:id="@+id/mealInfo"
+        android:layout_width="@dimen/_260sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/_30sdp"/>
+
+</FrameLayout>
+
+<ImageView
+    android:id="@+id/mealImage"
+    android:layout_width="@dimen/_70sdp"
+    android:layout_height="@dimen/_70sdp"
+    android:layout_marginBottom="@dimen/_100sdp"
+    android:scaleType="centerInside"
+    android:contentDescription="Dynamic"
+    app:layout_constraintStart_toEndOf="@id/suggest"
+    app:layout_constraintBottom_toTopOf="@id/icons"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
