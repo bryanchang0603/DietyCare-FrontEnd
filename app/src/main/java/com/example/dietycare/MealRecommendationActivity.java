@@ -18,9 +18,12 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class MealRecommendationActivity extends AppCompatActivity {
 
@@ -44,8 +47,11 @@ public class MealRecommendationActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
 
         }
+
+        HashMap<String, String> suggestion_nutrients = readSuggestionNutrients();
+        Integer target_calories = (int) Double.parseDouble(suggestion_nutrients.get("suggestedCal"));
         try {
-            meal_plan = getMealRecommendation(1800);
+            meal_plan = getMealRecommendation(target_calories);
             String meal_detail = extractMealPlan(meal_plan, meal_selection);
             set_meal_plan_tv(meal_detail);
         } catch (Exception e) {
@@ -59,7 +65,7 @@ public class MealRecommendationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 try {
-                    meal_plan = getMealRecommendation(1800);
+                    meal_plan = getMealRecommendation(target_calories);
                     String meal_detail = extractMealPlan(meal_plan, meal_selection);
                     set_meal_plan_tv(meal_detail);
                 } catch (Exception e) {
@@ -203,6 +209,23 @@ public class MealRecommendationActivity extends AppCompatActivity {
         }
 
         return "Food Name: \n"+dish_list_str + "\nNutrients: \n" + nutrient_list_string;
+    }
+
+    private HashMap<String, String> readSuggestionNutrients(){
+        File path = getApplicationContext().getFilesDir();
+        File read = new File(path, "suggestion.txt");
+        HashMap<String, String> readInfo = new HashMap<String, String>();
+        try{
+            Scanner reader = new Scanner(read);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                String[] temp = data.split(":");
+                readInfo.put(temp[0], temp[1]);
+            }
+        }catch(Exception e){
+
+        }
+        return readInfo;
     }
 }
 
