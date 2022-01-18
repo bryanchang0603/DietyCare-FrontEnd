@@ -30,6 +30,9 @@
         <activity android:name=".progress" />
         <activity android:name=".shareActivity" />
         <activity android:name=".mealRcmdActivity" />
+        <activity
+            android:name=".MealRecommendationActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"
