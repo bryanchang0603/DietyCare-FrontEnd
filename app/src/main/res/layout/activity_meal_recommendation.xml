@@ -85,67 +85,58 @@
     app:layout_constraintStart_toStartOf="@id/iconMeal"/>
 
 
-
-<LinearLayout
-    android:id="@+id/icons"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/_70sdp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:orientation="horizontal">
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/home"
-        android:layout_width="@dimen/_50sdp"
+    <View
+        android:id="@+id/view7"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/_50sdp"
+        android:background="#A6A6A6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <LinearLayout
+        android:id="@+id/icons"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_home"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/progress"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_progress"
-        app:layout_constraintStart_toEndOf="@id/home"/>
+        <ImageButton
+            android:id="@+id/menu_btn_home_recmd"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_home" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/meal"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_meal"
-        android:tint="@color/purple_500"
-        app:layout_constraintStart_toEndOf="@id/progress"/>
+        <ImageButton
+            android:id="@+id/menu_btn_community_recmd"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_community" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/community"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_community"
-        app:layout_constraintStart_toEndOf="@id/meal"/>
+        <ImageButton
+            android:id="@+id/menu_btn_meal_recmd"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_meal" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/account"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_account"
-        app:layout_constraintStart_toEndOf="@id/community"/>
+        <ImageButton
+            android:id="@+id/main_btn_account_recmd"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_account" />
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/menu_btn_progress_recmd"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_progress" />
+
+    </LinearLayout>
+
 
 <Button
     android:id="@+id/regenerate"

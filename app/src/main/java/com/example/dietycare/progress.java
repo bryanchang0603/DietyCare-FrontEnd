@@ -56,7 +56,7 @@ public class progress extends AppCompatActivity {
         meal_btn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            Intent intent = new Intent(progress.this, mealRcmdActivity.class);
+                                            Intent intent = new Intent(progress.this, MealRecommendationActivity.class);
                                             //Starting of the Intent
                                             startActivity(intent);
                                             finish();
