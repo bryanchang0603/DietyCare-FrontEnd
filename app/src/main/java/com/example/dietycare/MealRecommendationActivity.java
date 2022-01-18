@@ -1,11 +1,13 @@
 package com.example.dietycare;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ public class MealRecommendationActivity extends AppCompatActivity {
     private Spinner meal_selection_sp;
     private String meal_selection = "breakfast";
     private JSONObject meal_plan;
+    private ImageButton home_btn, meal_btn, community_btn, account_btn, progress_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,57 @@ public class MealRecommendationActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+
+        // setup the menu buttons
+        home_btn = findViewById(R.id.menu_btn_home_recmd);
+        community_btn = findViewById(R.id.menu_btn_community_recmd);
+        account_btn = findViewById(R.id.main_btn_account_recmd);
+        progress_btn = findViewById(R.id.menu_btn_progress_recmd);
+
+        home_btn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intent = new Intent(MealRecommendationActivity.this, MainActivity.class);
+                                            //Starting of the Intent
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }
+        );
+
+        progress_btn.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Intent intent = new Intent(MealRecommendationActivity.this, progress.class);
+                                                //Starting of the Intent
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        }
+        );
+
+        community_btn.setOnClickListener(new View.OnClickListener() {
+                                             @Override
+                                             public void onClick(View view) {
+                                                 Intent intent = new Intent(MealRecommendationActivity.this, shareActivity.class);
+                                                 //Starting of the Intent
+                                                 startActivity(intent);
+                                                 finish();
+                                             }
+                                         }
+        );
+
+        account_btn.setOnClickListener(new View.OnClickListener() {
+                                           @Override
+                                           public void onClick(View view) {
+                                               Intent intent = new Intent(MealRecommendationActivity.this, accountActivity.class);
+                                               //Starting of the Intent
+                                               startActivity(intent);
+                                               finish();
+                                           }
+                                       }
+        );
     }
 
     private void set_meal_plan_tv(String meal_detail) {

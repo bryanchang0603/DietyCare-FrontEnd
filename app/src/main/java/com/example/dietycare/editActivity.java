@@ -30,6 +30,9 @@ import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Scanner;
 
+
+//TODO: add limit to each field
+//TODO: 
 public class editActivity extends AppCompatActivity{
     private HashMap<String, String> readInfo = new HashMap<String, String>();
     private static final int SELECT_PICTURE = 1;

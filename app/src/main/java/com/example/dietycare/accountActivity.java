@@ -66,7 +66,7 @@ public class accountActivity extends AppCompatActivity {
         meal_btn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            Intent intent = new Intent(accountActivity.this, mealRcmdActivity.class);
+                                            Intent intent = new Intent(accountActivity.this, MealRecommendationActivity.class);
                                             //Starting of the Intent
                                             startActivity(intent);
                                             finish();
