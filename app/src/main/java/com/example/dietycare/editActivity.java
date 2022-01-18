@@ -30,19 +30,17 @@ import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Scanner;
 
-
-//TODO: add limit to each field
-//TODO: 
 public class editActivity extends AppCompatActivity{
     private HashMap<String, String> readInfo = new HashMap<String, String>();
     private static final int SELECT_PICTURE = 1;
     private TextView textGet;
-    private String bodyT;
+    private String bodyT, exerciseL;
     private int BYear, BMonth, BDay;
     private String Sex = "Male";
     private String checkVeg = "False";
 
     String[] bodyType = {"Ectomorph", "Endomorph", "Mesomorph"};
+    String[] exercise_level = {"1", "2", "3", "4", "5"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +50,14 @@ public class editActivity extends AppCompatActivity{
             getSupportActionBar().hide();
         }
 
-        Spinner sp = (Spinner) findViewById(R.id.spinner);
+        Spinner sp = (Spinner) findViewById(R.id.spinner3);
+        Spinner exer_sp = (Spinner) findViewById(R.id.spinner_exercise);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, bodyType);
         sp.setAdapter(adapter);
+
+        ArrayAdapter<String> exer_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, exercise_level);
+        exer_sp.setAdapter(exer_adapter);
+
         EditText weight = findViewById(R.id.editTextNumber5);
         EditText BFat= findViewById(R.id.editTextNumber6);
         EditText Tweight = findViewById(R.id.editTextNumber7);
@@ -100,6 +103,23 @@ public class editActivity extends AppCompatActivity{
 
             sp.setSelection(index);
 
+            int index_exer = 0;
+
+            if(readInfo.get("Exercise").equals("2")){
+                index_exer = 1;
+            }
+            if(readInfo.get("Exercise").equals("3")){
+                index_exer = 2;
+            }
+            if(readInfo.get("Exercise").equals("4")){
+                index_exer = 3;
+            }
+            if(readInfo.get("Exercise").equals("5")){
+                index_exer = 4;
+            }
+
+            exer_sp.setSelection(index_exer);
+
             if(readInfo.get("Vegetarian").equals("True")) {
                 Yes.setChecked(true);
                 No.setChecked(false);
@@ -129,6 +149,18 @@ public class editActivity extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 bodyT = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        exer_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                exerciseL = (String) parent.getItemAtPosition(position);
             }
 
             @Override
@@ -182,6 +214,8 @@ public class editActivity extends AppCompatActivity{
                     infoWriter.write("Body_Type " + bodyT);
                     infoWriter.write(10);
                     infoWriter.write("Vegetarian " + checkVeg);
+                    infoWriter.write(10);
+                    infoWriter.write("Exercise " + exerciseL);
                     infoWriter.close();
                     writer.close();
                     Toast.makeText(getApplicationContext(), "Wrote to file", Toast.LENGTH_SHORT).show();
