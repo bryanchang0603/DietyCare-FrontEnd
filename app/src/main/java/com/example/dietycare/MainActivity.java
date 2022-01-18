@@ -15,8 +15,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -306,7 +308,17 @@ public class MainActivity extends AppCompatActivity {
                 display(suggestedCal, intakeCal, consumedProtein, consumedFat, consumedCarbo,
                         suggestedProtein, suggestedFat, suggestedCarbo);
 
-            } catch (JSONException e) {
+                File file = new File(getFilesDir()+"/suggestion.txt");
+                if (!file.exists()){
+                    file.createNewFile();
+                }
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write(String.format("suggestedCal:%.2f\nsuggestedProtein:%.2f\n" +
+                        "suggestedFat:%.2f\nsuggestedCarbo:%.2f", suggestedCal, suggestedProtein,
+                        suggestedFat, suggestedCarbo));
+                fileWriter.close();
+
+            } catch (JSONException | IOException e) {
                 e.printStackTrace();
             }
         }
