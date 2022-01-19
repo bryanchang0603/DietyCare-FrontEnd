@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private double height;
     private double bodyFat;
     private double weight;
+    private int exerciseLevel;
     private char gender;
     private String bodyType;
     private int birthYear;
@@ -140,10 +141,8 @@ public class MainActivity extends AppCompatActivity {
         String path = getApplicationContext().getFilesDir().toString()+"/personInfo.txt";
         File file = new File(path);
         sharedPreferences = getSharedPreferences("userPref", 0);
-
         int mealGoalSP = sharedPreferences.getInt("mealGoalSP", 0); //default 0, no radio button will be selected
             // 1 means build build muscles, 2 means lose weight, 3 means remain shape
-        System.out.println(mealGoalSP);
         SPEditor = sharedPreferences.edit();
         handler = new newHandler();
         HashMap<String, String> personInfo = new HashMap<String, String>();
@@ -165,12 +164,13 @@ public class MainActivity extends AppCompatActivity {
             birthDate = Integer.parseInt(personInfo.get("Day"));
             gender = personInfo.get("Sex").charAt(0);
             bodyType = personInfo.get("Body_Type").toLowerCase();
+            exerciseLevel = Integer.parseInt(personInfo.get("Exercise"));
         } catch (FileNotFoundException e) {
             display(0,0,0,0,0,
                     0,0,0);
         }
 
-        // moved calander
+        // calculate age
         Calendar cal = Calendar.getInstance();
         int currentYear = cal.get(Calendar.YEAR);
         int currentMonth = cal.get(Calendar.MONTH)+1;
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 rbBuild.setChecked(true);
                 customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
-                        age, weight, height, gender, 5, bodyFat, bodyType);
+                        age, weight, height, gender, exerciseLevel, bodyFat, bodyType);
                 urlParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + customParam;
                 set_diet_goal(handler, SPEditor,1, urlParam);
                 break;
@@ -224,144 +224,32 @@ public class MainActivity extends AppCompatActivity {
 
         // radio button saving status end
 
-
         final RadioGroup radGroup= findViewById(R.id.radio_group);
         radGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup rg, int id) {
                 RadioButton rb = findViewById(id);
                 String temp, url;
-                System.out.println(id);
                 dietGoalIs = rb.getText().toString();
 
-                //moved this part of the code to the beginning of the function
-/*                Calendar cal = Calendar.getInstance();
-                int currentYear = cal.get(Calendar.YEAR);
-                int currentMonth = cal.get(Calendar.MONTH)+1;
-                int currentDate = cal.get(Calendar.DATE);
-                age = currentYear - birthYear;
-
-                if (currentMonth < birthMonth) {
-                    age--;
-                } else if (currentMonth == birthMonth) {
-                    if (currentDate < birthDate) {
-                        age--;
-                    }
-                }
-
-                try{
-                    Scanner reader = new Scanner(file);
-                    while (reader.hasNextLine()) {
-                        String data = reader.nextLine();
-                        String[] temp = data.split(" ");
-                        personInfo.put(temp[0], temp[1]);
-                    }
-                    height = Double.parseDouble(personInfo.get("Height"));
-                    weight = Double.parseDouble(personInfo.get("Weight"));
-                    targetWeight = Double.parseDouble(personInfo.get("Target_Weight"));
-                    bodyFat = Double.parseDouble(personInfo.get("Body_Fat"))/100;
-                    birthYear = Integer.parseInt(personInfo.get("Year"));
-                    birthMonth = Integer.parseInt(personInfo.get("Month"));
-                    birthDate = Integer.parseInt(personInfo.get("Day"));
-                    gender = personInfo.get("Sex").charAt(0);
-                    bodyType = personInfo.get("Body_Type").toLowerCase();
-                } catch (FileNotFoundException e) {
-                    display(0,0,0,0,0,
-                            0,0,0);
-                }*/
-
-                //changed if to switch, and changed to a general function
                 switch (dietGoalIs) {
                     case "build muscles":
                         temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
-                                age, weight, height, gender, 5, bodyFat, bodyType);
+                                age, weight, height, gender, exerciseLevel, bodyFat, bodyType);
                         url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + temp;
                         set_diet_goal(handler, SPEditor, 1, url);
-/*
-
-                        intakeCal = 11.1;
-
-                        consumedProtein = 49.5;
-                        consumedFat = 32.1;
-                        consumedCarbo = 66;
-
-                        SPEditor.putInt("mealGoalSP", 1);
-
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                String temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
-                                        age, weight, height, gender, 5, bodyFat, bodyType);
-                                String url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + temp;
-
-                                String output = requestData(url, "GET");
-                                Message msg = handler.obtainMessage();
-                                msg.obj = output;
-                                handler.sendMessage(msg);
-                                System.out.println(output);
-                            }
-                        }).start();
-*/
-
                         break;
                     case "lose weight":
                         temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
                                 age, weight, height, gender, targetWeight, bodyFat);
                         url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
                         set_diet_goal(handler, SPEditor, 2, url);
-/*                        intakeCal = 11.1;
-
-                        consumedProtein = 49.5;
-                        consumedFat = 32.1;
-                        consumedCarbo = 66;
-
-                        SPEditor.putInt("mealGoalSP", 2);
-
-
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                String temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
-                                        age, weight, height, gender, targetWeight, bodyFat);
-                                String url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
-
-                                String output = requestData(url, "GET");
-                                Message msg = handler.obtainMessage();
-                                msg.obj = output;
-                                handler.sendMessage(msg);
-                                System.out.println(height);
-                            }
-                        }).start();*/
-
                         break;
                     case "remain shape":
                         temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
                                 age, weight, height, gender, weight, bodyFat);
                         url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
                         set_diet_goal(handler, SPEditor, 3, url);
-/*                        intakeCal = 11.1;
-
-                        consumedProtein = 49.5;
-                        consumedFat = 32.1;
-                        consumedCarbo = 66;
-
-                        SPEditor.putInt("mealGoalSP", 3);
-
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                String temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
-                                        age, weight, height, gender, weight, bodyFat);
-                                String url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
-
-                                String output = requestData(url, "GET");
-                                Message msg = handler.obtainMessage();
-                                msg.obj = output;
-                                handler.sendMessage(msg);
-                            }
-                        }).start();*/
-
                         break;
                 }
                 SPEditor.commit();
@@ -386,7 +274,6 @@ public class MainActivity extends AppCompatActivity {
                 Message msg = handler.obtainMessage();
                 msg.obj = output;
                 handler.sendMessage(msg);
-                System.out.println(output);
             }
         }).start();
     }
