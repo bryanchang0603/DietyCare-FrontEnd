@@ -197,21 +197,21 @@ public class MainActivity extends AppCompatActivity {
                 customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
                         age, weight, height, gender, 5, bodyFat, bodyType);
                 urlParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + customParam;
-                set_muscle_goal(handler, SPEditor,1, urlParam);
+                set_diet_goal(handler, SPEditor,1, urlParam);
                 break;
             case 2:
                 rbLose.setChecked(true);
                 customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
                         age, weight, height, gender, targetWeight, bodyFat);
                 urlParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + customParam;
-                set_muscle_goal(handler, SPEditor, 2, urlParam);
+                set_diet_goal(handler, SPEditor, 2, urlParam);
                 break;
             case 3:
                 rbRemain.setChecked(true);
                 customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
                         age, weight, height, gender, weight, bodyFat);
                 urlParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + customParam;
-                set_muscle_goal(handler, SPEditor, 3, urlParam);
+                set_diet_goal(handler, SPEditor, 3, urlParam);
                 break;
                 default:
                     rbBuild.setChecked(false);
@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
                         temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
                                 age, weight, height, gender, 5, bodyFat, bodyType);
                         url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + temp;
-                        set_muscle_goal(handler, SPEditor, 1, url);
+                        set_diet_goal(handler, SPEditor, 1, url);
 /*
 
                         intakeCal = 11.1;
@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
                         temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
                                 age, weight, height, gender, targetWeight, bodyFat);
                         url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
-                        set_muscle_goal(handler, SPEditor, 2, url);
+                        set_diet_goal(handler, SPEditor, 2, url);
 /*                        intakeCal = 11.1;
 
                         consumedProtein = 49.5;
@@ -337,7 +337,7 @@ public class MainActivity extends AppCompatActivity {
                         temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
                                 age, weight, height, gender, weight, bodyFat);
                         url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
-                        set_muscle_goal(handler, SPEditor, 3, url);
+                        set_diet_goal(handler, SPEditor, 3, url);
 /*                        intakeCal = 11.1;
 
                         consumedProtein = 49.5;
@@ -367,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void set_muscle_goal(newHandler handler, SharedPreferences.Editor SPEditor, int mealGoalSP, String paramURL){
+    private void set_diet_goal(newHandler handler, SharedPreferences.Editor SPEditor, int mealGoalSP, String paramURL){
         intakeCal = 11.1;
 
         consumedProtein = 49.5;
