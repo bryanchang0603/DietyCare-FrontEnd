@@ -22,25 +22,15 @@
     android:id="@+id/iconSearch"
     android:layout_width="@dimen/_30sdp"
     android:layout_height="@dimen/_30sdp"
-    android:layout_marginEnd="@dimen/_30sdp"
+    android:layout_marginTop="@dimen/_15sdp"
+    android:layout_marginStart="@dimen/_30sdp"
     android:padding="@dimen/_5sdp"
     android:src="@drawable/ic_search"
-    app:layout_constraintStart_toStartOf="@id/iconMeal"
-    app:layout_constraintTop_toTopOf="@id/iconPhoto"/>
-
-<androidx.appcompat.widget.AppCompatImageView
-    android:id="@+id/iconPhoto"
-    android:layout_width="@dimen/_30sdp"
-    android:layout_height="@dimen/_30sdp"
-    android:layout_marginTop="@dimen/_5sdp"
-    android:layout_marginEnd="@dimen/_30sdp"
-    android:padding="@dimen/_5sdp"
-    android:src="@drawable/ic_photo"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="@id/keyword"/>
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/iconMeal"/>
 
 
-<TextView
+    <TextView
     android:id="@+id/dishFood"
     android:layout_width="wrap_content"
     android:layout_height="@dimen/_30sdp"
@@ -53,24 +43,23 @@
     app:layout_constraintTop_toTopOf="@id/iconMeal"
     app:layout_constraintStart_toEndOf="@id/iconMeal"/>
 
-<EditText
-    android:id="@+id/keyword"
-    android:layout_width="0dp"
-    android:layout_height="@dimen/_40sdp"
-    android:layout_marginTop="@dimen/_5sdp"
-    android:layout_marginEnd="@dimen/_30sdp"
-    android:background="@drawable/background_search_input"
-    android:hint="Search"
-    android:imeOptions="actionDone"
-    android:importantForAutofill="no"
-    android:inputType="text"
-    android:paddingStart="@dimen/_16sdp"
-    android:paddingEnd="@dimen/_16sdp"
-    android:textColor="@color/black"
-    android:textColorHint="@color/secondary_text"
-    app:layout_constraintTop_toBottomOf="@id/dishFood"
-    app:layout_constraintStart_toEndOf="@id/iconSearch"
-    app:layout_constraintEnd_toEndOf="@id/iconPhoto"/>
+    <EditText
+        android:id="@+id/keyword"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/background_search_input"
+        android:hint="Search"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:paddingStart="@dimen/_16sdp"
+        android:paddingEnd="@dimen/_16sdp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/secondary_text"
+        app:layout_constraintEnd_toStartOf="@+id/uploadPhoto"
+        app:layout_constraintStart_toEndOf="@id/iconSearch"
+        app:layout_constraintTop_toBottomOf="@id/dishFood" />
 
 <TextView
     android:id="@+id/suggest"
@@ -149,14 +138,15 @@
     app:layout_constraintTop_toBottomOf="@id/suggest"
     app:layout_constraintStart_toStartOf="@id/suggest"/>
 
-<Spinner
-    android:id="@+id/mealSelection"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:background="@android:drawable/btn_dropdown"
-    android:spinnerMode="dropdown"
-    app:layout_constraintEnd_toEndOf="@id/iconPhoto"
-    app:layout_constraintTop_toTopOf="@id/regenerate"/>
+    <Spinner
+        android:id="@+id/mealSelection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/regenerate" />
 
 <FrameLayout
     android:layout_width="match_parent"
@@ -183,5 +173,15 @@
     android:contentDescription="Dynamic"
     app:layout_constraintStart_toEndOf="@id/suggest"
     app:layout_constraintBottom_toTopOf="@id/icons"/>
+
+    <ImageButton
+        android:id="@+id/uploadPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_73sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_photo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
