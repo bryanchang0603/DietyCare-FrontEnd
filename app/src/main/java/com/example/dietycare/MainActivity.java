@@ -141,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
         String path = getApplicationContext().getFilesDir().toString()+"/personInfo.txt";
         File file = new File(path);
         sharedPreferences = getSharedPreferences("userPref", 0);
-        int mealGoalSP = sharedPreferences.getInt("mealGoalSP", 0);
-
+        int mealGoalSP = sharedPreferences.getInt("mealGoalSP", 0); //default 0, no radio button will be selected
+            // 1 means build build muscles, 2 means lose weight, 3 means remain shape
         SPEditor = sharedPreferences.edit();
         handler = new newHandler();
         HashMap<String, String> personInfo = new HashMap<String, String>();
