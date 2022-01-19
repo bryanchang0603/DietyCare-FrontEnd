@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private double height;
     private double bodyFat;
     private double weight;
+    private int exerciseLevel;
     private char gender;
     private String bodyType;
     private int birthYear;
@@ -163,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
             birthDate = Integer.parseInt(personInfo.get("Day"));
             gender = personInfo.get("Sex").charAt(0);
             bodyType = personInfo.get("Body_Type").toLowerCase();
+            exerciseLevel = Integer.parseInt(personInfo.get("Exercise"));
         } catch (FileNotFoundException e) {
             display(0,0,0,0,0,
                     0,0,0);
@@ -195,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 rbBuild.setChecked(true);
                 customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
-                        age, weight, height, gender, 5, bodyFat, bodyType);
+                        age, weight, height, gender, exerciseLevel, bodyFat, bodyType);
                 urlParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + customParam;
                 set_diet_goal(handler, SPEditor,1, urlParam);
                 break;
@@ -233,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (dietGoalIs) {
                     case "build muscles":
                         temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
-                                age, weight, height, gender, 5, bodyFat, bodyType);
+                                age, weight, height, gender, exerciseLevel, bodyFat, bodyType);
                         url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + temp;
                         set_diet_goal(handler, SPEditor, 1, url);
                         break;
