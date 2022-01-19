@@ -1,16 +1,26 @@
 package com.example.dietycare;
 
 import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.ActivityResultRegistry;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
@@ -59,6 +69,7 @@ public class MealRecommendationActivity extends AppCompatActivity {
             set_meal_plan_tv("Something went wrong.");
         }
 
+        uploadPhoto();
 
         regenerate_btw = (Button) findViewById(R.id.regenerate);
         regenerate_btw.setOnClickListener(new View.OnClickListener(){
@@ -98,7 +109,6 @@ public class MealRecommendationActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
 
         // setup the menu buttons
         home_btn = findViewById(R.id.menu_btn_home_recmd);
@@ -226,6 +236,25 @@ public class MealRecommendationActivity extends AppCompatActivity {
 
         }
         return readInfo;
+    }
+
+    private void uploadPhoto() {
+        ImageButton imgButton = findViewById(R.id.uploadPhoto);
+        ActivityResultLauncher arl = registerForActivityResult(new ActivityResultContracts.GetContent(),
+                new ActivityResultCallback<Uri>() {
+                    @Override
+                    public void onActivityResult(Uri result) {
+                        ImageView imgView = findViewById(R.id.mealImage);
+                        imgView.setImageURI(result);
+                    }
+                });
+
+        imgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                arl.launch("image/*");
+            }
+        });
     }
 }
 
