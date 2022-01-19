@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private ImageButton progress_btn, meal_btn, community_btn, account_btn;
-
     private String dietGoalIs;
     private double suggestedCal;
     private double intakeCal;
@@ -62,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
     private String outputStr;
     private newHandler handler;
 
+    //Variables for saving radio buttons
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor SPEditor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
+
+        menu_button_creation();
+        main_page_event();
+
+
+    }
+
+    private void menu_button_creation(){
         progress_btn = findViewById(R.id.menu_btn_progress_main);
         meal_btn = findViewById(R.id.menu_btn_meal_main);
         community_btn = findViewById(R.id.menu_btn_community_main);
@@ -119,16 +133,20 @@ public class MainActivity extends AppCompatActivity {
                                            }
                                        }
         );
-
-        main_page_event();
-
     }
 
     public void main_page_event(){
 
         String path = getApplicationContext().getFilesDir().toString()+"/personInfo.txt";
         File file = new File(path);
+        sharedPreferences = getSharedPreferences("userPref", 0);
+        int mealGoalSP = sharedPreferences.getInt("mealGoalSP", 0);
+        System.out.println(mealGoalSP);
+        SPEditor = sharedPreferences.edit();
+        handler = new newHandler();
         HashMap<String, String> personInfo = new HashMap<String, String>();
+
+
         try{
             Scanner reader = new Scanner(file);
             while (reader.hasNextLine()) {
@@ -150,15 +168,72 @@ public class MainActivity extends AppCompatActivity {
                     0,0,0);
         }
 
-        handler = new newHandler();
+        // moved calander
+        Calendar cal = Calendar.getInstance();
+        int currentYear = cal.get(Calendar.YEAR);
+        int currentMonth = cal.get(Calendar.MONTH)+1;
+        int currentDate = cal.get(Calendar.DATE);
+        age = currentYear - birthYear;
+
+        if (currentMonth < birthMonth) {
+            age--;
+        } else if (currentMonth == birthMonth) {
+            if (currentDate < birthDate) {
+                age--;
+            }
+        }
+
+
+        // code for setting the radio buttons' saved status
+        RadioButton rbBuild, rbLose, rbRemain;
+        String customParam, urlParam;
+        rbBuild = findViewById(R.id.radioButton_muscle);
+        rbLose = findViewById(R.id.radioButton_weight);
+        rbRemain = findViewById(R.id.radioButton_shape);
+
+        switch(mealGoalSP){
+            case 1:
+                rbBuild.setChecked(true);
+                customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
+                        age, weight, height, gender, 5, bodyFat, bodyType);
+                urlParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + customParam;
+                set_muscle_goal(handler, SPEditor,1, urlParam);
+                break;
+            case 2:
+                rbLose.setChecked(true);
+                customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
+                        age, weight, height, gender, targetWeight, bodyFat);
+                urlParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + customParam;
+                set_muscle_goal(handler, SPEditor, 2, urlParam);
+                break;
+            case 3:
+                rbRemain.setChecked(true);
+                customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
+                        age, weight, height, gender, weight, bodyFat);
+                urlParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + customParam;
+                set_muscle_goal(handler, SPEditor, 3, urlParam);
+                break;
+                default:
+                    rbBuild.setChecked(false);
+                    rbLose.setChecked(false);
+                    rbRemain.setChecked(false);
+
+        }
+
+        // radio button saving status end
+
 
         final RadioGroup radGroup= findViewById(R.id.radio_group);
         radGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup rg, int id) {
                 RadioButton rb = findViewById(id);
+                String temp, url;
+                System.out.println(id);
                 dietGoalIs = rb.getText().toString();
-                Calendar cal = Calendar.getInstance();
+
+                //moved this part of the code to the beginning of the function
+/*                Calendar cal = Calendar.getInstance();
                 int currentYear = cal.get(Calendar.YEAR);
                 int currentMonth = cal.get(Calendar.MONTH)+1;
                 int currentDate = cal.get(Calendar.DATE);
@@ -172,73 +247,146 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                if (dietGoalIs.equals("build muscles")) {
+                try{
+                    Scanner reader = new Scanner(file);
+                    while (reader.hasNextLine()) {
+                        String data = reader.nextLine();
+                        String[] temp = data.split(" ");
+                        personInfo.put(temp[0], temp[1]);
+                    }
+                    height = Double.parseDouble(personInfo.get("Height"));
+                    weight = Double.parseDouble(personInfo.get("Weight"));
+                    targetWeight = Double.parseDouble(personInfo.get("Target_Weight"));
+                    bodyFat = Double.parseDouble(personInfo.get("Body_Fat"))/100;
+                    birthYear = Integer.parseInt(personInfo.get("Year"));
+                    birthMonth = Integer.parseInt(personInfo.get("Month"));
+                    birthDate = Integer.parseInt(personInfo.get("Day"));
+                    gender = personInfo.get("Sex").charAt(0);
+                    bodyType = personInfo.get("Body_Type").toLowerCase();
+                } catch (FileNotFoundException e) {
+                    display(0,0,0,0,0,
+                            0,0,0);
+                }*/
 
-                    intakeCal = 11.1;
+                //changed if to switch, and changed to a general function
+                switch (dietGoalIs) {
+                    case "build muscles":
+                        temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
+                                age, weight, height, gender, 5, bodyFat, bodyType);
+                        url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + temp;
+                        set_muscle_goal(handler, SPEditor, 1, url);
+/*
 
-                    consumedProtein = 49.5;
-                    consumedFat = 32.1;
-                    consumedCarbo = 66;
+                        intakeCal = 11.1;
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
+                        consumedProtein = 49.5;
+                        consumedFat = 32.1;
+                        consumedCarbo = 66;
 
-                            String temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
-                                    age, weight, height, gender,5,bodyFat,bodyType);
-                            String url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?"+temp;
+                        SPEditor.putInt("mealGoalSP", 1);
 
-                            String output = requestData(url, "GET");
-                            Message msg = handler.obtainMessage();
-                            msg.obj = output;
-                            handler.sendMessage(msg);
-                            System.out.println(output);
-                        }
-                    }).start();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
 
-                } else if (dietGoalIs.equals("lose weight")) {
-                    intakeCal = 11.1;
+                                String temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
+                                        age, weight, height, gender, 5, bodyFat, bodyType);
+                                String url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + temp;
 
-                    consumedProtein = 49.5;
-                    consumedFat = 32.1;
-                    consumedCarbo = 66;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            String temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
-                                    age, weight, height, gender,targetWeight,bodyFat);
-                            String url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?"+temp;
+                                String output = requestData(url, "GET");
+                                Message msg = handler.obtainMessage();
+                                msg.obj = output;
+                                handler.sendMessage(msg);
+                                System.out.println(output);
+                            }
+                        }).start();
+*/
 
-                            String output = requestData(url, "GET");
-                            Message msg = handler.obtainMessage();
-                            msg.obj = output;
-                            handler.sendMessage(msg);
-                            System.out.println(height);
-                        }
-                    }).start();
+                        break;
+                    case "lose weight":
+                        temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
+                                age, weight, height, gender, targetWeight, bodyFat);
+                        url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
+                        set_muscle_goal(handler, SPEditor, 2, url);
+/*                        intakeCal = 11.1;
 
-                } else if (dietGoalIs.equals("remain shape")) {
-                    intakeCal = 11.1;
+                        consumedProtein = 49.5;
+                        consumedFat = 32.1;
+                        consumedCarbo = 66;
 
-                    consumedProtein = 49.5;
-                    consumedFat = 32.1;
-                    consumedCarbo = 66;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            String temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
-                                    age, weight, height, gender,weight,bodyFat);
-                            String url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?"+temp;
+                        SPEditor.putInt("mealGoalSP", 2);
 
-                            String output = requestData(url, "GET");
-                            Message msg = handler.obtainMessage();
-                            msg.obj = output;
-                            handler.sendMessage(msg);
-                        }
-                    }).start();
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
+                                        age, weight, height, gender, targetWeight, bodyFat);
+                                String url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
+
+                                String output = requestData(url, "GET");
+                                Message msg = handler.obtainMessage();
+                                msg.obj = output;
+                                handler.sendMessage(msg);
+                                System.out.println(height);
+                            }
+                        }).start();*/
+
+                        break;
+                    case "remain shape":
+                        temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
+                                age, weight, height, gender, weight, bodyFat);
+                        url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
+                        set_muscle_goal(handler, SPEditor, 3, url);
+/*                        intakeCal = 11.1;
+
+                        consumedProtein = 49.5;
+                        consumedFat = 32.1;
+                        consumedCarbo = 66;
+
+                        SPEditor.putInt("mealGoalSP", 3);
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
+                                        age, weight, height, gender, weight, bodyFat);
+                                String url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
+
+                                String output = requestData(url, "GET");
+                                Message msg = handler.obtainMessage();
+                                msg.obj = output;
+                                handler.sendMessage(msg);
+                            }
+                        }).start();*/
+
+                        break;
                 }
+                SPEditor.commit();
             }
         });
+    }
+
+    private void set_muscle_goal(newHandler handler, SharedPreferences.Editor SPEditor, int mealGoalSP, String paramURL){
+        intakeCal = 11.1;
+
+        consumedProtein = 49.5;
+        consumedFat = 32.1;
+        consumedCarbo = 66;
+
+        SPEditor.putInt("mealGoalSP", mealGoalSP);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                String output = requestData(paramURL, "GET");
+                Message msg = handler.obtainMessage();
+                msg.obj = output;
+                handler.sendMessage(msg);
+                System.out.println(output);
+            }
+        }).start();
     }
 
     private void display(double suggestedCal, double intakeCal, double consumedProtein,
