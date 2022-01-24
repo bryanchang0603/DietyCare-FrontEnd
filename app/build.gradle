@@ -56,6 +56,12 @@ dependencies {
 
     //Rounded ImageView
     implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    //Algolia
+    implementation 'com.algolia:algoliasearch-android:3.+'
+
+    //RecyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
