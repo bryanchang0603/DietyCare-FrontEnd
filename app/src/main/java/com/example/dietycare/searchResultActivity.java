@@ -34,13 +34,6 @@ public class searchResultActivity extends AppCompatActivity {
     private TextView searchBox;
     private ImageButton backToMealPage;
     RecyclerView recycler;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-    private double protein;
-    private double fat;
-    private double carbo;
-    private double calorie;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +43,6 @@ public class searchResultActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-
-        sharedPreferences = getSharedPreferences("searchResult", 0);
-        editor = sharedPreferences.edit();
 
         goBackToMealPage();
 
