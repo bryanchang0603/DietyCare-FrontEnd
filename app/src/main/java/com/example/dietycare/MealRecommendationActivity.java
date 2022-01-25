@@ -272,7 +272,7 @@ public class MealRecommendationActivity extends AppCompatActivity {
         searchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (i == EditorInfo.IME_ACTION_DONE) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
                     String keyword = searchBox.getText().toString();
                     goToSearchResultPage(keyword);
                 }

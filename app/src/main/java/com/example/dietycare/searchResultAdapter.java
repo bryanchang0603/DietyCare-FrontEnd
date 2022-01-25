@@ -1,6 +1,7 @@
 package com.example.dietycare;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class searchResultAdapter extends RecyclerView.Adapter<searchResultAdapter.Holder> {
@@ -30,7 +32,31 @@ public class searchResultAdapter extends RecyclerView.Adapter<searchResultAdapte
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
+        Food food = foodArrayList.get(position);
+        String foodName = food.getFoodName();
+        double protein = food.getProtein();
+        double fat = food.getFat();
+        double carbo = food.getCarbo();
+        double calorie = food.getCalorie();
+
         holder.textView.setText(foodArrayList.get(position).getFoodName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                /*
+                jump to next page here
+                Intent intent = new Intent(context, your_activity.class);
+                intent.putExtra("food name", foodName);
+                intent.putExtra("protein", protein);
+                intent.putExtra("fat", fat);
+                intent.putExtra("carbo", carbo);
+                intent.putExtra("calorie", calorie);
+                startActivity(intent);
+                finish();
+                */
+            }
+        });
     }
 
     @Override
