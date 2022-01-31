@@ -33,7 +33,7 @@
             android:name=".MealRecommendationActivity"
             android:exported="false" />
         <activity android:name=".searchResultActivity" />
-
+        <activity android:name=".FoodDetailsActivity"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
