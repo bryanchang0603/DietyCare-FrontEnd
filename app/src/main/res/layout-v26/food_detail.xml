@@ -13,7 +13,7 @@
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,7 +46,7 @@
         android:layout_height="@dimen/_50sdp"
         android:layout_marginStart="@dimen/_50sdp"
         android:textColor="@color/secondary_text"
-        android:autoSizeTextType="uniform"
+        android:textSize="@dimen/_15ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/foodImage"
         app:layout_constraintTop_toTopOf="@id/foodImage" />

@@ -43,8 +43,10 @@ public class searchResultAdapter extends RecyclerView.Adapter<searchResultAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //jump to next page here
-                Intent intent = new Intent(context, FoodDetailsActivity.class);
+
+
+               // jump to next page here
+                Intent intent = new Intent(context, FoodDetailActivity.class);
                 intent.putExtra("food name", foodName);
                 intent.putExtra("protein", protein);
                 intent.putExtra("fat", fat);
