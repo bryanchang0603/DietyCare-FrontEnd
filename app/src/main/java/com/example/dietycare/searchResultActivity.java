@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class searchResultActivity extends AppCompatActivity {
     private searchResultAdapter adapter;
@@ -78,6 +79,10 @@ public class searchResultActivity extends AppCompatActivity {
                 try {
                     assert jsonObject != null;
                     JSONArray arr = jsonObject.getJSONArray("hits");
+//                    Iterator<String> jsonKeys = jsonObject.keys();
+//                    while (jsonKeys.hasNext()) {
+//                        System.out.println(jsonKeys.next().toString());
+//                    }
                     for (int i = 0; i < arr.length(); i++) {
                         String foodName = arr.getJSONObject(i).get("Descrip").toString();
                         double protein = Double.parseDouble(arr.getJSONObject(i).get("Protein_g").toString());
@@ -97,7 +102,7 @@ public class searchResultActivity extends AppCompatActivity {
                 }
             }
         };
-        index.searchAsync(new Query(keyword), compHand);
+        index.searchAsync(new Query(keyword).setHitsPerPage(50), compHand);
     }
 
     private void searchAgain() {
