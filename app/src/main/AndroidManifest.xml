@@ -32,6 +32,7 @@
         <activity android:name=".FoodDetailActivity" />
         <activity android:name=".RecordActivity" />
         <activity android:name=".shareActivity" />
+        <activity android:name=".ImageRecognitionActivity" />
         <activity
             android:name=".MealRecommendationActivity"
             android:exported="false" />

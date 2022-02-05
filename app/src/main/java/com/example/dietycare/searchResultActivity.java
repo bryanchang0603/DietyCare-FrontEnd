@@ -84,11 +84,11 @@ public class searchResultActivity extends AppCompatActivity {
 //                        System.out.println(jsonKeys.next().toString());
 //                    }
                     for (int i = 0; i < arr.length(); i++) {
-                        String foodName = arr.getJSONObject(i).get("Descrip").toString();
-                        double protein = Double.parseDouble(arr.getJSONObject(i).get("Protein_g").toString());
-                        double fat = Double.parseDouble(arr.getJSONObject(i).get("Fat_g").toString());
-                        double carbo = Double.parseDouble(arr.getJSONObject(i).get("Carb_g").toString());
-                        double calorie = Double.parseDouble(arr.getJSONObject(i).get("Energy_kcal").toString());
+                        String foodName = arr.getJSONObject(i).get("Food").toString();
+                        double protein = Double.parseDouble(arr.getJSONObject(i).get("Pro_100G").toString());
+                        double fat = Double.parseDouble(arr.getJSONObject(i).get("Fat_100G").toString());
+                        double carbo = Double.parseDouble(arr.getJSONObject(i).get("CHO_100G").toString());
+                        double calorie = Double.parseDouble(arr.getJSONObject(i).get("Cal_100G").toString());
                         tempArr.add(new Food(foodName, protein, fat, carbo, calorie));
                     }
                     //update UI

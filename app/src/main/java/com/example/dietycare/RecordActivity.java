@@ -99,8 +99,8 @@ public class RecordActivity extends AppCompatActivity {
             }
         });
 
-        cal_tv = (TextView) findViewById(R.id.kal);;
-        cal_tv.setText(food_cal.toString());
+        cal_tv = (TextView) findViewById(R.id.kal);
+        cal_tv.setText("0");
         amount_tv=(TextView) findViewById(R.id.g);
         amount_tv.setText("0");
 
@@ -119,10 +119,10 @@ public class RecordActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if(amount_et.getText().length() >= 0) {
                     result = amount_et.getText().toString();
-                    cal_intake = food_cal * Double.parseDouble(result);
-                    pro_intake = food_pro * Double.parseDouble(result);
-                    fat_intake = food_fat * Double.parseDouble(result);
-                    carbo_intake = food_carbo * Double.parseDouble(result);
+                    cal_intake = food_cal * Double.parseDouble(result) / 100.0;
+                    pro_intake = food_pro * Double.parseDouble(result) / 100.0;
+                    fat_intake = food_fat * Double.parseDouble(result) / 100.0;
+                    carbo_intake = food_carbo * Double.parseDouble(result) / 100.0;
                     cal_tv.setText(cal_intake.toString());
                     amount_tv.setText(result);
                 }

@@ -1,9 +1,13 @@
 package com.example.dietycare;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -26,6 +30,7 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -67,7 +72,7 @@ public class MealRecommendationActivity extends AppCompatActivity {
             set_meal_plan_tv("Something went wrong.");
         }
 
-        uploadPhoto();
+        uploadPhoto(this);
 
         regenerate_btw = (Button) findViewById(R.id.regenerate);
         regenerate_btw.setOnClickListener(new View.OnClickListener(){
@@ -241,14 +246,15 @@ public class MealRecommendationActivity extends AppCompatActivity {
         return readInfo;
     }
 
-    private void uploadPhoto() {
+    private void uploadPhoto(Context context) {
         ImageButton imgButton = findViewById(R.id.uploadPhoto);
         ActivityResultLauncher arl = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri result) {
-                        ImageView imgView = findViewById(R.id.mealImage);
-                        imgView.setImageURI(result);
+                        Intent intent = new Intent(context, ImageRecognitionActivity.class);
+                        intent.setData(result);
+                        startActivity(intent);
                     }
                 });
 
