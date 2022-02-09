@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/progress_top"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_160sdp"
+        android:layout_width="391dp"
+        android:layout_height="124dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/top" />
@@ -26,40 +26,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progress_top" />
 
-    <Button
-        android:id="@+id/button_today"
-        android:layout_width="@dimen/_65sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:backgroundTint="@color/white"
-        android:text="today"
-        android:textColor="#FF6C87"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progress_top" />
-
-    <ImageView
-        android:id="@+id/bell"
-        android:layout_width="@dimen/_18sdp"
-        android:layout_height="@dimen/_18sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:backgroundTint="#689F38"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progress_top"
-        app:srcCompat="@drawable/icon_bell"
-        app:tint="#4D58BC" />
-
     <View
         android:id="@+id/calorie_info"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:background="#D4C5C5"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_year" />
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3" />
 
     <TextView
-        android:id="@+id/text_latest_calorie_intake"
+        android:id="@+id/text_latest_intake"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_100sdp"
@@ -71,7 +47,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calorie_intake_img1" />
+        app:layout_constraintTop_toBottomOf="@+id/latest_calorie_intake_pie_chart" />
 
 
     <View
@@ -87,8 +63,8 @@
         android:id="@+id/icons"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageButton
             android:id="@+id/menu_btn_home_progress"
@@ -128,21 +104,62 @@
     </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/latest_calorie_intake_img"
+<!--    <com.github.mikephil.charting.charts.BarChart-->
+<!--        android:id="@+id/latest_calorie_intake_barChart"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginStart="@dimen/_10sdp"-->
+<!--        android:layout_marginTop="@dimen/_5sdp"-->
+<!--        android:layout_marginEnd="@dimen/_10sdp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/view7"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/text_latest_intake" />-->
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/latest_calorie_intake_LineChart"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/view7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_latest_calorie_intake" />
+        app:layout_constraintTop_toBottomOf="@+id/text_latest_intake" >
 
-    <ImageView
-        android:id="@+id/calorie_intake_img1"
+    </com.github.mikephil.charting.charts.LineChart>
+
+    <TextView
+        android:id="@+id/line_graph_bigining_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cambay"
+        android:text="Latest Calorie Intake"
+        android:textColor="#6C4DC2"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/icons"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/_10sdp"/>
+
+    <TextView
+        android:id="@+id/line_graph_ending_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cambay"
+        android:text="Latest Calorie Intake"
+        android:textColor="#6C4DC2"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/icons"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/_10sdp"/>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/latest_calorie_intake_pie_chart"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="@dimen/_150sdp"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_170sdp"
@@ -151,72 +168,19 @@
         app:layout_constraintTop_toBottomOf="@+id/calorie_info" />
 
     <Spinner
-        android:id="@+id/spinner_year"
-        android:layout_width="@dimen/_50sdp"
+        android:id="@+id/spinner_bar_graph"
+        android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"
-        app:layout_constraintStart_toStartOf="@id/text_year"
-        app:layout_constraintTop_toTopOf="@id/text_health_data" />
-
-    <Spinner
-        android:id="@+id/spinner_month"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:layout_marginStart="@dimen/_38sdp"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        app:layout_constraintStart_toStartOf="@id/text_month"
-        app:layout_constraintTop_toTopOf="@id/text_health_data" />
-
-    <Spinner
-        android:id="@+id/spinner_day"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:layout_marginStart="@dimen/_25sdp"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        app:layout_constraintStart_toStartOf="@id/text_day"
-        app:layout_constraintTop_toTopOf="@id/text_health_data" />
-
-    <TextView
-        android:id="@+id/text_year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:text="Year"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_health_data" />
-
-    <TextView
-        android:id="@+id/text_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:text="month"
-        app:layout_constraintStart_toEndOf="@+id/spinner_year"
-        app:layout_constraintTop_toBottomOf="@+id/text_health_data" />
-
-    <TextView
-        android:id="@+id/text_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:text="day"
-        app:layout_constraintStart_toEndOf="@+id/spinner_month"
-        app:layout_constraintTop_toBottomOf="@+id/text_health_data" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/latest_calorie_intake_pie_chart" />
 
     <ImageView
         android:id="@+id/calorie_intake_img2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="@dimen/_150sdp"
         android:layout_marginStart="@dimen/_170sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_10sdp"
@@ -224,5 +188,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calorie_info" />
 
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@+id/text_health_data"
+        tools:context=".MainActivity">
+
+        <!--on below line we are creating our calendar view
+            selector color is use as a indicator for selected date
+            text color normal is use to give text color to unselected date
+            text color selected is use to give text color to selected date-->
+        <devs.mulham.horizontalcalendar.HorizontalCalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:selectorColor="@android:color/holo_red_dark"
+            app:textColorNormal="@color/purple_200"
+            app:textColorSelected="@color/purple_200" />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
