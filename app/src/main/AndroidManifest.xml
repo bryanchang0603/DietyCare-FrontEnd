@@ -29,6 +29,7 @@
         <activity android:name=".editActivity" />
         <activity android:name=".progress" />
         <activity android:name=".shareActivity" />
+        <activity android:name=".PostDetailActivity" />
         <activity
             android:name=".MealRecommendationActivity"
             android:exported="false" />
