@@ -75,11 +75,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         // The following codes are for testing the UID
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-
-        assert currentUser != null;
-        System.out.println(currentUser.getUid());
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//
+//        assert currentUser != null;
+//        System.out.println(currentUser.getUid());
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
