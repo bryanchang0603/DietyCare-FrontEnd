@@ -38,9 +38,37 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
-        android:src="@drawable/ic_account"
+        android:src="@drawable/icon_account"
         app:layout_constraintStart_toEndOf="@id/icBack"
         app:layout_constraintTop_toTopOf="@+id/icBack" />
+
+
+    <ImageView
+        android:id="@+id/postPicture"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:src="@drawable/ic_account"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/postContent"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:gravity="left"
+        android:text="Amysdfasdfas sef as"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postPicture" />
 
     <Button
         android:id="@+id/recordButton"
