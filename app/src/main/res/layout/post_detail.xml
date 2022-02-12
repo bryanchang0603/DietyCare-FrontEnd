@@ -19,10 +19,9 @@
 
     <TextView
         android:id="@+id/postOwnerName"
-        android:layout_width="76dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:gravity="center"
-        android:text="Amy"
         android:textColor="@color/black"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
@@ -58,24 +57,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/postContent"
+        android:id="@+id/postTime"
         android:layout_width="70dp"
         android:layout_height="25dp"
         android:gravity="center"
-        android:text="10:30 AM"
         android:textColor="@color/black"
         android:textSize="@dimen/_10ssp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/postContent3"
-        app:layout_constraintTop_toTopOf="@+id/postContent3" />
+        app:layout_constraintStart_toEndOf="@+id/postContent"
+        app:layout_constraintTop_toTopOf="@+id/postContent" />
 
     <TextView
-        android:id="@+id/postContent3"
+        android:id="@+id/postContent"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:gravity="left"
-        android:text="Amysdfasdfas sef asAmysdfasdfas sef as"
         android:textColor="@color/black"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
@@ -90,7 +87,7 @@
         android:layout_weight="1"
         android:text="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postContent3"
+        app:layout_constraintTop_toBottomOf="@+id/postContent"
         app:srcCompat="@drawable/ic_comment" />
 
     <ImageButton
@@ -100,7 +97,7 @@
         android:layout_weight="1"
         android:text="1"
         app:layout_constraintStart_toEndOf="@+id/commentButton"
-        app:layout_constraintTop_toBottomOf="@+id/postContent3"
+        app:layout_constraintTop_toBottomOf="@+id/postContent"
         app:srcCompat="@drawable/ic_thumbup" />
 
     <androidx.constraintlayout.widget.Guideline
