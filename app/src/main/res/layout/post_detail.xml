@@ -59,26 +59,49 @@
 
     <TextView
         android:id="@+id/postContent"
-        android:layout_width="300dp"
+        android:layout_width="70dp"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:text="10:30 AM"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/postContent3"
+        app:layout_constraintTop_toTopOf="@+id/postContent3" />
+
+    <TextView
+        android:id="@+id/postContent3"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:gravity="left"
-        android:text="Amysdfasdfas sef as"
+        android:text="Amysdfasdfas sef asAmysdfasdfas sef as"
         android:textColor="@color/black"
-        android:textSize="@dimen/_20ssp"
+        android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/postPicture" />
 
-    <Button
-        android:id="@+id/recordButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:text="Record"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <ImageButton
+        android:id="@+id/commentButton"
+        android:layout_width="150dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="50dp"
+        android:layout_weight="1"
+        android:text="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postContent3"
+        app:srcCompat="@drawable/ic_comment" />
+
+    <ImageButton
+        android:id="@+id/likeButton"
+        android:layout_width="150dp"
+        android:layout_height="63dp"
+        android:layout_weight="1"
+        android:text="1"
+        app:layout_constraintStart_toEndOf="@+id/commentButton"
+        app:layout_constraintTop_toBottomOf="@+id/postContent3"
+        app:srcCompat="@drawable/ic_thumbup" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
