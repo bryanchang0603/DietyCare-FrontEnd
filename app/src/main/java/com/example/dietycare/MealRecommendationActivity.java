@@ -47,6 +47,11 @@ public class MealRecommendationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_recommendation);
 
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         // Block to make strict mode to allow
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
