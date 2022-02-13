@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".PostDetailActivity">
 
+
     <ImageButton
         android:id="@+id/icBack"
         android:layout_width="@dimen/_20sdp"
@@ -34,27 +35,36 @@
         android:layout_height="40dp"
         android:layout_marginStart="4dp"
         android:gravity="center"
+        android:src="@drawable/icon_account"
         android:textColor="@color/black"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
-        android:src="@drawable/icon_account"
         app:layout_constraintStart_toEndOf="@id/icBack"
         app:layout_constraintTop_toTopOf="@+id/icBack" />
 
 
     <ImageView
         android:id="@+id/postPicture"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="100dp"
         android:gravity="center"
         android:src="@drawable/ic_account"
+        app:layout_constraintTop_toBottomOf="@+id/postOwnerIcon" />
+
+
+    <TextView
+        android:id="@+id/postContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="left"
         android:textColor="@color/black"
-        android:textSize="@dimen/_20ssp"
+        android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/postPicture"
+        app:layout_constraintTop_toBottomOf="@+id/postPicture" />
+
 
     <TextView
         android:id="@+id/postTime"
@@ -64,30 +74,18 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_10ssp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/postContent"
-        app:layout_constraintTop_toTopOf="@+id/postContent" />
-
-    <TextView
-        android:id="@+id/postContent"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:gravity="left"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_14ssp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postPicture" />
+        app:layout_constraintStart_toStartOf="@+id/postContent"
+        app:layout_constraintTop_toBottomOf="@+id/postContent" />
 
     <ImageButton
         android:id="@+id/commentButton"
         android:layout_width="150dp"
         android:layout_height="63dp"
-        android:layout_marginStart="50dp"
         android:layout_weight="1"
+        android:layout_marginStart="45dp"
         android:text="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postContent"
+        app:layout_constraintTop_toBottomOf="@+id/postTime"
         app:srcCompat="@drawable/ic_comment" />
 
     <ImageButton
@@ -97,48 +95,17 @@
         android:layout_weight="1"
         android:text="1"
         app:layout_constraintStart_toEndOf="@+id/commentButton"
-        app:layout_constraintTop_toBottomOf="@+id/postContent"
+        app:layout_constraintTop_toBottomOf="@+id/postTime"
         app:srcCompat="@drawable/ic_thumbup" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+    <ListView
+        android:id="@+id/commentList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="88dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postTime" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
