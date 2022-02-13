@@ -94,6 +94,8 @@ public class PostDetailActivity extends AppCompatActivity {
         list.add("3: I love yoI love youI love youu");
         list.add("4: I love youI love youI love youI love you");
         list.add("5: I love youI love youI love youI love you");
+        list.add("6: I love youI love youI love youI love you");
+        list.add("7: I love youI love youI love youI love you");
         StableArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
