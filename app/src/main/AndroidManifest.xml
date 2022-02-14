@@ -31,12 +31,18 @@
         <activity android:name=".progress" />
         <activity android:name=".FoodDetailActivity" />
         <activity android:name=".RecordActivity" />
-        <activity android:name=".shareActivity" />
+        <activity android:name=".communityActivity" />
         <activity android:name=".ImageRecognitionActivity" />
         <activity
             android:name=".MealRecommendationActivity"
             android:exported="false" />
         <activity android:name=".searchResultActivity" />
+        <activity android:name=".shareActivity" />
+        <activity android:name=".PostDetailActivity" />
+        <activity
+            android:name=".MealRecommendationActivity"
+            android:exported="false" />
+        <activity android:name=".postingActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

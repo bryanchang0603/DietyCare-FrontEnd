@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -62,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
     private String outputStr;
     private newHandler handler;
 
+    //the following variables are for jump to Post page
+    private Button post_btn;
+
     //Variables for saving radio buttons
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor SPEditor;
@@ -73,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         // The following codes are for testing the UID
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-
-        assert currentUser != null;
-        System.out.println(currentUser.getUid());
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//
+//        assert currentUser != null;
+//        System.out.println(currentUser.getUid());
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -86,6 +91,19 @@ public class MainActivity extends AppCompatActivity {
 
         menu_button_creation();
         main_page_event();
+
+        // //the following variables are for jump to Post page
+        // post_btn= findViewById(R.id.to_post);
+        // post_btn.setOnClickListener(new View.OnClickListener() {
+        //                                     @Override
+        //                                     public void onClick(View view) {
+        //                                         Intent intent = new Intent(MainActivity.this, postingActivity.class);
+        //                                         //Starting of the Intent
+        //                                         startActivity(intent);
+        //                                         finish();
+        //                                     }
+        //                                 }
+        // );
 
 
     }
@@ -122,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         community_btn.setOnClickListener(new View.OnClickListener() {
                                              @Override
                                              public void onClick(View view) {
-                                                 Intent intent = new Intent(MainActivity.this, shareActivity.class);
+                                                 Intent intent = new Intent(MainActivity.this, communityActivity.class);
                                                  //Starting of the Intent
                                                  startActivity(intent);
                                                  finish();
@@ -378,8 +396,16 @@ public class MainActivity extends AppCompatActivity {
                 suggestedCarbo = Double.parseDouble(jobj.get("suggest_ch").toString());
                 suggestedCal = Double.parseDouble(jobj.get("suggest_cal").toString());
                 displaySuggested(suggestedProtein, suggestedFat, suggestedCarbo, suggestedCal);
-
-            } catch (JSONException e) {
+                File file = new File(getFilesDir()+"/suggestion.txt");
+                if (!file.exists()){
+                    file.createNewFile();
+                }
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write(String.format("suggestedCal:%.2f\nsuggestedProtein:%.2f\n" +
+                                "suggestedFat:%.2f\nsuggestedCarbo:%.2f", suggestedCal, suggestedProtein,
+                        suggestedFat, suggestedCarbo));
+                fileWriter.close();
+            } catch (JSONException | IOException e) {
                 e.printStackTrace();
             }
         }

@@ -17,7 +17,21 @@
         tools:layout_editor_absoluteY="@dimen/_70sdp" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton2"
+        android:id="@+id/detailButton"
+        android:layout_width="@dimen/_55sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="136dp"
+        android:layout_marginEnd="104dp"
+        android:text="postDetail"
+        android:textColor="#000000"
+        android:textSize="8dp"
+        app:backgroundTint="#CCCFCF"
+        app:cornerRadius="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/materialButton"
         android:layout_width="@dimen/_55sdp"
         android:layout_height="@dimen/_30sdp"
         android:text="Other"
