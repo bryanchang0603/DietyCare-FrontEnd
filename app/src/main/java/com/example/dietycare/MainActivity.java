@@ -18,7 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton progress_btn, meal_btn, community_btn, account_btn;
     private String dietGoalIs;
     private double suggestedCal;
-    private double intakeCal;
+    private double consumedCal;
     private double leftCal;
     private double consumedProtein;
     private double consumedFat;
@@ -141,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         community_btn.setOnClickListener(new View.OnClickListener() {
                                              @Override
                                              public void onClick(View view) {
-                                                 Intent intent = new Intent(MainActivity.this, shareActivity.class);
+                                                 Intent intent = new Intent(MainActivity.this, communityActivity.class);
                                                  //Starting of the Intent
                                                  startActivity(intent);
                                                  finish();
@@ -191,8 +190,8 @@ public class MainActivity extends AppCompatActivity {
             bodyType = personInfo.get("Body_Type").toLowerCase();
             exerciseLevel = Integer.parseInt(personInfo.get("Exercise"));
         } catch (FileNotFoundException e) {
-            display(0,0,0,0,0,
-                    0,0,0);
+            displaySuggested(0,0,0,0);
+            displayConsumedAndLeftCal(0,0,0,0,0);
         }
 
         // calculate age
@@ -213,32 +212,38 @@ public class MainActivity extends AppCompatActivity {
 
         // code for setting the radio buttons' saved status
         RadioButton rbBuild, rbLose, rbRemain;
-        String customParam, urlParam;
+        String customParam, consumedInfo, urlParamTarget, urlConsumed;
         rbBuild = findViewById(R.id.radioButton_muscle);
         rbLose = findViewById(R.id.radioButton_weight);
         rbRemain = findViewById(R.id.radioButton_shape);
+
+        int userID = 123;
+        //String intakeDate = String.format("%d-%02d-%02d", currentYear, currentMonth, currentDate);
+        String intakeDate = "2022-02-03";
+        consumedInfo = String.format("user_id=%d&intake_date=%s",userID, intakeDate);
+        urlConsumed = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/dailyNutrient?" + consumedInfo;
 
         switch(mealGoalSP){
             case 1:
                 rbBuild.setChecked(true);
                 customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
                         age, weight, height, gender, exerciseLevel, bodyFat, bodyType);
-                urlParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + customParam;
-                set_diet_goal(handler, SPEditor,1, urlParam);
+                urlParamTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + customParam;
+                set_diet_goal(handler, SPEditor,1, urlConsumed, urlParamTarget);
                 break;
             case 2:
                 rbLose.setChecked(true);
                 customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
                         age, weight, height, gender, targetWeight, bodyFat);
-                urlParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + customParam;
-                set_diet_goal(handler, SPEditor, 2, urlParam);
+                urlParamTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + customParam;
+                set_diet_goal(handler, SPEditor, 2, urlConsumed, urlParamTarget);
                 break;
             case 3:
                 rbRemain.setChecked(true);
                 customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
                         age, weight, height, gender, weight, bodyFat);
-                urlParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + customParam;
-                set_diet_goal(handler, SPEditor, 3, urlParam);
+                urlParamTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + customParam;
+                set_diet_goal(handler, SPEditor, 3, urlConsumed,urlParamTarget);
                 break;
                 default:
                     rbBuild.setChecked(false);
@@ -254,27 +259,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup rg, int id) {
                 RadioButton rb = findViewById(id);
-                String temp, url;
+                String temp, urlTarget, consumedInfo, urlConsumed;
                 dietGoalIs = rb.getText().toString();
+
+                int userID = 123;
+                String intakeDate = "2022-02-03";
+
+                consumedInfo = String.format("user_id=%d&intake_date=%s",userID, intakeDate);
+                urlConsumed = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/dailyNutrient?" + consumedInfo;
 
                 switch (dietGoalIs) {
                     case "build muscles":
                         temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
                                 age, weight, height, gender, exerciseLevel, bodyFat, bodyType);
-                        url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + temp;
-                        set_diet_goal(handler, SPEditor, 1, url);
+                        urlTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + temp;
+                        set_diet_goal(handler, SPEditor, 1, urlConsumed, urlTarget);
                         break;
                     case "lose weight":
                         temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
                                 age, weight, height, gender, targetWeight, bodyFat);
-                        url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
-                        set_diet_goal(handler, SPEditor, 2, url);
+                        urlTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
+                        set_diet_goal(handler, SPEditor, 2, urlConsumed, urlTarget);
                         break;
                     case "remain shape":
                         temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
                                 age, weight, height, gender, weight, bodyFat);
-                        url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
-                        set_diet_goal(handler, SPEditor, 3, url);
+                        urlTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
+                        set_diet_goal(handler, SPEditor, 3, urlConsumed, urlTarget);
                         break;
                 }
                 SPEditor.commit();
@@ -282,20 +293,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void set_diet_goal(newHandler handler, SharedPreferences.Editor SPEditor, int mealGoalSP, String paramURL){
-        intakeCal = 11.1;
-
-        consumedProtein = 49.5;
-        consumedFat = 32.1;
-        consumedCarbo = 66;
+    private void set_diet_goal(newHandler handler, SharedPreferences.Editor SPEditor, int mealGoalSP, String paramURLConsumed, String paramURLTarget){
 
         SPEditor.putInt("mealGoalSP", mealGoalSP);
+        newHandler2 handler2 = new newHandler2();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String output = requestData(paramURLConsumed, "GET");
+                Message msg = handler2.obtainMessage();
+                msg.obj = output;
+                handler2.sendMessage(msg);
+            }
+        }).start();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
 
-                String output = requestData(paramURL, "GET");
+                String output = requestData(paramURLTarget, "GET");
                 Message msg = handler.obtainMessage();
                 msg.obj = output;
                 handler.sendMessage(msg);
@@ -303,23 +319,36 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void display(double suggestedCal, double intakeCal, double consumedProtein,
-                         double consumedFat, double consumedCarbo, double suggestedProtein,
-                         double suggestedFat, double suggestedCarbo) {
+    private void displaySuggested(double suggestedProtein, double suggestedFat,
+                                  double suggestedCarbo, double suggestedCal) {
         TextView textValSuggested = findViewById(R.id.text_val_suggested);
-        TextView textValLeft = findViewById(R.id.text_val_left);
-        TextView textValIntake = findViewById(R.id.text_val_intake);
-        TextView textValProtein = findViewById(R.id.text_val_protein);
-        TextView textValFat = findViewById(R.id.text_val_fat);
-        TextView textValCarbo = findViewById(R.id.text_val_carbo);
-        leftCal = suggestedCal - intakeCal;
+
+        TextView textSuggestedProtein = findViewById(R.id.text_val_protein);
+        TextView textSuggestedFat = findViewById(R.id.text_val_fat);
+        TextView textSuggestedCarbo = findViewById(R.id.text_val_carbo);
+
         textValSuggested.setText(String.format("%.1f",suggestedCal));
-        textValIntake.setText(String.format("%.1f",intakeCal));
-        textValLeft.setText(String.format("%.1f",leftCal));
-        textValProtein.setText(String.format("%.1f",consumedProtein)+'/'+String.format("%.1f",suggestedProtein));
-        textValFat.setText(String.format("%.1f",consumedFat)+'/'+String.format("%.1f",suggestedFat));
-        textValCarbo.setText(String.format("%.1f",consumedCarbo)+'/'+String.format("%.1f",suggestedCarbo));
+//        textValIntake.setText(String.format("%.1f",intakeCal));
+//        textValLeft.setText(String.format("%.1f",leftCal));
+        textSuggestedProtein.setText(String.format("%.1f",suggestedProtein));
+        textSuggestedFat.setText(String.format("%.1f",suggestedFat));
+        textSuggestedCarbo.setText(String.format("%.1f",suggestedCarbo));
     }
+
+    private void displayConsumedAndLeftCal(double consumedProtein, double consumedFat, double consumedCarbo,
+                                           double consumedCal, double leftCal) {
+        TextView textConsumedProtein = findViewById(R.id.text_consumed_protein);
+        TextView textConsumedFat = findViewById(R.id.text_consumed_fat);
+        TextView textConsumedCarbo = findViewById(R.id.text_consumed_carbo);
+        TextView textConsumedCal = findViewById(R.id.text_val_intake);
+        TextView textCalLeft = findViewById(R.id.text_val_left);
+        textConsumedProtein.setText(String.format("%.1f",consumedProtein));
+        textConsumedFat.setText(String.format("%.1f",consumedFat));
+        textConsumedCarbo.setText(String.format("%.1f",consumedCarbo));
+        textConsumedCal.setText(String.format("%.1f", consumedCal));
+        textCalLeft.setText(String.format("%.1f", leftCal));
+    }
+
     public String requestData(String inputURL, String reqMethod) {
         HttpURLConnection connection;
         InputStream in;
@@ -362,25 +391,42 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 JSONObject jobj = new JSONObject(outputStr);
-                suggestedCal = Double.parseDouble(jobj.get("suggest_cal").toString());
                 suggestedProtein = Double.parseDouble(jobj.get("suggest_pro").toString());
                 suggestedFat = Double.parseDouble(jobj.get("suggest_fat").toString());
                 suggestedCarbo = Double.parseDouble(jobj.get("suggest_ch").toString());
-                leftCal = suggestedCal - intakeCal;
-                display(suggestedCal, intakeCal, consumedProtein, consumedFat, consumedCarbo,
-                        suggestedProtein, suggestedFat, suggestedCarbo);
-
+                suggestedCal = Double.parseDouble(jobj.get("suggest_cal").toString());
+                displaySuggested(suggestedProtein, suggestedFat, suggestedCarbo, suggestedCal);
                 File file = new File(getFilesDir()+"/suggestion.txt");
                 if (!file.exists()){
                     file.createNewFile();
                 }
                 FileWriter fileWriter = new FileWriter(file);
                 fileWriter.write(String.format("suggestedCal:%.2f\nsuggestedProtein:%.2f\n" +
-                        "suggestedFat:%.2f\nsuggestedCarbo:%.2f", suggestedCal, suggestedProtein,
+                                "suggestedFat:%.2f\nsuggestedCarbo:%.2f", suggestedCal, suggestedProtein,
                         suggestedFat, suggestedCarbo));
                 fileWriter.close();
-
             } catch (JSONException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class newHandler2 extends Handler {
+        public String outputStr;
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            outputStr = msg.obj.toString();
+
+            try {
+                JSONObject jobj = new JSONObject(outputStr);
+                consumedCal = Double.parseDouble(jobj.get("cal_consumed").toString());
+                consumedProtein = Double.parseDouble(jobj.get("pro_consumed").toString());
+                consumedFat = Double.parseDouble(jobj.get("fat_consumed").toString());
+                consumedCarbo = Double.parseDouble(jobj.get("CHO_consumed").toString());
+                leftCal = Double.parseDouble(jobj.get("cal_left").toString());
+                displayConsumedAndLeftCal(consumedProtein,consumedFat, consumedCarbo, consumedCal, leftCal);
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -408,4 +454,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }

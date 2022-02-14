@@ -77,7 +77,7 @@ public class accountActivity extends AppCompatActivity {
         community_btn.setOnClickListener(new View.OnClickListener() {
                                              @Override
                                              public void onClick(View view) {
-                                                 Intent intent = new Intent(accountActivity.this, shareActivity.class);
+                                                 Intent intent = new Intent(accountActivity.this, communityActivity.class);
                                                  //Starting of the Intent
                                                  startActivity(intent);
                                                  finish();

@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/main_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_160sdp"
+        android:layout_height="@dimen/_165sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/top" />
@@ -88,7 +88,7 @@
         android:id="@+id/text_protein"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:alpha="53"
         android:text="Protein"
@@ -101,7 +101,7 @@
         android:id="@+id/text_fat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_45sdp"
+        android:layout_marginStart="@dimen/_58sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:alpha="53"
         android:text="Fat"
@@ -114,7 +114,7 @@
         android:id="@+id/text_carbo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_45sdp"
+        android:layout_marginStart="@dimen/_50sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:alpha="53"
         android:text="Carbohydrate"
@@ -125,27 +125,27 @@
 
     <View
         android:id="@+id/protein_"
-        android:layout_width="@dimen/_65sdp"
+        android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_8sdp"
-        android:layout_marginStart="@dimen/_22sdp"
+        android:layout_marginStart="@dimen/_10sdp"
         android:background="#0386D0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_protein" />
 
     <View
         android:id="@+id/fat_"
-        android:layout_width="@dimen/_45sdp"
+        android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_8sdp"
-        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginStart="@dimen/_15sdp"
         android:background="#FFECE1"
         app:layout_constraintStart_toEndOf="@+id/protein_"
         app:layout_constraintTop_toBottomOf="@+id/text_fat" />
 
     <View
         android:id="@+id/carbo_"
-        android:layout_width="@dimen/_105sdp"
+        android:layout_width="@dimen/_95sdp"
         android:layout_height="@dimen/_8sdp"
-        android:layout_marginStart="@dimen/_28sdp"
+        android:layout_marginStart="@dimen/_17sdp"
         android:background="#D4C5C5"
         app:layout_constraintStart_toEndOf="@+id/fat_"
         app:layout_constraintTop_toBottomOf="@+id/text_carbo" />
@@ -298,35 +298,103 @@
         app:layout_constraintTop_toBottomOf="@id/text_intake" />
 
     <TextView
-        android:id="@+id/text_val_protein"
-        android:layout_width="@dimen/_60sdp"
+        android:id="@+id/text_consumed_protein"
+        android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_20sdp"
-        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_5sdp"
-        android:gravity="center"
+        android:gravity="right"
+        android:paddingRight="@dimen/_2sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/protein_" />
 
     <TextView
-        android:id="@+id/text_val_fat"
-        android:layout_width="@dimen/_60sdp"
+        android:id="@+id/text_slash_protein"
+        android:layout_width="@dimen/_6sdp"
         android:layout_height="@dimen/_20sdp"
-        android:layout_marginStart="@dimen/_19sdp"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/_3sdp"
         android:gravity="center"
+        android:text="/"
+        app:layout_constraintStart_toEndOf="@+id/text_consumed_protein"
+        app:layout_constraintTop_toBottomOf="@id/protein_" />
+
+    <TextView
+        android:id="@+id/text_val_protein"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="left"
+        android:paddingLeft="@dimen/_2sdp"
+        app:layout_constraintStart_toEndOf="@id/text_slash_protein"
+        app:layout_constraintTop_toBottomOf="@id/protein_" />
+
+    <TextView
+        android:id="@+id/text_consumed_fat"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="right"
+        android:paddingRight="@dimen/_2sdp"
         app:layout_constraintStart_toEndOf="@id/text_val_protein"
         app:layout_constraintTop_toBottomOf="@id/fat_" />
 
     <TextView
-        android:id="@+id/text_val_carbo"
-        android:layout_width="@dimen/_60sdp"
+        android:id="@+id/text_slash_fat"
+        android:layout_width="@dimen/_6sdp"
         android:layout_height="@dimen/_20sdp"
-        android:layout_marginStart="@dimen/_43sdp"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/_3sdp"
         android:gravity="center"
+        android:text="/"
+        app:layout_constraintStart_toEndOf="@id/text_consumed_fat"
+        app:layout_constraintTop_toBottomOf="@id/fat_" />
+
+    <TextView
+        android:id="@+id/text_val_fat"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="left"
+        android:paddingLeft="@dimen/_2sdp"
+        app:layout_constraintStart_toEndOf="@id/text_slash_fat"
+        app:layout_constraintTop_toBottomOf="@id/fat_" />
+
+    <TextView
+        android:id="@+id/text_consumed_carbo"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="right"
+        android:paddingRight="@dimen/_2sdp"
         app:layout_constraintStart_toEndOf="@id/text_val_fat"
         app:layout_constraintTop_toBottomOf="@id/carbo_" />
 
+    <TextView
+        android:id="@+id/text_slash_carbo"
+        android:layout_width="@dimen/_6sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:gravity="center"
+        android:text="/"
+        app:layout_constraintStart_toEndOf="@id/text_consumed_carbo"
+        app:layout_constraintTop_toBottomOf="@id/carbo_" />
+
+    <TextView
+        android:id="@+id/text_val_carbo"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="left"
+        android:paddingLeft="@dimen/_2sdp"
+        app:layout_constraintStart_toEndOf="@id/text_slash_carbo"
+        app:layout_constraintTop_toBottomOf="@id/carbo_" />
     <Button
         android:id="@+id/to_post"
         android:layout_width="wrap_content"

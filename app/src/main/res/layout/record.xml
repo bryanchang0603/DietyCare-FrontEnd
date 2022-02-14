@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecordActivity">
+
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="Cancel"
+        android:textColor="@color/red"
+        android:backgroundTint="@color/grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="Save"
+        android:textColor="@color/purple_500"
+        android:backgroundTint="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/food"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:textSize="@dimen/_18ssp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@id/cancel"
+        app:layout_constraintTop_toBottomOf="@id/cancel"/>
+
+    <TextView
+        android:id="@+id/selectDate"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:text="Select Date"
+        android:gravity="center"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_40sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/food"/>
+
+    <TextView
+        android:id="@+id/selectedDate"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_20sdp"
+        app:layout_constraintStart_toEndOf="@id/selectDate"
+        app:layout_constraintTop_toTopOf="@id/selectDate"/>
+
+    <ImageButton
+        android:id="@+id/imageCal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/white"
+        android:contentDescription="static"
+        app:layout_constraintStart_toEndOf="@+id/selectedDate"
+        app:layout_constraintTop_toTopOf="@id/selectedDate"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+    <TextView
+        android:id="@+id/selectType"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:text="Select Type"
+        android:gravity="center"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selectDate"/>
+
+    <Spinner
+        android:id="@+id/selectedType"
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toEndOf="@+id/selectType"
+        app:layout_constraintTop_toTopOf="@+id/selectType" />
+
+
+    <TextView
+        android:id="@+id/enterAmount"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:text="Enter Amount"
+        android:gravity="center"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selectType"/>
+
+    <EditText
+        android:id="@+id/amount"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:inputType="number"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_20sdp"
+        app:layout_constraintStart_toEndOf="@id/enterAmount"
+        app:layout_constraintTop_toTopOf="@id/enterAmount"/>
+
+    <TextView
+        android:id="@+id/unit"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_40sdp"
+        android:gravity="center"
+        android:text="g"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_5sdp"
+        app:layout_constraintStart_toEndOf="@id/amount"
+        app:layout_constraintTop_toTopOf="@id/amount"/>
+
+    <TextView
+        android:id="@+id/kal"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:gravity="center"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_90sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enterAmount"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_40sdp"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="kcal"
+        app:layout_constraintStart_toEndOf="@id/kal"
+        app:layout_constraintTop_toTopOf="@id/kal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_40sdp"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:text="g"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@id/g"
+        app:layout_constraintTop_toTopOf="@id/g"/>
+
+    <TextView
+        android:id="@+id/g"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:gravity="center"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_90sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/kal"/>
+
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -190,7 +190,7 @@ public class progress extends AppCompatActivity {
         community_btn.setOnClickListener(new View.OnClickListener() {
                                              @Override
                                              public void onClick(View view) {
-                                                 Intent intent = new Intent(progress.this, shareActivity.class);
+                                                 Intent intent = new Intent(progress.this, communityActivity.class);
                                                  //Starting of the Intent
                                                  startActivity(intent);
                                                  finish();
