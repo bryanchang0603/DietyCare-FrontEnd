@@ -37,6 +37,12 @@
             android:name=".MealRecommendationActivity"
             android:exported="false" />
         <activity android:name=".searchResultActivity" />
+        <activity android:name=".shareActivity" />
+        <activity android:name=".PostDetailActivity" />
+        <activity
+            android:name=".MealRecommendationActivity"
+            android:exported="false" />
+        <activity android:name=".postingActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -63,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
     private String outputStr;
     private newHandler handler;
 
+    //the following variables are for jump to Post page
+    private Button post_btn;
+
     //Variables for saving radio buttons
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor SPEditor;
@@ -74,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         // The following codes are for testing the UID
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-
-        assert currentUser != null;
-        System.out.println(currentUser.getUid());
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//
+//        assert currentUser != null;
+//        System.out.println(currentUser.getUid());
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -87,6 +91,19 @@ public class MainActivity extends AppCompatActivity {
 
         menu_button_creation();
         main_page_event();
+
+        //the following variables are for jump to Post page
+        post_btn= findViewById(R.id.to_post);
+        post_btn.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Intent intent = new Intent(MainActivity.this, postingActivity.class);
+                                                //Starting of the Intent
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        }
+        );
 
 
     }
