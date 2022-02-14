@@ -92,18 +92,18 @@ public class MainActivity extends AppCompatActivity {
         menu_button_creation();
         main_page_event();
 
-        //the following variables are for jump to Post page
-        post_btn= findViewById(R.id.to_post);
-        post_btn.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                Intent intent = new Intent(MainActivity.this, postingActivity.class);
-                                                //Starting of the Intent
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        }
-        );
+        // //the following variables are for jump to Post page
+        // post_btn= findViewById(R.id.to_post);
+        // post_btn.setOnClickListener(new View.OnClickListener() {
+        //                                     @Override
+        //                                     public void onClick(View view) {
+        //                                         Intent intent = new Intent(MainActivity.this, postingActivity.class);
+        //                                         //Starting of the Intent
+        //                                         startActivity(intent);
+        //                                         finish();
+        //                                     }
+        //                                 }
+        // );
 
 
     }
