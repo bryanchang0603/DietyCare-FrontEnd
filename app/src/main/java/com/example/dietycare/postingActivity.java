@@ -29,6 +29,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+
 public class postingActivity extends AppCompatActivity {
 
     private ImageView return_button, photo_display, add_photo;
@@ -113,6 +115,10 @@ public class postingActivity extends AppCompatActivity {
                                     String key = my_ref.getKey();
                                     Post post = new Post(text_field.getText().toString(), firebase_uri,
                                             FirebaseAuth.getInstance().getCurrentUser().getUid(), key);
+                                    post.appendComment("123");
+                                    post.appendComment("456");
+                                    post.appendLikedUser("123");
+                                    post.appendLikedUser("456");
                                     my_ref.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
@@ -122,11 +128,19 @@ public class postingActivity extends AppCompatActivity {
                                             finish();
                                         }
                                     });
+
+                                    // the following code are for testing retriving modified
+/*                                    post.appendLikedUser("user 3");
+                                    DatabaseReference mDatabase = database.getReference();
+                                    mDatabase.child("posts").child(key).setValue(post);
+                                    ArrayList<String> test = new ArrayList<String>();
+                                    test.add("null");
+                                    post.setUser_liked(test);
+                                    mDatabase.child("posts").child(key).setValue(post);*/
                                 }
                             });
                         }
                     });
-
                 }
                 else{
                     System.out.println("some field is incomplete");
