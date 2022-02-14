@@ -36,7 +36,7 @@ public class communityActivity extends AppCompatActivity {
         detail_btn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            Intent intent = new Intent(shareActivity.this, PostDetailActivity.class);
+                                            Intent intent = new Intent(communityActivity.this, PostDetailActivity.class);
                                             //Starting of the Intent
                                             startActivity(intent);
                                             finish();
