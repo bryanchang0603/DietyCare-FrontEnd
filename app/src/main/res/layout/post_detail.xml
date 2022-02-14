@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PostDetailActivity">
+
+
+    <ImageButton
+        android:id="@+id/icBack"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/postOwnerName"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/postOwnerIcon"
+        app:layout_constraintTop_toTopOf="@+id/postOwnerIcon" />
+
+    <ImageView
+        android:id="@+id/postOwnerIcon"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:gravity="center"
+        android:src="@drawable/icon_account"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/icBack"
+        app:layout_constraintTop_toTopOf="@+id/icBack" />
+
+
+    <ImageView
+        android:id="@+id/postPicture"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:gravity="center"
+        android:src="@drawable/ic_account"
+        app:layout_constraintTop_toBottomOf="@+id/postOwnerIcon" />
+
+
+    <TextView
+        android:id="@+id/postContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="left"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/postPicture"
+        app:layout_constraintTop_toBottomOf="@+id/postPicture" />
+
+
+    <TextView
+        android:id="@+id/postTime"
+        android:layout_width="70dp"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/postContent"
+        app:layout_constraintTop_toBottomOf="@+id/postContent" />
+
+    <ImageButton
+        android:id="@+id/commentButton"
+        android:layout_width="150dp"
+        android:layout_height="63dp"
+        android:layout_weight="1"
+        android:layout_marginStart="45dp"
+        android:text="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postTime"
+        app:srcCompat="@drawable/ic_comment" />
+
+    <ImageButton
+        android:id="@+id/likeButton"
+        android:layout_width="150dp"
+        android:layout_height="63dp"
+        android:layout_weight="1"
+        android:text="1"
+        app:layout_constraintStart_toEndOf="@+id/commentButton"
+        app:layout_constraintTop_toBottomOf="@+id/postTime"
+        app:srcCompat="@drawable/ic_thumbup" />
+
+    <ListView
+        android:id="@+id/commentList"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commentButton" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
