@@ -18,18 +18,20 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-import android.os.Bundle;
-import android.widget.EditText;
+
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText loginEmail, loginPassword;
+    private EditText email, password;
     private Button loginButton;
+    private ImageButton PasswordVisibleButton;
+
     private TextView registerButton;
+    private TextView forgot_password;
+
     private FirebaseAuth mAuth;
-    private ImageButton signiPasswordVisible;
+
     @Override
     protected void onStart() {
 
@@ -43,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         //implements Parcelable UserInfo which is used in helping to check if the user is logged in or not
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            //If user is logged in then send him to the MianActivity
+            //If user is logged in then send him to the MainActivity
             sendToMain();
 
         }
@@ -56,24 +58,30 @@ public class LoginActivity extends AppCompatActivity {
         //get the instance for firebase authentication
         mAuth = FirebaseAuth.getInstance();
 
-        // open the signin.xml
-
-
-        loginEmail = findViewById(R.id.sign_in_username);
-        loginPassword = findViewById(R.id.sign_in_password);
+        email = findViewById(R.id.sign_in_username);
+        password = findViewById(R.id.sign_in_password);
         loginButton = findViewById(R.id.button_signin);
+        PasswordVisibleButton = findViewById(R.id.sigin_show_passwd);
         registerButton = findViewById(R.id.signin_register);
-        signiPasswordVisible = findViewById(R.id.sigin_show_passwd);
+        forgot_password = findViewById(R.id.forget_password);
 
-        signiPasswordVisible.setOnTouchListener(new View.OnTouchListener() {
+        forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: add reset password page
+                //  startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+            }
+        });
+
+        PasswordVisibleButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-                    loginPassword.setInputType(InputType.TYPE_CLASS_TEXT);
+                    password.setInputType(InputType.TYPE_CLASS_TEXT);
                     return true;
                 }
                 else if (motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    loginPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     return true;
                 }
                 return false;
@@ -83,22 +91,23 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String loginEmailStr = loginEmail.getText().toString().trim();
-                String loginPasswordlStr = loginPassword.getText().toString().trim();
+                String emailStr = email.getText().toString();
+                String passwordStr = password.getText().toString();
 
                 // check if the login or password are empty
-                if (!(TextUtils.isEmpty(loginEmailStr) || TextUtils.isEmpty(loginPasswordlStr))){
-                    mAuth.signInWithEmailAndPassword(loginEmailStr, loginPasswordlStr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                sendToMain();
+                if (!(TextUtils.isEmpty(emailStr) || TextUtils.isEmpty(passwordStr))){
+                    mAuth.signInWithEmailAndPassword(emailStr, passwordStr)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()){
+                                    sendToMain();
+                                }
+                                else{
+                                    Toast.makeText(LoginActivity.this,
+                                            task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            else{
-                                Toast.makeText(LoginActivity.this,
-                                        task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
                     });
                 }
                 else{
