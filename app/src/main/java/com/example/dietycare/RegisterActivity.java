@@ -123,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity{
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()){
                                                     // TODO: once register page finished, jump to the registering personal info page to allow users to enter their personal info
-                                                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                                    Intent intent = new Intent(RegisterActivity.this, WalkThroughActivity.class);
                                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                     startActivity(intent);
                                                     finish();
