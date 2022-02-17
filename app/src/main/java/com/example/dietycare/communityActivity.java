@@ -114,8 +114,9 @@ public class communityActivity extends AppCompatActivity {
                     String postKey = temp.child("postKey").getValue().toString();
                     long timestamp = (long) temp.child("timeStamp").getValue();
                     String userID = temp.child("userID").getValue().toString();
+                    String imgPath = temp.child("image_path").getValue().toString();
 
-                    Post post = new Post(bodyText, imgUri, userID, postKey);
+                    Post post = new Post(bodyText, imgUri, userID, postKey, imgPath);
                     post.setTimeStamp(timestamp);
                     postsArr.add(post);
 

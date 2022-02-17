@@ -2,6 +2,7 @@ package com.example.dietycare;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -9,6 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -47,10 +54,28 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         holder.textView1.setText(twoPostsAsAGroup.get(position).get(0).getBody_text());
         holder.userName1.setText(twoPostsAsAGroup.get(position).get(0).getUserID());
-        
+
+        StorageReference storageReference1 = FirebaseStorage.getInstance().getReference().child(
+                twoPostsAsAGroup.get(position).get(0).getImage_path()
+        );
+        storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context).load(uri).into(holder.imageView1);
+            }
+        });
         if (2*(position+1) <= postsArr.size()) {
             holder.textView2.setText(twoPostsAsAGroup.get(position).get(1).getBody_text());
             holder.userName2.setText(twoPostsAsAGroup.get(position).get(1).getUserID());
+            StorageReference storageReference2 = FirebaseStorage.getInstance().getReference().child(
+                    twoPostsAsAGroup.get(position).get(0).getImage_path()
+            );
+            storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(context).load(uri).into(holder.imageView2);
+                }
+            });
         }
         if (position == twoPostsAsAGroup.size()-1 && twoPostsAsAGroup.get(twoPostsAsAGroup.size()-1).size() == 1) {
             holder.imageView2.setVisibility(View.GONE);
