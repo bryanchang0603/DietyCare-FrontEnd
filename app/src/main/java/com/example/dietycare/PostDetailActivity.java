@@ -89,13 +89,13 @@ public class PostDetailActivity extends AppCompatActivity {
         //set Comments list
         ListView listview = findViewById(R.id.commentList);
         ArrayList<String> list = new ArrayList<String>();
-        list.add("Jason: I love youI love youI love youI love youI love you");
-        list.add("2: I love yoI love youI love youI love youu");
-        list.add("3: I love yoI love youI love youu");
-        list.add("4: I love youI love youI love youI love you");
-        list.add("5: I love youI love youI love youI love you");
-        list.add("6: I love youI love youI love youI love you");
-        list.add("7: I love youI love youI love youI love you");
+        list.add("Jason: skdljafbsdkljfabhsdlkfbahsdlkfh");
+        list.add("2: skdljafbsdkljfabhsdlkfbahsdlkfh");
+        list.add("3: skdljafbsdkljfabhsdlkfbahsdlkfh");
+        list.add("4: skdljafbsdkljfabhsdlkfbahsdlkfh");
+        list.add("5: skdljafbsdkljfabhsdlkfbahsdlkfh");
+        list.add("6: skdljafbsdkljfabhsdlkfbahsdlkfh");
+        list.add("7: skdljafbsdkljfabhsdlkfbahsdlkfh");
         StableArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
