@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -11,11 +13,18 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+
+import java.util.ArrayList;
 
 public class communityActivity extends AppCompatActivity {
     @Override
@@ -32,18 +41,22 @@ public class communityActivity extends AppCompatActivity {
         progress_btn = findViewById(R.id.menu_btn_progress_community);
         account_btn = findViewById(R.id.main_btn_account_community);
 
-        MaterialButton detail_btn = findViewById(R.id.detailButton);
-        detail_btn.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            Intent intent = new Intent(communityActivity.this, PostDetailActivity.class);
-                                            //Starting of the Intent
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    }
-        );
+        retrieveData();
 
+
+//        MaterialButton detail_btn = findViewById(R.id.detailButton);
+//        detail_btn.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View view) {
+//                                            Intent intent = new Intent(communityActivity.this, PostDetailActivity.class);
+//                                            //Starting of the Intent
+//                                            startActivity(intent);
+//                                            finish();
+//                                        }
+//                                    }
+//        );
+
+        //bottom buttons
         home_btn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
@@ -89,4 +102,35 @@ public class communityActivity extends AppCompatActivity {
         );
     }
 
+    public void retrieveData(){
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("posts");
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Post> postsArr = new ArrayList<Post>();
+                for(DataSnapshot temp: snapshot.getChildren()) {
+                    String bodyText = temp.child("body_text").getValue().toString();
+                    String imgUri = temp.child("image_uri").getValue().toString();
+                    String postKey = temp.child("postKey").getValue().toString();
+                    long timestamp = (long) temp.child("timeStamp").getValue();
+                    String userID = temp.child("userID").getValue().toString();
+
+                    Post post = new Post(bodyText, imgUri, userID, postKey);
+                    post.setTimeStamp(timestamp);
+                    postsArr.add(post);
+
+                    RecyclerView recyclerView = findViewById(R.id.community_recyclerView);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(communityActivity.this);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    communityAdapter adapter = new communityAdapter(postsArr, communityActivity.this);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }
