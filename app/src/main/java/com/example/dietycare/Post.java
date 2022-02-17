@@ -13,8 +13,9 @@ public class Post {
     private Object timeStamp;
     private ArrayList<String> user_liked;
     private ArrayList<String> attached_comment;
+    private String image_path;
 
-    public Post(String body_text, String image_uri, String userID, String postKey) {
+    public Post(String body_text, String image_uri, String userID, String postKey, String image_path) {
         this.body_text = body_text;
         this.image_uri = image_uri;
         this.userID = userID;
@@ -22,7 +23,16 @@ public class Post {
         this.timeStamp = ServerValue.TIMESTAMP;
         this.attached_comment = new ArrayList<String>();
         this.user_liked = new ArrayList<String>();
+        this.image_path = image_path;
 
+    }
+
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
     }
 
     public String getPostKey() {

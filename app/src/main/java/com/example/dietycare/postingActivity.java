@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.FirebaseApp;
@@ -30,6 +31,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class postingActivity extends AppCompatActivity {
 
@@ -67,6 +69,17 @@ public class postingActivity extends AppCompatActivity {
         text_field = findViewById(R.id.posting_text_field);
         post_button = findViewById(R.id.posting_submit_button);
 
+        //the following code are for testing retrieve image from firebase storage based on image_path
+/*        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("community_images/image:31");
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getApplicationContext())
+                        .load(uri)
+                        .into(photo_display);
+            }
+        });*/
+
         button_setup();
 
 
@@ -94,9 +107,11 @@ public class postingActivity extends AppCompatActivity {
         post_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+/*                System.out.println(text_field);
+                System.out.println(selected_image_uri.getLastPathSegment());*/
+/*                file_type = getContentResolver().getType(selected_image_uri).split(Pattern.quote("/")); // get the file surfix
+                System.out.println(file_type[1]);*/
                 if(!text_field.getText().toString().equals("") && selected_image_uri != null){
-                    System.out.println(text_field);
-                    System.out.println(selected_image_uri);
 
                     //upload the image to Firebase Storage first
                     StorageReference storage_reference = FirebaseStorage.getInstance().getReference().child("community_images");
@@ -108,13 +123,13 @@ public class postingActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String firebase_uri = uri.toString();
-                                    System.out.println(firebase_uri);
                                     //create post
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                                     DatabaseReference my_ref = database.getReference("posts").push();
                                     String key = my_ref.getKey();
+                                    String image_string = "community_images/"+selected_image_uri.getLastPathSegment();
                                     Post post = new Post(text_field.getText().toString(), firebase_uri,
-                                            FirebaseAuth.getInstance().getCurrentUser().getUid(), key);
+                                            FirebaseAuth.getInstance().getCurrentUser().getUid(), key, image_string);
                                     post.appendComment("123");
                                     post.appendComment("456");
                                     post.appendLikedUser("123");
