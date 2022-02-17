@@ -32,7 +32,7 @@ public class communityActivity extends AppCompatActivity {
         progress_btn = findViewById(R.id.menu_btn_progress_community);
         account_btn = findViewById(R.id.main_btn_account_community);
 
-        MaterialButton detail_btn = findViewById(R.id.detailButton);
+/*        MaterialButton detail_btn = findViewById(R.id.detailButton);
         detail_btn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
@@ -42,7 +42,7 @@ public class communityActivity extends AppCompatActivity {
                                             finish();
                                         }
                                     }
-        );
+        );*/
 
         home_btn.setOnClickListener(new View.OnClickListener() {
                                         @Override

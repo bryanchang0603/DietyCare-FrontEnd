@@ -16,6 +16,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +28,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private ImageButton back_bt, comment_bt;
     private String commentText = "";
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
     @Override
@@ -61,6 +66,11 @@ public class PostDetailActivity extends AppCompatActivity {
                                                @Override
                                                public void onClick(DialogInterface dialog, int which) {
                                                    commentText = input.getText().toString();
+                                                   DatabaseReference comment_ref = database.getReference("comments").push();
+                                                   String comment_key = comment_ref.getKey();
+                                                   String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                                   Comment comment = new Comment(commentText, uid, comment_key);
+                                                   comment_ref.setValue(comment);
                                                }
                                            });
                                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

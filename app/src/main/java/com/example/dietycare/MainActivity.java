@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private newHandler handler;
 
     //the following variables are for jump to Post page
-    private Button post_btn;
+    private Button post_btn , detail_btn;
 
     //Variables for saving radio buttons
     private SharedPreferences sharedPreferences;
@@ -103,6 +103,18 @@ public class MainActivity extends AppCompatActivity {
                                                 finish();
                                             }
                                         }
+        );
+
+        detail_btn = findViewById(R.id.detailButton);
+        detail_btn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intent = new Intent(MainActivity.this, PostDetailActivity.class);
+                                            //Starting of the Intent
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }
         );
 
 
