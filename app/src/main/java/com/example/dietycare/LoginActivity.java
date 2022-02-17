@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         if (getSupportActionBar() != null){
             getSupportActionBar().hide();
         }
-        FirebaseAuth.getInstance().signOut();
+
         //FirebaseUser class is public abstract class FirebaseUser extends Object
         //implements Parcelable UserInfo which is used in helping to check if the user is logged in or not
         FirebaseUser currentUser = mAuth.getCurrentUser();
