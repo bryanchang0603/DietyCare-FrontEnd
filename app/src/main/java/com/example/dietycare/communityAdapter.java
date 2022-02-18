@@ -83,12 +83,19 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
             holder.acc2.setVisibility(View.GONE);
             holder.textView2.setVisibility(View.GONE);
         }
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // jump to next page here
-//            }
-//        });
+
+        holder.imageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        holder.imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override
