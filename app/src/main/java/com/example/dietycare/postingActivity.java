@@ -97,7 +97,7 @@ public class postingActivity extends AppCompatActivity {
         return_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(postingActivity.this, MainActivity.class);
+                Intent intent = new Intent(postingActivity.this, communityActivity.class);
                 //Starting of the Intent
                 startActivity(intent);
                 finish();

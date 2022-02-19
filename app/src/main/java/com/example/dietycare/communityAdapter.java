@@ -64,6 +64,9 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
                 Glide.with(context).load(uri).into(holder.imageView1);
             }
         });
+        //The following is for storing post key for transfering to posting detail
+        holder.setPostKey1(twoPostsAsAGroup.get(position).get(0).getPostKey());
+
         if (2*(position+1) <= postsArr.size()) {
             holder.textView2.setText(twoPostsAsAGroup.get(position).get(1).getBody_text());
             holder.userName2.setText(twoPostsAsAGroup.get(position).get(1).getUserID());
@@ -76,6 +79,8 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
                     Glide.with(context).load(uri).into(holder.imageView2);
                 }
             });
+            //The following is for storing post key for transfering to posting detail
+            holder.setPostKey2(twoPostsAsAGroup.get(position).get(1).getPostKey());
         }
         if (position == twoPostsAsAGroup.size()-1 && twoPostsAsAGroup.get(twoPostsAsAGroup.size()-1).size() == 1) {
             holder.imageView2.setVisibility(View.GONE);
@@ -87,13 +92,17 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
         holder.imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context, PostDetailActivity.class);
+                intent.putExtra("postID", holder.getPostKey1());
+                context.startActivity(intent);
             }
         });
         holder.imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context, PostDetailActivity.class);
+                intent.putExtra("postID", holder.getPostKey2());
+                context.startActivity(intent);
             }
         });
     }
@@ -112,6 +121,8 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
         private ImageView thumbUp2;
         private TextView userName1;
         private TextView userName2;
+        private String postKey1;
+        private String postKey2;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
@@ -123,6 +134,22 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
             thumbUp2 = itemView.findViewById(R.id.community_item_thumb_up_2);
             userName1 = itemView.findViewById(R.id.community_item_username_1);
             userName2 = itemView.findViewById(R.id.community_item_username_2);
+        }
+
+        public String getPostKey1() {
+            return postKey1;
+        }
+
+        public void setPostKey1(String postKey1) {
+            this.postKey1 = postKey1;
+        }
+
+        public String getPostKey2() {
+            return postKey2;
+        }
+
+        public void setPostKey2(String postKey2) {
+            this.postKey2 = postKey2;
         }
     }
 }

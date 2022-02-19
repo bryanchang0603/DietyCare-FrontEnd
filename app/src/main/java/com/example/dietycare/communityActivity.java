@@ -34,27 +34,27 @@ public class communityActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-        ImageButton home_btn, meal_btn, progress_btn, account_btn;
+        ImageButton home_btn, meal_btn, progress_btn, account_btn, post_btn;
 
         home_btn = findViewById(R.id.menu_btn_home_community);
         meal_btn = findViewById(R.id.menu_btn_meal_community);
         progress_btn = findViewById(R.id.menu_btn_progress_community);
         account_btn = findViewById(R.id.main_btn_account_community);
+        post_btn = findViewById(R.id.community_add_button);
 
         retrieveData();
 
 
-//        MaterialButton detail_btn = findViewById(R.id.detailButton);
-//        detail_btn.setOnClickListener(new View.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(View view) {
-//                                            Intent intent = new Intent(communityActivity.this, PostDetailActivity.class);
-//                                            //Starting of the Intent
-//                                            startActivity(intent);
-//                                            finish();
-//                                        }
-//                                    }
-//        );
+
+        post_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(communityActivity.this, postingActivity.class);
+                //Starting of the Intent
+                startActivity(intent);
+                finish();
+            }
+        });
 
         //bottom buttons
         home_btn.setOnClickListener(new View.OnClickListener() {

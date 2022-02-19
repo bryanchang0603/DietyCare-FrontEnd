@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -13,12 +14,19 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,13 +34,50 @@ import java.util.List;
 
 public class PostDetailActivity extends AppCompatActivity {
 
-    private ImageButton back_bt, comment_bt;
+    private ImageButton back_bt, comment_bt, like_bt;
     private String commentText = "";
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-
+    private DatabaseReference post_ref, post_comment_ref, post_like_ref;
+    private ArrayList<String> comment_list = new ArrayList<>();
+    private ArrayList<String> like_lists = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+        //setting up ref to the post
+        Intent intent = getIntent();
+        String post_path = "posts/"+intent.getStringExtra("postID");
+        post_ref = database.getReference().child(post_path);
+        post_comment_ref = post_ref.getRef().child("attached_comment");
+        post_like_ref = post_ref.getRef().child("user_liked");
+        System.out.println(post_comment_ref);
+        System.out.println(post_like_ref);
+
+        //retrive comment and like of the post
+        // here can also be sued to setup the page information
+        post_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                comment_list = (ArrayList<String>) snapshot.child("attached_comment").getValue();
+                like_lists = (ArrayList<String>) snapshot.child("user_liked").getValue();
+                if (comment_list== null){
+                    comment_list = new ArrayList<>();
+                    post_comment_ref.push();
+                }
+                if (like_lists==null){
+                    like_lists = new ArrayList<>();
+                    post_like_ref.push();
+                }
+                System.out.println(like_lists);
+                System.out.println(comment_list);
+                System.out.println(like_lists);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getBaseContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.post_detail);
@@ -42,10 +87,10 @@ public class PostDetailActivity extends AppCompatActivity {
         back_bt.setOnClickListener(new View.OnClickListener() {
                                        @Override
                                        public void onClick(View view) {
-                                           Intent intent = new Intent(PostDetailActivity.this, MainActivity.class);
+                                           Intent intent = new Intent(PostDetailActivity.this, communityActivity.class);
                                            //Starting of the Intent
                                            startActivity(intent);
-
+                                           finish();
                                        }
                                    }
         );
@@ -71,6 +116,14 @@ public class PostDetailActivity extends AppCompatActivity {
                                                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                                    Comment comment = new Comment(commentText, uid, comment_key);
                                                    comment_ref.setValue(comment);
+                                                   System.out.println(comment_ref);
+                                                   comment_list.add(commentText);
+                                                   post_comment_ref.setValue(comment_list).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                       @Override
+                                                       public void onSuccess(Void unused) {
+                                                           Toast.makeText(getBaseContext(), "post added", Toast.LENGTH_LONG).show();
+                                                       }
+                                                   });
                                                }
                                            });
                                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -85,6 +138,36 @@ public class PostDetailActivity extends AppCompatActivity {
                                        }
                                    }
         );
+
+        //like button
+        like_bt = findViewById(R.id.likeButton);
+        String UID = FirebaseAuth.getInstance().getUid();
+        System.out.println(UID);
+        System.out.println(like_lists);
+        like_bt.setColorFilter(like_lists.contains(UID)? Color.RED:Color.GRAY);
+        like_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String user = FirebaseAuth.getInstance().getUid();
+                if(like_lists.contains(UID)){
+                    like_lists.remove(user);
+                    post_like_ref.setValue(like_lists).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            like_bt.setColorFilter(Color.GRAY);
+                        }
+                    });
+                }else{
+                    like_lists.add(user);
+                    post_like_ref.setValue(like_lists).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            like_bt.setColorFilter(Color.RED);
+                        }
+                    });
+                }
+            }
+        });
 
         //set Post Owner's Name
         TextView postOwnerName = findViewById(R.id.postOwnerName);
