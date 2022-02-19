@@ -42,7 +42,8 @@ public class PostDetailActivity extends AppCompatActivity {
     private ArrayList<String> like_lists = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.post_detail);
 
         //setting up ref to the post
         Intent intent = getIntent();
@@ -52,6 +53,10 @@ public class PostDetailActivity extends AppCompatActivity {
         post_like_ref = post_ref.getRef().child("user_liked");
         System.out.println(post_comment_ref);
         System.out.println(post_like_ref);
+
+        //like button initalization for color setup
+        like_bt = findViewById(R.id.likeButton);
+        String UID = FirebaseAuth.getInstance().getUid();
 
         //retrive comment and like of the post
         // here can also be sued to setup the page information
@@ -68,9 +73,10 @@ public class PostDetailActivity extends AppCompatActivity {
                     like_lists = new ArrayList<>();
                     post_like_ref.push();
                 }
-                System.out.println(like_lists);
+                like_bt.setColorFilter(like_lists.contains(UID)? Color.RED:Color.GRAY);
+/*                System.out.println(like_lists);
                 System.out.println(comment_list);
-                System.out.println(like_lists);
+                System.out.println(like_lists);*/
             }
 
             @Override
@@ -78,9 +84,6 @@ public class PostDetailActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.post_detail);
 
         //Back Button
         back_bt = findViewById(R.id.icBack);
@@ -116,7 +119,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                                    Comment comment = new Comment(commentText, uid, comment_key);
                                                    comment_ref.setValue(comment);
-                                                   System.out.println(comment_ref);
+/*                                                   System.out.println(comment_ref);*/
                                                    comment_list.add(commentText);
                                                    post_comment_ref.setValue(comment_list).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                        @Override
@@ -140,11 +143,6 @@ public class PostDetailActivity extends AppCompatActivity {
         );
 
         //like button
-        like_bt = findViewById(R.id.likeButton);
-        String UID = FirebaseAuth.getInstance().getUid();
-        System.out.println(UID);
-        System.out.println(like_lists);
-        like_bt.setColorFilter(like_lists.contains(UID)? Color.RED:Color.GRAY);
         like_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
