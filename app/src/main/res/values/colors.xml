@@ -14,4 +14,7 @@
     <color name="received_message_background">#F1F1F1</color>s
     <color name="light_grey">#C4C4C4</color>
     <color name="red">#F03A3A</color>
+    <color name="colorPrimary">#3eaeae</color>
+    <color name="colorPrimaryDark">#226e6e</color>
+    <color name="colorAccent">#226e6e</color>
 </resources>

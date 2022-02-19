@@ -22,12 +22,13 @@ public class accountActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-        Button btn_register = findViewById(R.id.material1);
+        Button btn_edit = findViewById(R.id.material1);
         ImageButton home_btn, progress_btn, meal_btn, community_btn;
         TextView sign_out = findViewById(R.id.signout_field);
+        TextView message_btn = findViewById(R.id.textView15);
 
 
-        btn_register.setOnClickListener(new View.OnClickListener() {
+        btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(accountActivity.this, editActivity.class);
@@ -43,6 +44,15 @@ public class accountActivity extends AppCompatActivity {
                 //Starting of the Intent
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        message_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(accountActivity.this, messageActivity.class);
+                //Starting of the Intent
+                startActivity(intent);
             }
         });
 
