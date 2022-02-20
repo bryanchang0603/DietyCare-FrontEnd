@@ -36,8 +36,9 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private ImageButton back_bt, comment_bt, like_bt;
     private String commentText = "";
+    private String post_path;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference post_ref, post_comment_ref, post_like_ref;
+    private DatabaseReference post_ref, post_like_ref;
     private ArrayList<String> comment_list = new ArrayList<>();
     private ArrayList<String> like_lists = new ArrayList<>();
     @Override
@@ -47,11 +48,9 @@ public class PostDetailActivity extends AppCompatActivity {
 
         //setting up ref to the post
         Intent intent = getIntent();
-        String post_path = "posts/"+intent.getStringExtra("postID");
+        post_path = "posts/"+intent.getStringExtra("postID");
         post_ref = database.getReference().child(post_path);
-        post_comment_ref = post_ref.getRef().child("attached_comment");
         post_like_ref = post_ref.getRef().child("user_liked");
-        System.out.println(post_comment_ref);
         System.out.println(post_like_ref);
 
         //like button initalization for color setup
@@ -63,12 +62,7 @@ public class PostDetailActivity extends AppCompatActivity {
         post_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                comment_list = (ArrayList<String>) snapshot.child("attached_comment").getValue();
                 like_lists = (ArrayList<String>) snapshot.child("user_liked").getValue();
-                if (comment_list== null){
-                    comment_list = new ArrayList<>();
-                    post_comment_ref.push();
-                }
                 if (like_lists==null){
                     like_lists = new ArrayList<>();
                     post_like_ref.push();
@@ -114,19 +108,19 @@ public class PostDetailActivity extends AppCompatActivity {
                                                @Override
                                                public void onClick(DialogInterface dialog, int which) {
                                                    commentText = input.getText().toString();
-                                                   DatabaseReference comment_ref = database.getReference("comments").push();
+                                                   DatabaseReference comment_ref = database.getReference(post_path).child("attached_comment").push();
                                                    String comment_key = comment_ref.getKey();
                                                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                                    Comment comment = new Comment(commentText, uid, comment_key);
                                                    comment_ref.setValue(comment);
 /*                                                   System.out.println(comment_ref);*/
-                                                   comment_list.add(commentText);
+                     /*                              comment_list.add(comment_key);
                                                    post_comment_ref.setValue(comment_list).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                        @Override
                                                        public void onSuccess(Void unused) {
                                                            Toast.makeText(getBaseContext(), "post added", Toast.LENGTH_LONG).show();
                                                        }
-                                                   });
+                                                   });*/
                                                }
                                            });
                                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
