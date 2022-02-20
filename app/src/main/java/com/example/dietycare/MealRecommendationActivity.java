@@ -1,25 +1,22 @@
 package com.example.dietycare;
 
+import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.provider.MediaStore;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.ActivityResultRegistry;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,6 +35,7 @@ import java.util.Scanner;
 public class MealRecommendationActivity extends AppCompatActivity {
 
     private TextView meal_info_tv;
+    private TextView searchBox;
     private Button regenerate_btw;
     private Spinner meal_selection_sp;
     private String meal_selection = "breakfast";
@@ -74,7 +72,7 @@ public class MealRecommendationActivity extends AppCompatActivity {
             set_meal_plan_tv("Something went wrong.");
         }
 
-        uploadPhoto();
+        uploadPhoto(this);
 
         regenerate_btw = (Button) findViewById(R.id.regenerate);
         regenerate_btw.setOnClickListener(new View.OnClickListener(){
@@ -115,6 +113,9 @@ public class MealRecommendationActivity extends AppCompatActivity {
             }
         });
 
+        //Algolia Seach
+        //AlgoliaSearch();
+
         // setup the menu buttons
         home_btn = findViewById(R.id.menu_btn_home_recmd);
         community_btn = findViewById(R.id.menu_btn_community_recmd);
@@ -146,7 +147,7 @@ public class MealRecommendationActivity extends AppCompatActivity {
         community_btn.setOnClickListener(new View.OnClickListener() {
                                              @Override
                                              public void onClick(View view) {
-                                                 Intent intent = new Intent(MealRecommendationActivity.this, shareActivity.class);
+                                                 Intent intent = new Intent(MealRecommendationActivity.this, communityActivity.class);
                                                  //Starting of the Intent
                                                  startActivity(intent);
                                                  finish();
@@ -164,6 +165,8 @@ public class MealRecommendationActivity extends AppCompatActivity {
                                            }
                                        }
         );
+
+        search();
     }
 
     private void set_meal_plan_tv(String meal_detail) {
@@ -210,7 +213,7 @@ public class MealRecommendationActivity extends AppCompatActivity {
         Double protein = br_nutrient.getDouble("protein");
         // String nutrient_list_string = "Calories: "+calories.toString()+" Kcal\n"；
         String nutrient_list_string = String.format("Calories: %.2f\nProtein: %.2f g\nCarbon Hydrate: %.2f g\nFat: %.2f g\n", calories, protein, carb, fat);
-        System.out.println(nutrient_list_string);
+        //System.out.println(nutrient_list_string);
 
         final JSONArray br_dishes = breakfast.getJSONArray("dishes");
         final int n = br_dishes.length();
@@ -243,14 +246,15 @@ public class MealRecommendationActivity extends AppCompatActivity {
         return readInfo;
     }
 
-    private void uploadPhoto() {
+    private void uploadPhoto(Context context) {
         ImageButton imgButton = findViewById(R.id.uploadPhoto);
         ActivityResultLauncher arl = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri result) {
-                        ImageView imgView = findViewById(R.id.mealImage);
-                        imgView.setImageURI(result);
+                        Intent intent = new Intent(context, ImageRecognitionActivity.class);
+                        intent.setData(result);
+                        startActivity(intent);
                     }
                 });
 
@@ -258,6 +262,27 @@ public class MealRecommendationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 arl.launch("image/*");
+            }
+        });
+    }
+
+    private void goToSearchResultPage(String keyword) {
+        Intent intent = new Intent(MealRecommendationActivity.this, searchResultActivity.class);
+        intent.putExtra("keyword", keyword);
+        startActivity(intent);
+        finish();
+    }
+
+    private void search() {
+        searchBox = findViewById(R.id.keyword);
+        searchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    String keyword = searchBox.getText().toString();
+                    goToSearchResultPage(keyword);
+                }
+                return true;
             }
         });
     }
