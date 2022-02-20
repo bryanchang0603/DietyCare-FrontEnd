@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class communityActivity extends AppCompatActivity {
     @Override
@@ -119,13 +120,13 @@ public class communityActivity extends AppCompatActivity {
                     Post post = new Post(bodyText, imgUri, userID, postKey, imgPath);
                     post.setTimeStamp(timestamp);
                     postsArr.add(post);
-
-                    RecyclerView recyclerView = findViewById(R.id.community_recyclerView);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(communityActivity.this);
-                    recyclerView.setLayoutManager(linearLayoutManager);
-                    communityAdapter adapter = new communityAdapter(postsArr, communityActivity.this);
-                    recyclerView.setAdapter(adapter);
                 }
+                Collections.reverse(postsArr);
+                RecyclerView recyclerView = findViewById(R.id.community_recyclerView);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(communityActivity.this);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                communityAdapter adapter = new communityAdapter(postsArr, communityActivity.this);
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
