@@ -93,11 +93,11 @@
         android:layout_width="150dp"
         android:layout_height="63dp"
         android:layout_weight="1"
-        android:tint="@color/grey"
         android:text="1"
         app:layout_constraintStart_toEndOf="@+id/commentButton"
         app:layout_constraintTop_toBottomOf="@+id/postTime"
-        app:srcCompat="@drawable/ic_thumbup" />
+        app:srcCompat="@drawable/ic_thumbup"
+        app:tint="@color/grey" />
 
     <ListView
         android:id="@+id/commentList"

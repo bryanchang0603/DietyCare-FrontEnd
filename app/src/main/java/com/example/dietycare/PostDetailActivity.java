@@ -58,7 +58,7 @@ public class PostDetailActivity extends AppCompatActivity {
         String UID = FirebaseAuth.getInstance().getUid();
 
         //retrive comment and like of the post
-        // here can also be sued to setup the page information
+        // here can also be used to setup the page information
         post_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
