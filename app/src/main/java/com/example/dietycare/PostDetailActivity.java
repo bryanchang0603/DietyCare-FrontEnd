@@ -143,20 +143,10 @@ public class PostDetailActivity extends AppCompatActivity {
                 String user = FirebaseAuth.getInstance().getUid();
                 if(like_lists.contains(UID)){
                     like_lists.remove(user);
-                    post_like_ref.setValue(like_lists).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            like_bt.setColorFilter(Color.GRAY);
-                        }
-                    });
+                    post_like_ref.setValue(like_lists);
                 }else{
                     like_lists.add(user);
-                    post_like_ref.setValue(like_lists).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            like_bt.setColorFilter(Color.RED);
-                        }
-                    });
+                    post_like_ref.setValue(like_lists);
                 }
             }
         });
