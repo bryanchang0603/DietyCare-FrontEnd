@@ -84,7 +84,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 postContent.setText(snapshot.child("body_text").getValue().toString());
                 //set Post time
                 TextView postTime = findViewById(R.id.postTime);
-                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 Date date = new Date(Long.parseLong(snapshot.child("timeStamp").getValue().toString()));
                 postTime.setText(sf.format(date));
                 //set Comments list
