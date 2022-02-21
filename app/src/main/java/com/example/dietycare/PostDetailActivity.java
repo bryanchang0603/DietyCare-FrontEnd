@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,9 +30,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostDetailActivity extends AppCompatActivity {
 
@@ -39,7 +47,6 @@ public class PostDetailActivity extends AppCompatActivity {
     private String post_path;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference post_ref, post_like_ref;
-    private ArrayList<String> comment_list = new ArrayList<>();
     private ArrayList<String> like_lists = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +65,9 @@ public class PostDetailActivity extends AppCompatActivity {
         String UID = FirebaseAuth.getInstance().getUid();
 
         //retrive comment and like of the post
-        // here can also be sued to setup the page information
+        // here can also be used to setup the page information
         post_ref.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 like_lists = (ArrayList<String>) snapshot.child("user_liked").getValue();
@@ -71,6 +79,35 @@ public class PostDetailActivity extends AppCompatActivity {
 /*                System.out.println(like_lists);
                 System.out.println(comment_list);
                 System.out.println(like_lists);*/
+
+                //set Post Owner's Name
+                TextView postOwnerName = findViewById(R.id.postOwnerName);
+                postOwnerName.setText(snapshot.child("userID").getValue().toString());
+                //set Post content
+                TextView postContent = findViewById(R.id.postContent);
+                postContent.setText(snapshot.child("body_text").getValue().toString());
+                //set Post time
+                TextView postTime = findViewById(R.id.postTime);
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date date = new Date(Long.parseLong(snapshot.child("timeStamp").getValue().toString()));
+                postTime.setText(sf.format(date));
+                //set Comments list
+                ListView listview = findViewById(R.id.commentList);
+                HashMap comments;
+                ArrayList<String> commentList = new ArrayList<>();
+                if((comments = (HashMap<String, HashMap>) snapshot.child("attached_comment").getValue()) != null){
+                    for (HashMap comment : (Collection<HashMap>) comments.values()) {
+                        String commentUserID = (String) comment.get("userID");
+                        String commentText = (String) comment.get("comment_text");
+                        String timeStamp = sf.format(new Date(Long.parseLong(comment.get("timeStamp").toString())));
+                        commentList.add(String.format("%s: %s  %s", commentUserID, commentText, timeStamp));
+                    }
+                    commentList.sort(Comparator
+                            .comparing(s -> ((String) s).substring(s.length() - 19), Comparator.reverseOrder()));
+                }
+                StableArrayAdapter adapter = new StableArrayAdapter(PostDetailActivity.this,
+                        android.R.layout.simple_list_item_1, commentList);
+                listview.setAdapter(adapter);
             }
 
             @Override
@@ -150,30 +187,6 @@ public class PostDetailActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //set Post Owner's Name
-        TextView postOwnerName = findViewById(R.id.postOwnerName);
-        postOwnerName.setText("Amy");
-        //set Post content
-        TextView postContent = findViewById(R.id.postContent);
-        postContent.setText("Amysdfasdfas sef");
-        //set Post content
-        TextView postTime = findViewById(R.id.postTime);
-        postTime.setText("10:30 AM");
-
-        //set Comments list
-        ListView listview = findViewById(R.id.commentList);
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("Jason: I love youI love youI love youI love youI love you");
-        list.add("2: I love yoI love youI love youI love youu");
-        list.add("3: I love yoI love youI love youu");
-        list.add("4: I love youI love youI love youI love you");
-        list.add("5: I love youI love youI love youI love you");
-        list.add("6: I love youI love youI love youI love you");
-        list.add("7: I love youI love youI love youI love you");
-        StableArrayAdapter adapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
 
     }
     private class StableArrayAdapter extends ArrayAdapter<String> {
