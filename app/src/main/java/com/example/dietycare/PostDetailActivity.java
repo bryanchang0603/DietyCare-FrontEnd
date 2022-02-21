@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -88,12 +89,16 @@ public class PostDetailActivity extends AppCompatActivity {
                 postTime.setText(sf.format(date));
                 //set Comments list
                 ListView listview = findViewById(R.id.commentList);
-                ArrayList<String> list = new ArrayList<>();
+                ArrayList<String> commentList = new ArrayList<>();
                 for (HashMap comment : ((HashMap<String, HashMap>) snapshot.child("attached_comment").getValue()).values()) {
-                    list.add((String) comment.get("comment_text"));
+                    String commentUserID = (String) comment.get("userID");
+                    String commentText = (String) comment.get("comment_text");
+                    String timeStamp = sf.format(new Date(Long.parseLong(comment.get("timeStamp").toString())));
+                    commentList.add(String.format("%s: %s  %s", commentUserID, commentText, timeStamp));
                 }
+                Collections.reverse(commentList);
                 StableArrayAdapter adapter = new StableArrayAdapter(PostDetailActivity.this,
-                        android.R.layout.simple_list_item_1, list);
+                        android.R.layout.simple_list_item_1, commentList);
                 listview.setAdapter(adapter);
             }
 
