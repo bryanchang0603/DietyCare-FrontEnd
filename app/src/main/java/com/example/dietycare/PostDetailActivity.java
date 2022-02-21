@@ -28,9 +28,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostDetailActivity extends AppCompatActivity {
 
@@ -71,6 +74,27 @@ public class PostDetailActivity extends AppCompatActivity {
 /*                System.out.println(like_lists);
                 System.out.println(comment_list);
                 System.out.println(like_lists);*/
+
+                //set Post Owner's Name
+                TextView postOwnerName = findViewById(R.id.postOwnerName);
+                postOwnerName.setText(snapshot.child("userID").getValue().toString());
+                //set Post content
+                TextView postContent = findViewById(R.id.postContent);
+                postContent.setText(snapshot.child("body_text").getValue().toString());
+                //set Post time
+                TextView postTime = findViewById(R.id.postTime);
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = new Date(Long.parseLong(snapshot.child("timeStamp").getValue().toString()));
+                postTime.setText(sf.format(date));
+                //set Comments list
+                ListView listview = findViewById(R.id.commentList);
+                ArrayList<String> list = new ArrayList<>();
+                for (HashMap comment : ((HashMap<String, HashMap>) snapshot.child("attached_comment").getValue()).values()) {
+                    list.add((String) comment.get("comment_text"));
+                }
+                StableArrayAdapter adapter = new StableArrayAdapter(PostDetailActivity.this,
+                        android.R.layout.simple_list_item_1, list);
+                listview.setAdapter(adapter);
             }
 
             @Override
@@ -160,30 +184,6 @@ public class PostDetailActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //set Post Owner's Name
-        TextView postOwnerName = findViewById(R.id.postOwnerName);
-        postOwnerName.setText("Amy");
-        //set Post content
-        TextView postContent = findViewById(R.id.postContent);
-        postContent.setText("Amysdfasdfas sef");
-        //set Post content
-        TextView postTime = findViewById(R.id.postTime);
-        postTime.setText("10:30 AM");
-
-        //set Comments list
-        ListView listview = findViewById(R.id.commentList);
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("Jason: I love youI love youI love youI love youI love you");
-        list.add("2: I love yoI love youI love youI love youu");
-        list.add("3: I love yoI love youI love youu");
-        list.add("4: I love youI love youI love youI love you");
-        list.add("5: I love youI love youI love youI love you");
-        list.add("6: I love youI love youI love youI love you");
-        list.add("7: I love youI love youI love youI love you");
-        StableArrayAdapter adapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
 
     }
     private class StableArrayAdapter extends ArrayAdapter<String> {
