@@ -129,15 +129,15 @@ public class postingActivity extends AppCompatActivity {
                                     String key = my_ref.getKey();
                                     String image_string = "community_images/"+selected_image_uri.getLastPathSegment();
                                     Post post = new Post(text_field.getText().toString(), firebase_uri,
-                                            FirebaseAuth.getInstance().getCurrentUser().getUid(), key, image_string);
-                                    post.appendComment("123");
+                                            FirebaseAuth.getInstance().getCurrentUser().getUid(), key, image_string, null);
+/*                                    post.appendComment("123");
                                     post.appendComment("456");
                                     post.appendLikedUser("123");
-                                    post.appendLikedUser("456");
+                                    post.appendLikedUser("456");*/
                                     my_ref.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            Intent intent = new Intent(postingActivity.this, MainActivity.class);
+                                            Intent intent = new Intent(postingActivity.this, communityActivity.class);
                                             //Starting of the Intent
                                             startActivity(intent);
                                             finish();
