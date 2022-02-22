@@ -27,44 +27,54 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
 
-public class editActivity extends AppCompatActivity{
-    private HashMap<String, String> readInfo = new HashMap<String, String>();
+public class WalkThroughActivity extends AppCompatActivity {
+
     private static final int SELECT_PICTURE = 1;
     private TextView textGet;
-    private String bodyT, exerciseL;
+    private String bodyT, exerciseL, DGoal;
     private int BYear, BMonth, BDay;
     private String Gender = "Male";
     private String checkVeg = "False";
 
     String[] bodyType = {"Ectomorph", "Endomorph", "Mesomorph"};
     String[] exercise_level = {"1", "2", "3", "4", "5"};
+    String[] diet_goal = {"Build Muscle", "Lose Weight", "Remain Shape"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        HashMap<String, String> readInfo = new HashMap<String, String>();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit);
+        setContentView(R.layout.activity_walk_through);
         if (getSupportActionBar() != null){
             getSupportActionBar().hide();
         }
 
+        //Get user id from register
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        assert firebaseUser != null;
+        String userID = firebaseUser.getUid();
+
+        //Initialized all elements on layout
         Spinner sp = (Spinner) findViewById(R.id.spinner3);
         Spinner exer_sp = (Spinner) findViewById(R.id.spinner_exercise);
+        Spinner dg_sp = (Spinner) findViewById(R.id.DGspinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, bodyType);
         sp.setAdapter(adapter);
+
         ArrayAdapter<String> exer_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, exercise_level);
         exer_sp.setAdapter(exer_adapter);
+
+        ArrayAdapter<String> dg_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, diet_goal);
+        dg_sp.setAdapter(dg_adapter);
+
         EditText weight = findViewById(R.id.editTextNumber5);
         EditText BFat= findViewById(R.id.editTextNumber6);
         EditText Tweight = findViewById(R.id.editTextNumber7);
@@ -74,97 +84,9 @@ public class editActivity extends AppCompatActivity{
         RadioButton No = findViewById(R.id.notVeg);
         RadioButton maleB = findViewById(R.id.radioMale);
         RadioButton femaleB = findViewById(R.id.radioFemale);
-        ImageButton btn_register = findViewById(R.id.imageButton2);
         ImageButton btn_Cal = findViewById(R.id.btncal);
-        ImageButton btn_gallery = findViewById(R.id.imageButton3);
-        Button btn_save = findViewById(R.id.saveBtn);
+        Button btn_continue = findViewById(R.id.continueBtn);
 
-        //Get user id from register
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        assert firebaseUser != null;
-        String userID = firebaseUser.getUid();
-
-        //read data from DB
-        String baseUrlforGet = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com";
-        String pathforGet = "/user?";
-        String params = "user_id=" + userID;
-        String a = "";
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-            a = getUserfromDB(baseUrlforGet + pathforGet + params);
-        } catch (Exception e) {
-
-        }
-        a = a.replaceAll("\\s+","");
-        a = a.replaceAll("\\{","");
-        a = a.replaceAll("\\}","");
-        String[] pairs = a.split(",");
-        for(int i = 0; i < pairs.length; i++) {
-            String temp = pairs[i].replaceAll("\"", "");
-            String[] hashElement = temp.split(":");
-            readInfo.put(hashElement[0], hashElement[1]);
-        }
-
-        //write data from DB
-        weight.setText(readInfo.get("weight"));
-        float temp = Float.parseFloat(readInfo.get("body_fat"));
-        temp = temp * 100;
-        String bodyFatReal = String.format("%.1f", temp);
-        BFat.setText(bodyFatReal);
-        Tweight.setText(readInfo.get("target_weight"));
-        height.setText(readInfo.get("height"));
-
-        BYear = Integer.valueOf(readInfo.get("b_year"));
-        BMonth = Integer.valueOf(readInfo.get("b_month"));
-        BDay = Integer.valueOf(readInfo.get("b_day"));
-
-        textGet.setText(BYear + "." + BMonth + "." + BDay);
-
-        int index = 0;
-
-        if(readInfo.get("body_type").equals("Endomorph")){
-            index = 1;
-        }
-        if(readInfo.get("body_type").equals("Mesomorph")){
-            index = 2;
-        }
-        sp.setSelection(index);
-
-        int index_exer = 0;
-
-        if(readInfo.get("exercise_level").equals("2")){
-            index_exer = 1;
-        }
-        if(readInfo.get("exercise_level").equals("3")){
-            index_exer = 2;
-        }
-        if(readInfo.get("exercise_level").equals("4")){
-            index_exer = 3;
-        }
-        if(readInfo.get("exercise_level").equals("5")){
-            index_exer = 4;
-        }
-        exer_sp.setSelection(index_exer);
-
-        if(readInfo.get("is_vegetarian").equals("true")) {
-            Yes.setChecked(true);
-            No.setChecked(false);
-        }else{
-            No.setChecked(true);
-            Yes.setChecked(false);
-        }
-
-        if(readInfo.get("gender").equals("Male")) {
-            maleB.setChecked(true);
-            femaleB.setChecked(false);
-        }else{
-            femaleB.setChecked(true);
-            maleB.setChecked(false);
-        }
-
-        //
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -189,10 +111,21 @@ public class editActivity extends AppCompatActivity{
             }
         });
 
-        btn_save.setOnClickListener( new View.OnClickListener(){
+        dg_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                DGoal = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        btn_continue.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
                 int age = 2022 - BYear;
                 float body_fat = Float.parseFloat("" + BFat.getText());
                 body_fat = body_fat / 100;
@@ -205,6 +138,7 @@ public class editActivity extends AppCompatActivity{
                         + "\"weight\": " + "\"" + weight.getText() + "\", "
                         + "\"target_weight\": " + "\"" + Tweight.getText() + "\", "
                         + "\"body_fat\": " + "\"" + body_fat + "\", "
+                        + "\"diet_goal\": " + "\"" + DGoal + "\", "
                         + "\"body_type\": " + "\"" + bodyT + "\", "
                         + "\"exercise_level\": " + "\"" + exerciseL + "\", "
                         + "\"allergens\": " + "[], "
@@ -216,13 +150,10 @@ public class editActivity extends AppCompatActivity{
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
                 putUsertoDB(baseUrl + path, payload);
-                Toast.makeText(getApplicationContext(), "successfully saved", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btn_register.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                Intent intent = new Intent(WalkThroughActivity.this, MainActivity.class);
+                intent.putExtra("UID", userID);
+                //Starting of the Intent
+                startActivity(intent);
                 finish();
             }
         });
@@ -234,15 +165,6 @@ public class editActivity extends AppCompatActivity{
             }
         });
 
-        btn_gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_PICTURE);
-            }
-        });
     }
 
 
@@ -358,27 +280,4 @@ public class editActivity extends AppCompatActivity{
             }
         }
     }
-
-    public static String getUserfromDB(String uri) throws Exception {
-        URL url = new URL(uri) ;
-        // Open a connection(?) on the URL(??) and cast the response(???)
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        // Now it's "open", we can set the request method, headers etc.
-        connection.setRequestProperty("accept", "application/json");
-        connection.setRequestMethod("GET");
-
-        // This line makes the request
-        InputStream responseStream = connection.getInputStream();
-        BufferedInputStream bis = new BufferedInputStream(responseStream);
-        ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        for (int result = bis.read(); result != -1; result = bis.read()) {
-            buf.write((byte) result);
-        }
-        String response = buf.toString("UTF-8");
-
-        return response;
-
-    }
-
 }
