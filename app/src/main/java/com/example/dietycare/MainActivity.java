@@ -308,7 +308,6 @@ public class MainActivity extends AppCompatActivity {
                         set_diet_goal(handler, SPEditor, 3, urlConsumed, urlTarget);
                         break;
                 }
-                SPEditor.commit();
             }
         });
     }
@@ -316,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
     private void set_diet_goal(newHandler handler, SharedPreferences.Editor SPEditor, int mealGoalSP, String paramURLConsumed, String paramURLTarget){
 
         SPEditor.putInt("mealGoalSP", mealGoalSP);
+        SPEditor.commit();
 
         new Thread(new Runnable() {
             @Override
@@ -389,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
         textConsumedCarbo.setText(String.format("%.1f",consumedCarbo));
         textConsumedCal.setText(String.format("%.1f", consumedCal));
 
-        TextView textSuggestedCal = findViewById(R.id.text_val_intake);
+        TextView textSuggestedCal = findViewById(R.id.text_val_suggested);
         TextView textLeftCal = findViewById(R.id.text_val_left);
         TextWatcher textWatcher = new TextWatcher() {
             @Override
