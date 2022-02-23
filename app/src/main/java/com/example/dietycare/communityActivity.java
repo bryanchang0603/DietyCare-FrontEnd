@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class communityActivity extends AppCompatActivity {
     @Override
@@ -115,17 +116,18 @@ public class communityActivity extends AppCompatActivity {
                     long timestamp = (long) temp.child("timeStamp").getValue();
                     String userID = temp.child("userID").getValue().toString();
                     String imgPath = temp.child("image_path").getValue().toString();
+                    ArrayList<String> user_liked = (ArrayList<String>) temp.child("user_liked").getValue();
 
-                    Post post = new Post(bodyText, imgUri, userID, postKey, imgPath);
+                    Post post = new Post(bodyText, imgUri, userID, postKey, imgPath, user_liked);
                     post.setTimeStamp(timestamp);
                     postsArr.add(post);
-
-                    RecyclerView recyclerView = findViewById(R.id.community_recyclerView);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(communityActivity.this);
-                    recyclerView.setLayoutManager(linearLayoutManager);
-                    communityAdapter adapter = new communityAdapter(postsArr, communityActivity.this);
-                    recyclerView.setAdapter(adapter);
                 }
+                Collections.reverse(postsArr);
+                RecyclerView recyclerView = findViewById(R.id.community_recyclerView);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(communityActivity.this);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                communityAdapter adapter = new communityAdapter(postsArr, communityActivity.this);
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
