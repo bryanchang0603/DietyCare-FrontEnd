@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     //Variables for saving radio buttons
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor SPEditor;
+    TextView textLeftCal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,7 +185,10 @@ public class MainActivity extends AppCompatActivity {
         SPEditor = sharedPreferences.edit();
         handler = new newHandler();
         HashMap<String, String> personInfo = new HashMap<String, String>();
-
+        long left = sharedPreferences.getLong("leftCal", 0);
+        leftCal = Double.longBitsToDouble(left);
+        textLeftCal = findViewById(R.id.text_val_left);
+        textLeftCal.setText(String.format("%.1f",leftCal));
 
         try{
             Scanner reader = new Scanner(file);
@@ -203,7 +209,9 @@ public class MainActivity extends AppCompatActivity {
             exerciseLevel = Integer.parseInt(personInfo.get("Exercise"));
         } catch (FileNotFoundException e) {
             displaySuggested(0,0,0,0);
-            displayConsumedAndLeftCal(0,0,0,0,0);
+            displayConsumed(0,0,0,0);
+            TextView textLeftCal = findViewById(R.id.text_val_left);
+            textLeftCal.setText("0");
         }
 
         // calculate age
@@ -308,6 +316,17 @@ public class MainActivity extends AppCompatActivity {
     private void set_diet_goal(newHandler handler, SharedPreferences.Editor SPEditor, int mealGoalSP, String paramURLConsumed, String paramURLTarget){
 
         SPEditor.putInt("mealGoalSP", mealGoalSP);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String output = requestData(paramURLTarget, "GET");
+                Message msg = handler.obtainMessage();
+                msg.obj = output;
+                handler.sendMessage(msg);
+            }
+        }).start();
+
         newHandler2 handler2 = new newHandler2();
         new Thread(new Runnable() {
             @Override
@@ -318,47 +337,82 @@ public class MainActivity extends AppCompatActivity {
                 handler2.sendMessage(msg);
             }
         }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                String output = requestData(paramURLTarget, "GET");
-                Message msg = handler.obtainMessage();
-                msg.obj = output;
-                handler.sendMessage(msg);
-            }
-        }).start();
     }
 
     private void displaySuggested(double suggestedProtein, double suggestedFat,
                                   double suggestedCarbo, double suggestedCal) {
-        TextView textValSuggested = findViewById(R.id.text_val_suggested);
+        TextView textSuggestedCal = findViewById(R.id.text_val_suggested);
 
         TextView textSuggestedProtein = findViewById(R.id.text_val_protein);
         TextView textSuggestedFat = findViewById(R.id.text_val_fat);
         TextView textSuggestedCarbo = findViewById(R.id.text_val_carbo);
 
-        textValSuggested.setText(String.format("%.1f",suggestedCal));
-//        textValIntake.setText(String.format("%.1f",intakeCal));
-//        textValLeft.setText(String.format("%.1f",leftCal));
+        textSuggestedCal.setText(String.format("%.1f",suggestedCal));
         textSuggestedProtein.setText(String.format("%.1f",suggestedProtein));
         textSuggestedFat.setText(String.format("%.1f",suggestedFat));
         textSuggestedCarbo.setText(String.format("%.1f",suggestedCarbo));
+
+        TextView textConsumedCal = findViewById(R.id.text_val_intake);
+        TextView textLeftCal = findViewById(R.id.text_val_left);
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                double conCal = Double.parseDouble(textConsumedCal.getText().toString());
+                double sugCal = Double.parseDouble(textSuggestedCal.getText().toString());
+                leftCal = sugCal-conCal;
+                textLeftCal.setText(String.format("%.1f",leftCal));
+                SPEditor.putLong("leftCal", Double.doubleToRawLongBits(leftCal));
+                SPEditor.commit();
+            }
+        };
+        textConsumedCal.addTextChangedListener(textWatcher);
     }
 
-    private void displayConsumedAndLeftCal(double consumedProtein, double consumedFat, double consumedCarbo,
-                                           double consumedCal, double leftCal) {
+    private void displayConsumed(double consumedProtein, double consumedFat, double consumedCarbo,
+                                 double consumedCal) {
         TextView textConsumedProtein = findViewById(R.id.text_consumed_protein);
         TextView textConsumedFat = findViewById(R.id.text_consumed_fat);
         TextView textConsumedCarbo = findViewById(R.id.text_consumed_carbo);
         TextView textConsumedCal = findViewById(R.id.text_val_intake);
-        TextView textCalLeft = findViewById(R.id.text_val_left);
         textConsumedProtein.setText(String.format("%.1f",consumedProtein));
         textConsumedFat.setText(String.format("%.1f",consumedFat));
         textConsumedCarbo.setText(String.format("%.1f",consumedCarbo));
         textConsumedCal.setText(String.format("%.1f", consumedCal));
-        textCalLeft.setText(String.format("%.1f", leftCal));
+
+        TextView textSuggestedCal = findViewById(R.id.text_val_intake);
+        TextView textLeftCal = findViewById(R.id.text_val_left);
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                double conCal = Double.parseDouble(textConsumedCal.getText().toString());
+                double sugCal = Double.parseDouble(textSuggestedCal.getText().toString());
+                leftCal = sugCal-conCal;
+                textLeftCal.setText(String.format("%.1f",leftCal));
+                SPEditor.putLong("leftCal", Double.doubleToRawLongBits(leftCal));
+                SPEditor.commit();
+            }
+        };
+        textSuggestedCal.addTextChangedListener(textWatcher);
     }
 
     public String requestData(String inputURL, String reqMethod) {
@@ -436,8 +490,7 @@ public class MainActivity extends AppCompatActivity {
                 consumedProtein = Double.parseDouble(jobj.get("pro_consumed").toString());
                 consumedFat = Double.parseDouble(jobj.get("fat_consumed").toString());
                 consumedCarbo = Double.parseDouble(jobj.get("CHO_consumed").toString());
-                leftCal = Double.parseDouble(jobj.get("cal_left").toString());
-                displayConsumedAndLeftCal(consumedProtein,consumedFat, consumedCarbo, consumedCal, leftCal);
+                displayConsumed(consumedProtein,consumedFat, consumedCarbo, consumedCal);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

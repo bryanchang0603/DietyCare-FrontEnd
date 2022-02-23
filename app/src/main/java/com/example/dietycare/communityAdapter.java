@@ -54,7 +54,7 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         holder.textView1.setText(twoPostsAsAGroup.get(position).get(0).getBody_text());
         holder.userName1.setText(twoPostsAsAGroup.get(position).get(0).getUserID());
-
+        holder.likeNum1.setText(String.valueOf(twoPostsAsAGroup.get(position).get(0).getLikedNum()));
         StorageReference storageReference1 = FirebaseStorage.getInstance().getReference().child(
                 twoPostsAsAGroup.get(position).get(0).getImage_path()
         );
@@ -70,8 +70,9 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
         if (2*(position+1) <= postsArr.size()) {
             holder.textView2.setText(twoPostsAsAGroup.get(position).get(1).getBody_text());
             holder.userName2.setText(twoPostsAsAGroup.get(position).get(1).getUserID());
+            holder.likeNum2.setText(String.valueOf(twoPostsAsAGroup.get(position).get(1).getLikedNum()));
             StorageReference storageReference2 = FirebaseStorage.getInstance().getReference().child(
-                    twoPostsAsAGroup.get(position).get(0).getImage_path()
+                    twoPostsAsAGroup.get(position).get(1).getImage_path()
             );
             storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -123,6 +124,8 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
         private TextView userName2;
         private String postKey1;
         private String postKey2;
+        private TextView likeNum1;
+        private TextView likeNum2;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
@@ -134,6 +137,8 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
             thumbUp2 = itemView.findViewById(R.id.community_item_thumb_up_2);
             userName1 = itemView.findViewById(R.id.community_item_username_1);
             userName2 = itemView.findViewById(R.id.community_item_username_2);
+            likeNum1 = itemView.findViewById(R.id.community_like_num1);
+            likeNum2 = itemView.findViewById(R.id.community_like_num2);
         }
 
         public String getPostKey1() {

@@ -14,8 +14,9 @@ public class Post {
     private ArrayList<String> user_liked;
     private ArrayList<String> attached_comment;
     private String image_path;
+    private int likedNum;
 
-    public Post(String body_text, String image_uri, String userID, String postKey, String image_path) {
+    public Post(String body_text, String image_uri, String userID, String postKey, String image_path, int likedNum) {
         this.body_text = body_text;
         this.image_uri = image_uri;
         this.userID = userID;
@@ -24,7 +25,7 @@ public class Post {
         this.attached_comment = new ArrayList<String>();
         this.user_liked = new ArrayList<String>();
         this.image_path = image_path;
-
+        this.likedNum = likedNum;
     }
 
     public String getImage_path() {
@@ -54,6 +55,8 @@ public class Post {
     public Object getTimeStamp() {
         return timeStamp;
     }
+
+    public int getLikedNum() {return likedNum;}
 
     public ArrayList<String> getUser_liked() {
         return user_liked;

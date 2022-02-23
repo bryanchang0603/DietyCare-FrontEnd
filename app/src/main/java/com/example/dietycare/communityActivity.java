@@ -116,8 +116,8 @@ public class communityActivity extends AppCompatActivity {
                     long timestamp = (long) temp.child("timeStamp").getValue();
                     String userID = temp.child("userID").getValue().toString();
                     String imgPath = temp.child("image_path").getValue().toString();
-
-                    Post post = new Post(bodyText, imgUri, userID, postKey, imgPath);
+                    int likedNum = (int) temp.child("user_liked").getChildrenCount();
+                    Post post = new Post(bodyText, imgUri, userID, postKey, imgPath, likedNum);
                     post.setTimeStamp(timestamp);
                     postsArr.add(post);
                 }
