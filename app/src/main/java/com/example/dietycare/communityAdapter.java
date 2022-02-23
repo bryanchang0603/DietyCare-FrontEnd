@@ -74,7 +74,7 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
             StorageReference storageReference2 = FirebaseStorage.getInstance().getReference().child(
                     twoPostsAsAGroup.get(position).get(1).getImage_path()
             );
-            storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
                     Glide.with(context).load(uri).into(holder.imageView2);
@@ -88,6 +88,7 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
             holder.thumbUp2.setVisibility(View.GONE);
             holder.acc2.setVisibility(View.GONE);
             holder.textView2.setVisibility(View.GONE);
+            holder.likeNum2.setVisibility(View.GONE);
         }
 
         holder.imageView1.setOnClickListener(new View.OnClickListener() {
