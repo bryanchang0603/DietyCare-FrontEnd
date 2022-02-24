@@ -16,17 +16,18 @@ public class Post {
     private String image_path;
     private int likedNum;
 
-    public Post(String body_text, String image_uri, String userID, String postKey, String image_path, int likedNum) {
+    public Post(String body_text, String image_uri, String userID, String postKey, String image_path, ArrayList<String> user_liked,int likedNum) {
         this.body_text = body_text;
         this.image_uri = image_uri;
         this.userID = userID;
         this.postKey = postKey;
         this.timeStamp = ServerValue.TIMESTAMP;
         this.attached_comment = new ArrayList<String>();
-        this.user_liked = new ArrayList<String>();
+        this.user_liked = ((user_liked == null) ? new ArrayList<String>() : user_liked);
         this.image_path = image_path;
         this.likedNum = likedNum;
     }
+
 
     public String getImage_path() {
         return image_path;
@@ -94,11 +95,11 @@ public class Post {
         this.attached_comment = attached_comment;
     }
 
-    public void appendLikedUser(String UID){
+    public void appendLikedUser(String UID) {
         this.user_liked.add(UID);
     }
 
-    public void appendComment(String comment){
+    public void appendComment(String comment) {
         this.attached_comment.add(comment);
     }
 }
