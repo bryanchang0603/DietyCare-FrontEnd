@@ -115,7 +115,8 @@ public class postingActivity extends AppCompatActivity {
 
                     //upload the image to Firebase Storage first
                     StorageReference storage_reference = FirebaseStorage.getInstance().getReference().child("community_images");
-                    final StorageReference image_file_path = storage_reference.child(selected_image_uri.getLastPathSegment());
+                    final StorageReference image_file_path = storage_reference.child(selected_image_uri.getLastPathSegment());// change the naming here
+                    // use UUID for naming instead
                     image_file_path.putFile(selected_image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
