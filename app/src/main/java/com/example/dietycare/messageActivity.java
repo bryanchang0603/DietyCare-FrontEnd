@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.example.dietycare.Fragments.ChatsFragment;
 import com.example.dietycare.Fragments.UsersFragment;
 import com.example.dietycare.Model.User;
+import com.example.dietycare.Model.Chat;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -86,10 +87,45 @@ public class messageActivity extends AppCompatActivity {
         final ViewPager viewPager = findViewById(R.id.view_pager);
 
         ViewPagerAdapter view = new ViewPagerAdapter(getSupportFragmentManager());
-        view.addFragment(new ChatsFragment(), "Chats");
-        view.addFragment(new UsersFragment(), "Users");
-        viewPager.setAdapter(view);
-        tabLayout.setupWithViewPager(viewPager);
+
+
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+                int unread = countUnreadMessage(dataSnapshot);
+
+                if (unread == 0){
+                    viewPagerAdapter.addFragment(new ChatsFragment(), "Chats");
+                } else {
+                    viewPagerAdapter.addFragment(new ChatsFragment(), "("+unread+") Chats");
+                }
+
+                viewPagerAdapter.addFragment(new UsersFragment(), "Users");
+
+                viewPager.setAdapter(viewPagerAdapter);
+
+                tabLayout.setupWithViewPager(viewPager);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public Integer countUnreadMessage(DataSnapshot dataSnapshot){
+        int unread = 0;
+        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+            Chat chat = snapshot.getValue(Chat.class);
+            if (chat.getReceiver().equals(firebaseUser.getUid()) && !chat.isIsseen()){
+                unread++;
+            }
+        }
+        return unread;
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
