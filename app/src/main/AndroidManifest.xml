@@ -39,6 +39,7 @@
         <activity android:name=".searchResultActivity" />
         <activity android:name=".shareActivity" />
         <activity android:name=".PostDetailActivity" />
+        <activity android:name=".DietDiary" />
         <activity
             android:name=".MealRecommendationActivity"
             android:exported="false" />
