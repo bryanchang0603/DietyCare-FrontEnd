@@ -129,7 +129,7 @@ public class postingActivity extends AppCompatActivity {
                                     String key = my_ref.getKey();
                                     String image_string = "community_images/"+selected_image_uri.getLastPathSegment();
                                     Post post = new Post(text_field.getText().toString(), firebase_uri,
-                                            FirebaseAuth.getInstance().getCurrentUser().getUid(), key, image_string, null);
+                                            FirebaseAuth.getInstance().getCurrentUser().getUid(), key, image_string, null, 0);
 /*                                    post.appendComment("123");
                                     post.appendComment("456");
                                     post.appendLikedUser("123");
