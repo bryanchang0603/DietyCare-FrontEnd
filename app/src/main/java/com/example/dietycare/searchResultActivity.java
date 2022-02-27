@@ -102,7 +102,7 @@ public class searchResultActivity extends AppCompatActivity {
                 }
             }
         };
-        index.searchAsync(new Query(keyword).setHitsPerPage(50), compHand);
+        index.searchAsync(new Query(keyword).setHitsPerPage(15), compHand);
     }
 
     private void searchAgain() {
