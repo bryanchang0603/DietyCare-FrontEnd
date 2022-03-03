@@ -38,7 +38,7 @@ import java.net.URL;
 public class WalkThroughActivity extends AppCompatActivity {
 
     private static final int SELECT_PICTURE = 1;
-    private TextView textGet;
+    private TextView textBirth;
     private String bodyT, exerciseL, DGoal;
     private int BYear, BMonth, BDay;
     private String Gender = "Male";
@@ -79,7 +79,7 @@ public class WalkThroughActivity extends AppCompatActivity {
         EditText BFat= findViewById(R.id.editTextNumber6);
         EditText Tweight = findViewById(R.id.editTextNumber7);
         EditText height = findViewById(R.id.editTextNumber8);
-        textGet = findViewById(R.id.textView);
+        textBirth = findViewById(R.id.textView);
         RadioButton Yes = findViewById(R.id.isVeg);
         RadioButton No = findViewById(R.id.notVeg);
         RadioButton maleB = findViewById(R.id.radioMale);
@@ -126,35 +126,54 @@ public class WalkThroughActivity extends AppCompatActivity {
         btn_continue.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                int age = 2022 - BYear;
-                float body_fat = Float.parseFloat("" + BFat.getText());
-                body_fat = body_fat / 100;
-                String baseUrl = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com";
-                String path = "/user";
-                String payload = "{\"user_id\": " + "\"" + userID + "\", "
-                        + "\"gender\": " + "\"" + Gender + "\", "
-                        + "\"age\": " + "\"" + age + "\", "
-                        + "\"height\": " + "\"" + height.getText() + "\", "
-                        + "\"weight\": " + "\"" + weight.getText() + "\", "
-                        + "\"target_weight\": " + "\"" + Tweight.getText() + "\", "
-                        + "\"body_fat\": " + "\"" + body_fat + "\", "
-                        + "\"diet_goal\": " + "\"" + DGoal + "\", "
-                        + "\"body_type\": " + "\"" + bodyT + "\", "
-                        + "\"exercise_level\": " + "\"" + exerciseL + "\", "
-                        + "\"allergens\": " + "[], "
-                        + "\"is_vegetarian\": " + "\"" + checkVeg + "\", "
-                        + "\"b_day\": " + "\"" + BDay + "\", "
-                        + "\"b_month\": " + "\"" + BMonth + "\", "
-                        + "\"b_year\": " + "\"" + BYear + "\"}";
 
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-                putUsertoDB(baseUrl + path, payload);
-                Intent intent = new Intent(WalkThroughActivity.this, MainActivity.class);
-                intent.putExtra("UID", userID);
-                //Starting of the Intent
-                startActivity(intent);
-                finish();
+                //check whether user has input
+                if(textBirth.getText().toString().trim().length() > 10){
+                    Toast.makeText(getApplicationContext(), "Missing Birthday Info", Toast.LENGTH_SHORT).show();
+                }
+                else if(height.getText().toString().trim().length() == 0){
+                    Toast.makeText(getApplicationContext(), "Missing Height Info", Toast.LENGTH_SHORT).show();
+                }
+                else if(weight.getText().toString().trim().length() == 0){
+                    Toast.makeText(getApplicationContext(), "Missing Weight Info", Toast.LENGTH_SHORT).show();
+                }
+                else if(Tweight.getText().toString().trim().length() == 0){
+                    Toast.makeText(getApplicationContext(), "Missing Target Weight Info", Toast.LENGTH_SHORT).show();
+                }
+                else if(BFat.getText().toString().trim().length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Missing Body Fat Info", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    int age = 2022 - BYear;
+                    float body_fat = Float.parseFloat("" + BFat.getText());
+                    body_fat = body_fat / 100;
+                    String baseUrl = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com";
+                    String path = "/user";
+                    String payload = "{\"user_id\": " + "\"" + userID + "\", "
+                            + "\"gender\": " + "\"" + Gender + "\", "
+                            + "\"age\": " + "\"" + age + "\", "
+                            + "\"height\": " + "\"" + height.getText() + "\", "
+                            + "\"weight\": " + "\"" + weight.getText() + "\", "
+                            + "\"target_weight\": " + "\"" + Tweight.getText() + "\", "
+                            + "\"body_fat\": " + "\"" + body_fat + "\", "
+                            + "\"diet_goal\": " + "\"" + DGoal + "\", "
+                            + "\"body_type\": " + "\"" + bodyT + "\", "
+                            + "\"exercise_level\": " + "\"" + exerciseL + "\", "
+                            + "\"allergens\": " + "[], "
+                            + "\"is_vegetarian\": " + "\"" + checkVeg + "\", "
+                            + "\"b_day\": " + "\"" + BDay + "\", "
+                            + "\"b_month\": " + "\"" + BMonth + "\", "
+                            + "\"b_year\": " + "\"" + BYear + "\"}";
+
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                    putUsertoDB(baseUrl + path, payload);
+                    Intent intent = new Intent(WalkThroughActivity.this, MainActivity.class);
+                    intent.putExtra("UID", userID);
+                    //Starting of the Intent
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -206,7 +225,7 @@ public class WalkThroughActivity extends AppCompatActivity {
                 BYear = dateGet.getYear();
                 BMonth = month;
                 BDay = dateGet.getDayOfMonth();
-                textGet.setText(st);
+                textBirth.setText(st);
             }
         });
         builder.setNegativeButton("Cancel", null);
