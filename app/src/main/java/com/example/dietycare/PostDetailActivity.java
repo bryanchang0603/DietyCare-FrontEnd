@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,7 +25,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -88,7 +91,20 @@ public class PostDetailActivity extends AppCompatActivity {
 
                 //set Post Owner's Name
                 TextView postOwnerName = findViewById(R.id.postOwnerName);
-                postOwnerName.setText(snapshot.child("userID").getValue().toString());
+                String UID = snapshot.child("userID").getValue().toString();
+
+                database.getReference().child("Users").child(UID).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Error getting data", task.getException());
+                        }
+                        else {
+                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                            postOwnerName.setText(String.valueOf(task.getResult().getValue()));
+                        }
+                    }
+                });
                 //setPost's image
 
                 post_image = findViewById(R.id.postPicture);

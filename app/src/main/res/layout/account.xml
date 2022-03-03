@@ -78,11 +78,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
     <TextView
-        android:id="@+id/textView22"
+        android:id="@+id/account_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
-        android:text="DietyCare123"
+        android:text="  "
         android:textColor="@color/black"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -111,7 +111,7 @@
         android:textColor="@color/black"
         android:textSize="16dp"
         app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+        app:layout_constraintTop_toBottomOf="@+id/account_user_name" />
 
     <TextView
         android:id="@+id/textView20"
@@ -287,6 +287,20 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
+            android:id="@+id/menu_btn_progress_account"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_progress" />
+
+        <ImageButton
+            android:id="@+id/menu_btn_meal_account"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_meal" />
+
+        <ImageButton
             android:id="@+id/menu_btn_home_account"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
@@ -301,25 +315,11 @@
             app:srcCompat="@drawable/ic_community" />
 
         <ImageButton
-            android:id="@+id/menu_btn_meal_account"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_meal" />
-
-        <ImageButton
             android:id="@+id/main_btn_account_account"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_account" />
-
-        <ImageButton
-            android:id="@+id/menu_btn_progress_account"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_progress" />
 
     </LinearLayout>
 
