@@ -100,7 +100,6 @@ public class PostDetailActivity extends AppCompatActivity {
                             Log.e("firebase", "Error getting data", task.getException());
                         }
                         else {
-                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
                             postOwnerName.setText(String.valueOf(task.getResult().getValue()));
                         }
                     }

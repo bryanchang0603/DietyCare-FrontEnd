@@ -72,7 +72,6 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
                     holder.userName1.setText(String.valueOf(task.getResult().getValue()));
                 }
             }
@@ -111,7 +110,6 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
                         Log.e("firebase", "Error getting data", task.getException());
                     }
                     else {
-                        Log.d("firebase", String.valueOf(task.getResult().getValue()));
                         holder.userName2.setText(String.valueOf(task.getResult().getValue()));
                     }
                 }
