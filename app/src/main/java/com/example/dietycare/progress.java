@@ -27,6 +27,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -208,6 +209,15 @@ public class progress extends AppCompatActivity {
                                            }
                                        }
         );
+
+        Button bt_dietDiary = findViewById(R.id.dailyRecord);
+        bt_dietDiary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(progress.this, DietDiary.class);
+                startActivity(intent);
+            }
+        });
     }
     private void setupPieChart() {
         pie_chart.setDrawHoleEnabled(true);
