@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -15,8 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -28,6 +32,7 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
 
     private ArrayList<Post> postsArr;
     private Context context;
+    private DatabaseReference realtimeDB = FirebaseDatabase.getInstance().getReference();
     ArrayList<ArrayList<Post>> twoPostsAsAGroup;
 
     public communityAdapter(ArrayList<Post> postsArr, Context context) {
@@ -58,7 +63,20 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         holder.textView1.setText(twoPostsAsAGroup.get(position).get(0).getBody_text());
-        holder.userName1.setText(twoPostsAsAGroup.get(position).get(0).getUserID());
+        String UID1 = twoPostsAsAGroup.get(position).get(0).getUserID();
+        // the following listener will read the current user's username
+        realtimeDB.child("Users").child(UID1).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    holder.userName1.setText(String.valueOf(task.getResult().getValue()));
+                }
+            }
+        });
         holder.likeNum1.setText(String.valueOf(twoPostsAsAGroup.get(position).get(0).getLikedNum()));
         StorageReference storageReference1 = FirebaseStorage.getInstance().getReference().child(
                 twoPostsAsAGroup.get(position).get(0).getImage_path()
@@ -84,7 +102,20 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
 
         if (2 * (position + 1) <= postsArr.size()) {
             holder.textView2.setText(twoPostsAsAGroup.get(position).get(1).getBody_text());
-            holder.userName2.setText(twoPostsAsAGroup.get(position).get(1).getUserID());
+            String UID2 = twoPostsAsAGroup.get(position).get(0).getUserID();
+            // the following listener will read the current user's username
+            realtimeDB.child("Users").child(UID1).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error getting data", task.getException());
+                    }
+                    else {
+                        Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                        holder.userName2.setText(String.valueOf(task.getResult().getValue()));
+                    }
+                }
+            });
             holder.likeNum2.setText(String.valueOf(twoPostsAsAGroup.get(position).get(1).getLikedNum()));
             StorageReference storageReference2 = FirebaseStorage.getInstance().getReference().child(
                     twoPostsAsAGroup.get(position).get(1).getImage_path()

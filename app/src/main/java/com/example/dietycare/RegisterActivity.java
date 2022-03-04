@@ -9,31 +9,32 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-import android.os.Bundle;
-import android.widget.EditText;
+
+
+import java.util.HashMap;
 
 
 public class RegisterActivity extends AppCompatActivity{
 
-    private EditText username, emailAddress, passwd, passwdCfm, OTP;
+    private EditText username, email, passwd, passwdCfm, OTP;
     private Button verifyEmailBtn, registerBtn;
     private FirebaseAuth mAuth;
-    private ImageButton passwdBtn, passCfmBtn;
+    private ImageButton passwdVisibleBtn, passCfmVisibleBtn;
+    private DatabaseReference reference;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -46,16 +47,16 @@ public class RegisterActivity extends AppCompatActivity{
         }
         mAuth = FirebaseAuth.getInstance();
         username = findViewById(R.id.reg_username);
-        emailAddress = findViewById(R.id.reg_email);
+        email = findViewById(R.id.reg_email);
         passwd = findViewById(R.id.reg_password);
         passwdCfm = findViewById(R.id.reg_confirm_password);
         OTP = findViewById(R.id.otp);
         verifyEmailBtn = findViewById(R.id.button_verify);
         registerBtn = findViewById(R.id.button_register);
-        passwdBtn = findViewById(R.id.password_visible_button);
-        passCfmBtn = findViewById(R.id.confim_password_visible_button);
+        passwdVisibleBtn = findViewById(R.id.password_visible_button);
+        passCfmVisibleBtn = findViewById(R.id.confim_password_visible_button);
 
-        passwdBtn.setOnTouchListener(new View.OnTouchListener() {
+        passwdVisibleBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
@@ -70,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity{
             }
         });
 
-        passCfmBtn.setOnTouchListener(new View.OnTouchListener() {
+        passCfmVisibleBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
@@ -88,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity{
         registerBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String emailString = emailAddress.getText().toString().trim();
+                String emailString = email.getText().toString().trim();
                 String usernameString = username.getText().toString().trim();
                 String pwdString = passwd.getText().toString().trim();
                 String pwdCfmString = passwdCfm.getText().toString().trim();
@@ -104,10 +105,31 @@ public class RegisterActivity extends AppCompatActivity{
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                        startActivity(loginIntent);
-                                        finish();
+                                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                                        assert firebaseUser != null;
+                                        String userid = firebaseUser.getUid();
+
+                                        reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+
+                                        HashMap<String, String> hashMap = new HashMap<>();
+                                        hashMap.put("id", userid);
+                                        hashMap.put("username", usernameString);
+                                        hashMap.put("imageURL", "default");
+                                        hashMap.put("status", "offline");
+                                        hashMap.put("search", usernameString.toLowerCase());
+
+                                        reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()){
+                                                    // TODO: once register page finished, jump to the registering personal info page to allow users to enter their personal info
+                                                    Intent intent = new Intent(RegisterActivity.this, WalkThroughActivity.class);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            }
+                                        });
                                     } else {
                                         Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                     }

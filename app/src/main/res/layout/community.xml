@@ -32,22 +32,22 @@
                 app:srcCompat="@drawable/ic_baseline_search_24" />
 
             <TextView
-                android:id="@+id/community_following"
+                android:id="@+id/community_recommend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Following"
+                android:text="Suggest"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/community_others"
+                android:id="@+id/community_folloeing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_25sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Others"
+                android:text="Following"
                 android:textColor="#B6B6B6"
                 android:textSize="20sp" />
 
@@ -55,8 +55,8 @@
                 android:id="@+id/community_add_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:backgroundTint="@color/white"
                 app:srcCompat="@drawable/ic_follow" />
         </LinearLayout>
@@ -73,6 +73,20 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/menu_btn_progress_community"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_progress" />
+
+        <ImageButton
+            android:id="@+id/menu_btn_meal_community"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_meal" />
+
+        <ImageButton
             android:id="@+id/menu_btn_home_community"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
@@ -87,25 +101,11 @@
             app:srcCompat="@drawable/ic_community" />
 
         <ImageButton
-            android:id="@+id/menu_btn_meal_community"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_meal" />
-
-        <ImageButton
             android:id="@+id/main_btn_account_community"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_account" />
-
-        <ImageButton
-            android:id="@+id/menu_btn_progress_community"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_progress" />
 
     </LinearLayout>
 

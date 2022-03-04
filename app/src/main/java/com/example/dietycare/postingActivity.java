@@ -31,6 +31,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class postingActivity extends AppCompatActivity {
@@ -111,11 +112,14 @@ public class postingActivity extends AppCompatActivity {
                 System.out.println(selected_image_uri.getLastPathSegment());*/
 /*                file_type = getContentResolver().getType(selected_image_uri).split(Pattern.quote("/")); // get the file surfix
                 System.out.println(file_type[1]);*/
+                post_button.setEnabled(false);
                 if(!text_field.getText().toString().equals("") && selected_image_uri != null){
 
                     //upload the image to Firebase Storage first
                     StorageReference storage_reference = FirebaseStorage.getInstance().getReference().child("community_images");
-                    final StorageReference image_file_path = storage_reference.child(selected_image_uri.getLastPathSegment());
+                    String image_name = UUID.randomUUID().toString();
+                    final StorageReference image_file_path = storage_reference.child(image_name);// change the naming here
+                    // use UUID for naming instead
                     image_file_path.putFile(selected_image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -127,7 +131,7 @@ public class postingActivity extends AppCompatActivity {
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                                     DatabaseReference my_ref = database.getReference("posts").push();
                                     String key = my_ref.getKey();
-                                    String image_string = "community_images/"+selected_image_uri.getLastPathSegment();
+                                    String image_string = "community_images/"+image_name;
                                     Post post = new Post(text_field.getText().toString(), firebase_uri,
                                             FirebaseAuth.getInstance().getCurrentUser().getUid(), key, image_string, null, 0);
 /*                                    post.appendComment("123");
@@ -158,6 +162,7 @@ public class postingActivity extends AppCompatActivity {
                     });
                 }
                 else{
+                    post_button.setEnabled(true);
                     System.out.println("some field is incomplete");
                     Toast.makeText(getBaseContext(), "The post need a photo and some text", Toast.LENGTH_LONG).show();
                 }

@@ -67,6 +67,20 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageButton
+            android:id="@+id/menu_btn_progress_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_progress" />
+
+        <ImageButton
+            android:id="@+id/menu_btn_meal_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_meal" />
+
+        <ImageButton
             android:id="@+id/menu_btn_home_progress"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
@@ -81,25 +95,11 @@
             app:srcCompat="@drawable/ic_community" />
 
         <ImageButton
-            android:id="@+id/menu_btn_meal_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_meal" />
-
-        <ImageButton
             android:id="@+id/main_btn_account_progress"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_account" />
-
-        <ImageButton
-            android:id="@+id/menu_btn_progress_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_progress" />
 
     </LinearLayout>
 
@@ -209,5 +209,16 @@
         app:layout_constraintTop_toBottomOf="@+id/text_latest_intake">
 
     </com.github.mikephil.charting.charts.LineChart>
+
+    <Button
+        android:id="@+id/dailyRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DietDiary"
+        android:layout_marginStart="@dimen/_200sdp"
+        android:layout_marginTop="@dimen/_260sdp"
+        android:backgroundTint="@color/purple_200"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

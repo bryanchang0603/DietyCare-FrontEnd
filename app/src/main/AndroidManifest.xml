@@ -16,7 +16,11 @@
         android:theme="@style/Theme.DietyCare"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity"
+            android:name=".MessagePageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DietyCare.NoActionBar" />
+        <activity
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".WalkThroughActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".accountActivity" />
         <activity android:name=".editActivity" />
@@ -34,11 +39,15 @@
         <activity android:name=".communityActivity" />
         <activity android:name=".ImageRecognitionActivity" />
         <activity
+            android:name=".messageActivity"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".MealRecommendationActivity"
             android:exported="false" />
         <activity android:name=".searchResultActivity" />
         <activity android:name=".shareActivity" />
         <activity android:name=".PostDetailActivity" />
+        <activity android:name=".DietDiary" />
         <activity
             android:name=".MealRecommendationActivity"
             android:exported="false" />
