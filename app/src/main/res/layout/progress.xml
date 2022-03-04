@@ -67,6 +67,20 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageButton
+            android:id="@+id/menu_btn_progress_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_progress" />
+
+        <ImageButton
+            android:id="@+id/menu_btn_meal_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_meal" />
+
+        <ImageButton
             android:id="@+id/menu_btn_home_progress"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
@@ -81,25 +95,11 @@
             app:srcCompat="@drawable/ic_community" />
 
         <ImageButton
-            android:id="@+id/menu_btn_meal_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_meal" />
-
-        <ImageButton
             android:id="@+id/main_btn_account_progress"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_account" />
-
-        <ImageButton
-            android:id="@+id/menu_btn_progress_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_progress" />
 
     </LinearLayout>
 
@@ -116,77 +116,6 @@
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toBottomOf="@+id/text_latest_intake" />-->
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/latest_calorie_intake_LineChart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/view7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_latest_intake" >
-
-    </com.github.mikephil.charting.charts.LineChart>
-
-    <TextView
-        android:id="@+id/line_graph_bigining_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/cambay"
-        android:text="Latest Calorie Intake"
-        android:textColor="#6C4DC2"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/icons"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="@dimen/_10sdp"/>
-
-    <TextView
-        android:id="@+id/line_graph_ending_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/cambay"
-        android:text="Latest Calorie Intake"
-        android:textColor="#6C4DC2"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/icons"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/_10sdp"/>
-
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/latest_calorie_intake_pie_chart"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginEnd="@dimen/_170sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calorie_info" />
-
-    <Spinner
-        android:id="@+id/spinner_bar_graph"
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/latest_calorie_intake_pie_chart" />
-
-    <ImageView
-        android:id="@+id/calorie_intake_img2"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_marginStart="@dimen/_170sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calorie_info" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout3"
@@ -209,5 +138,87 @@
             app:textColorSelected="@color/purple_200" />
 
     </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/spinner_bar_graph"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/latest_calorie_intake_pie_chart" />
+
+    <TextView
+        android:id="@+id/line_graph_ending_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/cambay"
+        android:text="Latest Calorie Intake"
+        android:textColor="#6C4DC2"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/icons"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/calorie_intake_img2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginStart="@dimen/_170sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calorie_info" />
+
+    <TextView
+        android:id="@+id/line_graph_bigining_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:fontFamily="@font/cambay"
+        android:text="Latest Calorie Intake"
+        android:textColor="#6C4DC2"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/icons"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/latest_calorie_intake_pie_chart"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_170sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calorie_info" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/latest_calorie_intake_LineChart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/view7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_latest_intake">
+
+    </com.github.mikephil.charting.charts.LineChart>
+
+    <Button
+        android:id="@+id/dailyRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DietDiary"
+        android:layout_marginStart="@dimen/_200sdp"
+        android:layout_marginTop="@dimen/_260sdp"
+        android:backgroundTint="@color/purple_200"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

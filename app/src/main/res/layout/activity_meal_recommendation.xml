@@ -90,6 +90,20 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/menu_btn_progress_recmd"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_progress" />
+
+        <ImageButton
+            android:id="@+id/menu_btn_meal_recmd"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_meal" />
+
+        <ImageButton
             android:id="@+id/menu_btn_home_recmd"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
@@ -104,25 +118,11 @@
             app:srcCompat="@drawable/ic_community" />
 
         <ImageButton
-            android:id="@+id/menu_btn_meal_recmd"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_meal" />
-
-        <ImageButton
             android:id="@+id/main_btn_account_recmd"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_account" />
-
-        <ImageButton
-            android:id="@+id/menu_btn_progress_recmd"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_progress" />
 
     </LinearLayout>
 
