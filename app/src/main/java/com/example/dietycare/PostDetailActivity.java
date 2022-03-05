@@ -135,10 +135,10 @@ public class PostDetailActivity extends AppCompatActivity {
                 //there is a bug here
                 if((comments = (HashMap<String, HashMap>) snapshot.child("attached_comment").getValue()) != null){
                     for (HashMap comment : (Collection<HashMap>) comments.values()) {
-                        String commentUserID = (String) comment.get("userID");
+                        String commentUsername = (String) comment.get("username");
                         String commentText = (String) comment.get("comment_text");
                         String timeStamp = sf.format(new Date(Long.parseLong(comment.get("timeStamp").toString())));
-                        commentList.add(String.format("%s: %s  %s", commentUserID, commentText, timeStamp));
+                        commentList.add(String.format("%s: %s  %s", commentUsername, commentText, timeStamp));
                     }
                     commentList.sort(Comparator
                             .comparing(s -> ((String) s).substring(s.length() - 19), Comparator.reverseOrder()));
