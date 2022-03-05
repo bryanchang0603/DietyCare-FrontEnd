@@ -8,12 +8,14 @@ public class Comment {
     private String userID;
     private Object timeStamp;
     private String commentKey;
+    private String username;
 
-    public Comment(String comment_text, String userID, String commentKey) {
+    public Comment(String comment_text, String userID, String commentKey, String username) {
         this.comment_text = comment_text;
         this.userID = userID;
         this.commentKey = commentKey;
         this.timeStamp = ServerValue.TIMESTAMP;
+        this.username = username;
     }
 
     public String getComment_text() {
@@ -30,6 +32,14 @@ public class Comment {
 
     public String getCommentKey() {
         return commentKey;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setComment_text(String comment_text) {

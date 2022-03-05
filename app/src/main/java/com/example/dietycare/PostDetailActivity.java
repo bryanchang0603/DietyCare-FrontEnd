@@ -57,12 +57,14 @@ public class PostDetailActivity extends AppCompatActivity {
     private DatabaseReference post_ref, post_like_ref;
     private ArrayList<String> like_lists = new ArrayList<>();
     private ImageView post_image;
+    private TextView postOwnerName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.post_detail);
 
         //setting up ref to the post
+        postOwnerName = findViewById(R.id.postOwnerName);
         Intent intent = getIntent();
         post_path = "posts/"+intent.getStringExtra("postID");
         post_ref = database.getReference().child(post_path);
@@ -90,7 +92,6 @@ public class PostDetailActivity extends AppCompatActivity {
                 System.out.println(like_lists);*/
 
                 //set Post Owner's Name
-                TextView postOwnerName = findViewById(R.id.postOwnerName);
                 String UID = snapshot.child("userID").getValue().toString();
 
                 database.getReference().child("Users").child(UID).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -185,7 +186,8 @@ public class PostDetailActivity extends AppCompatActivity {
                                                    DatabaseReference comment_ref = database.getReference(post_path).child("attached_comment").push();
                                                    String comment_key = comment_ref.getKey();
                                                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                                   Comment comment = new Comment(commentText, uid, comment_key);
+                                                   String username = (String) postOwnerName.getText();
+                                                   Comment comment = new Comment(commentText, uid, comment_key, username);
                                                    comment_ref.setValue(comment);
 /*                                                   System.out.println(comment_ref);*/
                      /*                              comment_list.add(comment_key);
