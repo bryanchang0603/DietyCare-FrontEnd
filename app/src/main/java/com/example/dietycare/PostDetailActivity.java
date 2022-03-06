@@ -54,8 +54,8 @@ public class PostDetailActivity extends AppCompatActivity {
     private ImageButton back_bt, comment_bt, like_bt;
     private String commentText = "";
     private String post_path;
-    private static String current_username;
-    private static String current_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();;
+    private String current_username;
+    private String current_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference post_ref, post_like_ref;
     private ArrayList<String> like_lists = new ArrayList<>();
