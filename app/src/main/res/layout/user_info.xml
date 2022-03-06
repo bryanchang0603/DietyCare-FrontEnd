@@ -207,7 +207,7 @@
         android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="120dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView24" />
@@ -220,6 +220,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/getin"
         tools:layout_editor_absoluteY="422dp" />
+
+    <ImageView
+        android:id="@+id/postPicture1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:src="@drawable/ic_account"
+        app:layout_constraintTop_toBottomOf="@+id/textView24"
+        app:layout_constraintStart_toStartOf="@+id/textView24"/>
+
+    <ImageView
+        android:id="@+id/postPicture2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:src="@drawable/ic_account"
+        app:layout_constraintTop_toBottomOf="@+id/textView24"
+        app:layout_constraintStart_toEndOf="@+id/postPicture1"/>
+
+    <ImageView
+        android:id="@+id/postPicture3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:src="@drawable/ic_account"
+        app:layout_constraintTop_toBottomOf="@+id/textView24"
+        app:layout_constraintStart_toEndOf="@+id/postPicture2"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/material1"
