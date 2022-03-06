@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -53,6 +54,8 @@ public class PostDetailActivity extends AppCompatActivity {
     private ImageButton back_bt, comment_bt, like_bt;
     private String commentText = "";
     private String post_path;
+    private static String current_username;
+    private static String current_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference post_ref, post_like_ref;
     private ArrayList<String> like_lists = new ArrayList<>();
@@ -102,6 +105,19 @@ public class PostDetailActivity extends AppCompatActivity {
                         }
                         else {
                             postOwnerName.setText(String.valueOf(task.getResult().getValue()));
+                        }
+                    }
+                });
+
+                database.getReference("Users").child(current_uid).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Error getting data", task.getException());
+                        }
+                        else {
+                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                            current_username = String.valueOf(task.getResult().getValue());
                         }
                     }
                 });
@@ -185,9 +201,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                                    commentText = input.getText().toString();
                                                    DatabaseReference comment_ref = database.getReference(post_path).child("attached_comment").push();
                                                    String comment_key = comment_ref.getKey();
-                                                   String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                                   String username = (String) postOwnerName.getText();
-                                                   Comment comment = new Comment(commentText, uid, comment_key, username);
+                                                   Comment comment = new Comment(commentText, current_uid, comment_key, current_username);
                                                    comment_ref.setValue(comment);
 /*                                                   System.out.println(comment_ref);*/
                      /*                              comment_list.add(comment_key);
