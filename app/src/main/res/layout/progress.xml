@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/progress_top"
-        android:layout_width="391dp"
-        android:layout_height="124dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/top" />
@@ -161,16 +161,6 @@
         app:layout_constraintBottom_toTopOf="@+id/icons"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
-        android:id="@+id/calorie_intake_img2"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_marginStart="@dimen/_170sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calorie_info" />
 
     <TextView
         android:id="@+id/line_graph_bigining_date"
@@ -210,15 +200,37 @@
 
     </com.github.mikephil.charting.charts.LineChart>
 
+
     <Button
         android:id="@+id/dailyRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DietDiary"
-        android:layout_marginStart="@dimen/_200sdp"
-        android:layout_marginTop="@dimen/_260sdp"
+        android:text="Diet Diary"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_80sdp"
         android:backgroundTint="@color/purple_200"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toEndOf="@id/latest_calorie_intake_pie_chart"
+        app:layout_constraintTop_toTopOf="@id/latest_calorie_intake_pie_chart"/>
+
+    <ImageView
+        android:id="@+id/icfood"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="@id/dailyRecord"
+        app:layout_constraintBottom_toTopOf="@+id/dailyRecord"
+        app:srcCompat="@drawable/ic_food"
+        app:tint="@color/purple_200" />
+
+    <ImageView
+        android:id="@+id/icDiary"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_30sdp"
+        app:layout_constraintStart_toStartOf="@id/icfood"
+        app:layout_constraintBottom_toTopOf="@+id/dailyRecord"
+        app:srcCompat="@drawable/ic_diary"
+        app:tint="@color/purple_200" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
