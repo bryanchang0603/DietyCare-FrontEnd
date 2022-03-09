@@ -127,12 +127,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="47dp"
         android:text="Followers"
         android:textColor="@color/black"
         android:textSize="16dp"
         app:layout_constraintStart_toEndOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/material1" />
+        tools:layout_editor_absoluteY="221dp" />
 
     <TextView
         android:id="@+id/textView17"
@@ -176,6 +175,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/toux" />
+
+    <ImageButton
+        android:id="@+id/community_add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/textView18"
+        app:layout_constraintTop_toBottomOf="@+id/account_user_name"
+        app:srcCompat="@drawable/ic_follow" />
 
     <View
         android:layout_width="match_parent"
@@ -247,20 +255,6 @@
         android:src="@drawable/ic_account"
         app:layout_constraintTop_toBottomOf="@+id/textView24"
         app:layout_constraintStart_toEndOf="@+id/postPicture2"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/material1"
-        android:layout_width="60dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="143dp"
-        android:layout_marginEnd="8dp"
-        android:text="Edit"
-        android:textColor="#FAFAFA"
-        android:textSize="9dp"
-        app:backgroundTint="#49A6D8"
-        app:cornerRadius="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view7"

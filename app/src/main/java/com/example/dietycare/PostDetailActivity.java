@@ -51,7 +51,7 @@ import java.util.Map;
 
 public class PostDetailActivity extends AppCompatActivity {
 
-    private ImageButton back_bt, comment_bt, like_bt;
+    private ImageButton back_bt, comment_bt, like_bt, post_owner_bt;
     private String commentText = "";
     private String post_path;
     private String current_username;
@@ -73,6 +73,18 @@ public class PostDetailActivity extends AppCompatActivity {
         post_ref = database.getReference().child(post_path);
         post_like_ref = post_ref.getRef().child("user_liked");
         System.out.println(post_like_ref);
+
+        post_owner_bt = findViewById(R.id.postOwnerIcon);
+        post_owner_bt.setOnClickListener(new View.OnClickListener() {
+                                             @Override
+                                             public void onClick(View view) {
+                                                 Intent intent = new Intent(PostDetailActivity.this, userInfoActivity.class);
+                                                 //Starting of the Intent
+                                                 startActivity(intent);
+                                                 finish();
+                                             }
+                                         }
+        );
 
         //like button initalization for color setup
         like_bt = findViewById(R.id.likeButton);
