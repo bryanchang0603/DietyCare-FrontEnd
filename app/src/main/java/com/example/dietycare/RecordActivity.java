@@ -41,7 +41,6 @@ public class RecordActivity extends AppCompatActivity {
     private TextView food_tv, date_tv, cal_tv, amount_tv;
     private EditText amount_et, number_et;
     private Spinner meal_type_sp;
-    private DatabaseReference realtimeDB = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
