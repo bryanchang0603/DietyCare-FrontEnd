@@ -13,6 +13,10 @@
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/community_item.xml" value="0.4930555555555556" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/dialog_date.xml" value="0.2884259259259259" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/edit.xml" value="0.2949074074074074" />
+        <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/follow.xml" value="0.2405149051490515" />
+        <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/follow_user.xml" value="0.2405149051490515" />
+        <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/follower_user.xml" value="0.22" />
+        <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/following_user.xml" value="0.2405149051490515" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/fragment_home.xml" value="0.2462962962962963" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/item_container_received_message.xml" value="0.2462962962962963" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/item_container_sent_message.xml" value="0.2462962962962963" />

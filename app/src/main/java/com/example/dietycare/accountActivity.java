@@ -16,13 +16,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+//TODO: setup SharedPreferences so both following and follower  can be pressed
 
 public class accountActivity extends AppCompatActivity {
     private TextView textGet;
     private String UID;
     private DatabaseReference realtimeDB = FirebaseDatabase.getInstance().getReference();
+    private TextView postNum, followingNum, followerNum, Following_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,15 @@ public class accountActivity extends AppCompatActivity {
         ImageButton home_btn, progress_btn, meal_btn, community_btn;
         TextView sign_out = findViewById(R.id.signout_field);
         TextView message_btn = findViewById(R.id.textView15);
+        Following_text = findViewById(R.id.following);
+
+        Following_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(accountActivity.this, follow_activity.class);
+                startActivity(intent);
+            }
+        });
 
 
         btn_edit.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +148,63 @@ public class accountActivity extends AppCompatActivity {
                                         }
                                     }
         );
+
+        postNum = findViewById(R.id.PostNum);
+        DatabaseReference postDBRef = FirebaseDatabase.getInstance().getReference().child("posts");
+        postDBRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int own_post = 0;
+                for (DataSnapshot i : snapshot.getChildren()){
+                    String postUID = i.child("userID").getValue().toString();
+                    System.out.println(postUID + UID);
+                    own_post += (postUID.equals(UID)) ? 1 : 0;
+                }
+                postNum.setText(String.valueOf(own_post));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        followingNum = findViewById(R.id.followingNum);
+        DatabaseReference followingDBRef = FirebaseDatabase.getInstance().getReference().child("following").child(UID);
+        followingDBRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int following_num = 0;
+                for (DataSnapshot i : snapshot.getChildren()){
+                    following_num += 1;
+                }
+                followingNum.setText(String.valueOf(following_num));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        followerNum = findViewById(R.id.followerNum);
+        DatabaseReference followerDBRef = FirebaseDatabase.getInstance().getReference().child("follower").child(UID);
+        followerDBRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int follower_num = 0;
+                for (DataSnapshot i : snapshot.getChildren()){
+                    follower_num += 1;
+                }
+                followerNum.setText(String.valueOf(follower_num));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }
 
