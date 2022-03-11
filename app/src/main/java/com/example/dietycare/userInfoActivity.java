@@ -18,19 +18,42 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class userInfoActivity extends AppCompatActivity {
     private ImageButton back_bt;
     private String UID, user_diet_goal = "Lose Weight";
     private int num_of_posts = 1, num_of_followings = 3, num_of_followers = 5, days_on_dietycare = 123;
     private DatabaseReference realtimeDB = FirebaseDatabase.getInstance().getReference();
+    private JSONObject current_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_info);
 
+        // get userId that we are working with
         Intent intent = getIntent();
         UID = intent.getStringExtra("postOwnerId");
+
+        // get this user from DynamoDB
+        Thread thread = new Thread() {
+            public void run() {
+                try {
+                    current_user = getUser(UID);
+                    user_diet_goal = current_user.getString("diet_goal");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
 
         TextView username = findViewById(R.id.account_user_name);
 
@@ -77,6 +100,31 @@ public class userInfoActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
+    }
+    private JSONObject getUser(String userId) throws Exception{
+        // Create a neat value object to hold the URL
+        String str_url = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/user?user_id=" + userId;
+        URL url = new URL(str_url) ;
+        // Open a connection(?) on the URL(??) and cast the response(???)
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        // Now it's "open", we can set the request method, headers etc.
+        connection.setRequestProperty("accept", "application/json");
+
+        // This line makes the request
+        InputStream responseStream = connection.getInputStream();
+        BufferedInputStream bis = new BufferedInputStream(responseStream);
+        ByteArrayOutputStream buf = new ByteArrayOutputStream();
+        for (int result = bis.read(); result != -1; result = bis.read()) {
+            buf.write((byte) result);
+        }
+        String response = buf.toString("UTF-8");
+
+        final JSONObject obj = new JSONObject(response);
+
+        return obj;
+
 
     }
 }

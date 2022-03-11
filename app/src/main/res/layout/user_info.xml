@@ -42,9 +42,9 @@
 
     <TextView
         android:id="@+id/textView22"
-        android:layout_width="@dimen/_75sdp"
+        android:layout_width="@dimen/_115sdp"
         android:layout_height="@dimen/_20sdp"
-        android:layout_marginStart="256dp"
+        android:layout_marginStart="206dp"
         android:layout_marginTop="32dp"
         android:textColor="@color/black"
         android:textSize="@dimen/_15sdp"
