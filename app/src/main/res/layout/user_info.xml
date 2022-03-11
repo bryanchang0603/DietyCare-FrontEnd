@@ -185,6 +185,15 @@
         app:layout_constraintTop_toBottomOf="@+id/account_user_name"
         app:srcCompat="@drawable/ic_follow" />
 
+    <ImageButton
+        android:id="@+id/community_chat_button"
+        android:layout_width="73dp"
+        android:layout_height="44dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/community_add_button"
+        app:layout_constraintTop_toBottomOf="@+id/account_user_name"
+        app:srcCompat="@drawable/icon_chat" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
