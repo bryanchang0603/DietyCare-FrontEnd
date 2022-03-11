@@ -1,25 +1,30 @@
 package com.example.dietycare;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONObject;
 
@@ -31,7 +36,6 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 
 public class userInfoActivity extends AppCompatActivity {
     private ImageButton back_bt;
@@ -127,6 +131,31 @@ public class userInfoActivity extends AppCompatActivity {
                     if (counter == 0) break;
                     String image_path = (String) postSnapshot.child("image_path").getValue();
                     System.out.println(image_path);
+                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(image_path);
+                    if (counter == 3){
+                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(userInfoActivity.this).load(uri).fitCenter().into((ImageView) findViewById(R.id.postPicture1));
+                            }
+                        });
+                    }
+                    else if (counter == 2){
+                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(userInfoActivity.this).load(uri).fitCenter().into((ImageView) findViewById(R.id.postPicture2));
+                            }
+                        });
+                    }
+                    else if (counter == 1){
+                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(userInfoActivity.this).load(uri).fitCenter().into((ImageView) findViewById(R.id.postPicture3));
+                            }
+                        });
+                    }
                     counter--;
                 }
             }
