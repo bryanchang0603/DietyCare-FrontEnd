@@ -86,7 +86,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                          }
         );
 
-        //like button initalization for color setup
+        //like button initialization for color setup
         like_bt = findViewById(R.id.likeButton);
         String UID = FirebaseAuth.getInstance().getUid();
 
