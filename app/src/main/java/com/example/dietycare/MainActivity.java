@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor SPEditor;
     TextView textLeftCal;
+    private FirebaseUser firebaseUser;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,139 +153,26 @@ public class MainActivity extends AppCompatActivity {
 
     public void main_page_event(){
 
-        String path = getApplicationContext().getFilesDir().toString()+"/personInfo.txt";
-        File file = new File(path);
-        sharedPreferences = getSharedPreferences("userPref", 0);
-        int mealGoalSP = sharedPreferences.getInt("mealGoalSP", 0); //default 0, no radio button will be selected
-            // 1 means build build muscles, 2 means lose weight, 3 means remain shape
-        SPEditor = sharedPreferences.edit();
-        handler = new newHandler();
-        HashMap<String, String> personInfo = new HashMap<String, String>();
-        long left = sharedPreferences.getLong("leftCal", 0);
-        leftCal = Double.longBitsToDouble(left);
-        textLeftCal = findViewById(R.id.text_val_left);
-        textLeftCal.setText(String.format("%.1f",leftCal));
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        try{
-            Scanner reader = new Scanner(file);
-            while (reader.hasNextLine()) {
-                String data = reader.nextLine();
-                String[] temp = data.split(" ");
-                personInfo.put(temp[0], temp[1]);
-            }
-            height = Double.parseDouble(personInfo.get("Height"));
-            weight = Double.parseDouble(personInfo.get("Weight"));
-            targetWeight = Double.parseDouble(personInfo.get("Target_Weight"));
-            bodyFat = Double.parseDouble(personInfo.get("Body_Fat"))/100;
-            birthYear = Integer.parseInt(personInfo.get("Year"));
-            birthMonth = Integer.parseInt(personInfo.get("Month"));
-            birthDate = Integer.parseInt(personInfo.get("Day"));
-            gender = personInfo.get("Sex").charAt(0);
-            bodyType = personInfo.get("Body_Type").toLowerCase();
-            exerciseLevel = Integer.parseInt(personInfo.get("Exercise"));
-        } catch (FileNotFoundException e) {
-            displaySuggested(0,0,0,0);
-            displayConsumed(0,0,0,0);
-            TextView textLeftCal = findViewById(R.id.text_val_left);
-            textLeftCal.setText("0");
-        }
+        userID = firebaseUser.getUid().toString();
+        System.out.println(userID);
+        get_user_info(userID);
 
-        // calculate age
-        Calendar cal = Calendar.getInstance();
-        int currentYear = cal.get(Calendar.YEAR);
-        int currentMonth = cal.get(Calendar.MONTH)+1;
-        int currentDate = cal.get(Calendar.DATE);
-        age = currentYear - birthYear;
+    }
 
-        if (currentMonth < birthMonth) {
-            age--;
-        } else if (currentMonth == birthMonth) {
-            if (currentDate < birthDate) {
-                age--;
-            }
-        }
-
-
-        // code for setting the radio buttons' saved status
-        RadioButton rbBuild, rbLose, rbRemain;
-        String customParam, consumedInfo, urlParamTarget, urlConsumed;
-        rbBuild = findViewById(R.id.radioButton_muscle);
-        rbLose = findViewById(R.id.radioButton_weight);
-        rbRemain = findViewById(R.id.radioButton_shape);
-
-        int userID = 123;
-        //String intakeDate = String.format("%d-%02d-%02d", currentYear, currentMonth, currentDate);
-        String intakeDate = "2022-02-03";
-        consumedInfo = String.format("user_id=%d&intake_date=%s",userID, intakeDate);
-        urlConsumed = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/dailyNutrient?" + consumedInfo;
-
-        switch(mealGoalSP){
-            case 1:
-                rbBuild.setChecked(true);
-                customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
-                        age, weight, height, gender, exerciseLevel, bodyFat, bodyType);
-                urlParamTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + customParam;
-                set_diet_goal(handler, SPEditor,1, urlConsumed, urlParamTarget);
-                break;
-            case 2:
-                rbLose.setChecked(true);
-                customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
-                        age, weight, height, gender, targetWeight, bodyFat);
-                urlParamTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + customParam;
-                set_diet_goal(handler, SPEditor, 2, urlConsumed, urlParamTarget);
-                break;
-            case 3:
-                rbRemain.setChecked(true);
-                customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
-                        age, weight, height, gender, weight, bodyFat);
-                urlParamTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + customParam;
-                set_diet_goal(handler, SPEditor, 3, urlConsumed,urlParamTarget);
-                break;
-                default:
-                    rbBuild.setChecked(false);
-                    rbLose.setChecked(false);
-                    rbRemain.setChecked(false);
-
-        }
-
-        // radio button saving status end
-
-        final RadioGroup radGroup= findViewById(R.id.radio_group);
-        radGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+    private void get_user_info (String userID){
+        String url_user = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/user?user_id="+userID;
+        userHandler handlerUser = new userHandler();
+        new Thread(new Runnable() {
             @Override
-            public void onCheckedChanged(RadioGroup rg, int id) {
-                RadioButton rb = findViewById(id);
-                String temp, urlTarget, consumedInfo, urlConsumed;
-                dietGoalIs = rb.getText().toString();
-
-                int userID = 123;
-                String intakeDate = "2022-02-03";
-
-                consumedInfo = String.format("user_id=%d&intake_date=%s",userID, intakeDate);
-                urlConsumed = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/dailyNutrient?" + consumedInfo;
-
-                switch (dietGoalIs) {
-                    case "build muscles":
-                        temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
-                                age, weight, height, gender, exerciseLevel, bodyFat, bodyType);
-                        urlTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + temp;
-                        set_diet_goal(handler, SPEditor, 1, urlConsumed, urlTarget);
-                        break;
-                    case "lose weight":
-                        temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
-                                age, weight, height, gender, targetWeight, bodyFat);
-                        urlTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
-                        set_diet_goal(handler, SPEditor, 2, urlConsumed, urlTarget);
-                        break;
-                    case "remain shape":
-                        temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
-                                age, weight, height, gender, weight, bodyFat);
-                        urlTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
-                        set_diet_goal(handler, SPEditor, 3, urlConsumed, urlTarget);
-                        break;
-                }
+            public void run() {
+                String output = requestData(url_user, "GET");
+                Message msg = handlerUser.obtainMessage();
+                msg.obj = output;
+                handlerUser.sendMessage(msg);
             }
-        });
+        }).start();
     }
 
     private void set_diet_goal(newHandler handler, SharedPreferences.Editor SPEditor, int mealGoalSP, String paramURLConsumed, String paramURLTarget){
@@ -422,6 +311,134 @@ public class MainActivity extends AppCompatActivity {
         return "None";
     }
 
+    class userHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            outputStr = msg.obj.toString();
+            sharedPreferences = getSharedPreferences("userPref", 0);
+            int mealGoalSP = sharedPreferences.getInt("mealGoalSP", 0); //default 0, no radio button will be selected
+            // 1 means build build muscles, 2 means lose weight, 3 means remain shape
+            SPEditor = sharedPreferences.edit();
+            handler = new newHandler();
+            HashMap<String, String> personInfo = new HashMap<String, String>();
+            long left = sharedPreferences.getLong("leftCal", 0);
+            leftCal = Double.longBitsToDouble(left);
+            textLeftCal = findViewById(R.id.text_val_left);
+            textLeftCal.setText(String.format("%.1f",leftCal));
+
+            try {
+                JSONObject jobj = new JSONObject(outputStr);
+                height = Double.parseDouble(jobj.get("height").toString());
+                weight = Double.parseDouble(jobj.get("weight").toString());
+                targetWeight = Double.parseDouble(jobj.get("target_weight").toString());
+                bodyFat = Double.parseDouble(jobj.get("body_fat").toString());
+                birthYear = Integer.parseInt(jobj.get("b_year").toString());
+                birthMonth = Integer.parseInt(jobj.get("b_month").toString());
+                birthDate = Integer.parseInt(jobj.get("b_day").toString());
+                gender = jobj.get("gender").toString().charAt(0);
+                bodyType = jobj.get("body_type").toString().toLowerCase();
+                exerciseLevel = Integer.parseInt(jobj.get("exercise_level").toString());
+
+                // calculate age
+                Calendar cal = Calendar.getInstance();
+                int currentYear = cal.get(Calendar.YEAR);
+                int currentMonth = cal.get(Calendar.MONTH)+1;
+                int currentDate = cal.get(Calendar.DATE);
+                age = currentYear - birthYear;
+
+                if (currentMonth < birthMonth) {
+                    age--;
+                } else if (currentMonth == birthMonth) {
+                    if (currentDate < birthDate) {
+                        age--;
+                    }
+                }
+
+                // code for setting the radio buttons' saved status
+                RadioButton rbBuild, rbLose, rbRemain;
+                String customParam, consumedInfo, urlParamTarget, urlConsumed;
+                rbBuild = findViewById(R.id.radioButton_muscle);
+                rbLose = findViewById(R.id.radioButton_weight);
+                rbRemain = findViewById(R.id.radioButton_shape);
+
+                String intakeDate = generateToday();
+                consumedInfo = String.format("user_id=%s&intake_date=%s",userID, intakeDate);
+                urlConsumed = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/dailyNutrient?" + consumedInfo;
+
+                switch(mealGoalSP){
+                    case 1:
+                        rbBuild.setChecked(true);
+                        customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
+                                age, weight, height, gender, exerciseLevel, bodyFat, bodyType);
+                        urlParamTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + customParam;
+                        set_diet_goal(handler, SPEditor,1, urlConsumed, urlParamTarget);
+                        break;
+                    case 2:
+                        rbLose.setChecked(true);
+                        customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
+                                age, weight, height, gender, targetWeight, bodyFat);
+                        urlParamTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + customParam;
+                        set_diet_goal(handler, SPEditor, 2, urlConsumed, urlParamTarget);
+                        break;
+                    case 3:
+                        rbRemain.setChecked(true);
+                        customParam = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
+                                age, weight, height, gender, weight, bodyFat);
+                        urlParamTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + customParam;
+                        set_diet_goal(handler, SPEditor, 3, urlConsumed,urlParamTarget);
+                        break;
+                    default:
+                        rbBuild.setChecked(false);
+                        rbLose.setChecked(false);
+                        rbRemain.setChecked(false);
+
+                }
+
+                // radio button saving status end
+
+                final RadioGroup radGroup= findViewById(R.id.radio_group);
+                radGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup rg, int id) {
+                        RadioButton rb = findViewById(id);
+                        String temp, urlTarget, consumedInfo, urlConsumed;
+                        dietGoalIs = rb.getText().toString();
+
+                        String intakeDate = generateToday();
+
+                        consumedInfo = String.format("user_id=%s&intake_date=%s",userID, intakeDate);
+                        urlConsumed = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/dailyNutrient?" + consumedInfo;
+
+                        switch (dietGoalIs) {
+                            case "build muscles":
+                                temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&exercise_level=%d&body_fat=%.2f&body_type=%s",
+                                        age, weight, height, gender, exerciseLevel, bodyFat, bodyType);
+                                urlTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/muscleIntakeCustomization?" + temp;
+                                set_diet_goal(handler, SPEditor, 1, urlConsumed, urlTarget);
+                                break;
+                            case "lose weight":
+                                temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
+                                        age, weight, height, gender, targetWeight, bodyFat);
+                                urlTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
+                                set_diet_goal(handler, SPEditor, 2, urlConsumed, urlTarget);
+                                break;
+                            case "remain shape":
+                                temp = String.format("age=%d&weight=%.1f&height=%.1f&gender=%s&target_weight=%.1f&body_fat=%.2f",
+                                        age, weight, height, gender, weight, bodyFat);
+                                urlTarget = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/weightIntakeCustomization?" + temp;
+                                set_diet_goal(handler, SPEditor, 3, urlConsumed, urlTarget);
+                                break;
+                        }
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     class newHandler extends Handler {
         public String outputStr;
         @Override
@@ -492,6 +509,14 @@ public class MainActivity extends AppCompatActivity {
         //Starting of the Intent
         startActivity(intent);
         finish();
+    }
+
+    private String generateToday() {
+        Calendar cal = Calendar.getInstance();
+        int currentYear = cal.get(Calendar.YEAR);
+        int currentMonth = cal.get(Calendar.MONTH)+1;
+        int currentDate = cal.get(Calendar.DATE);
+        return String.format("%d-%02d-%02d", currentYear, currentMonth, currentDate);
     }
 
 }
