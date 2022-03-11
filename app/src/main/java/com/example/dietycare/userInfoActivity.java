@@ -1,19 +1,19 @@
 package com.example.dietycare;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,11 +25,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class userInfoActivity extends AppCompatActivity {
     private ImageButton back_bt;
     private String UID, user_diet_goal = "Lose Weight";
-    private int num_of_posts = 1, num_of_followings = 3, num_of_followers = 5, days_on_dietycare = 123;
+    private int num_of_posts = 1, num_of_followings = 3, num_of_followers = 5;
+    private long days_on_dietycare = 123;
     private DatabaseReference realtimeDB = FirebaseDatabase.getInstance().getReference();
     private JSONObject current_user;
 
@@ -44,16 +48,26 @@ public class userInfoActivity extends AppCompatActivity {
 
         // get this user from DynamoDB
         Thread thread = new Thread() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public void run() {
                 try {
                     current_user = getUser(UID);
                     user_diet_goal = current_user.getString("diet_goal");
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-M-d");
+                    LocalDate registration_date = LocalDate.parse(current_user.getString("registration_date"), dtf);
+                    LocalDate now = LocalDate.parse(LocalDate.now().format(dtf), dtf);
+                    days_on_dietycare = Duration.between(registration_date.atStartOfDay(), now.atStartOfDay()).toDays();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         };
         thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         TextView username = findViewById(R.id.account_user_name);
 
