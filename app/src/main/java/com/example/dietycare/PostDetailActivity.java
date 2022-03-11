@@ -55,6 +55,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private String commentText = "";
     private String post_path;
     private String current_username;
+    private String post_owner_uid;
     private String current_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference post_ref, post_like_ref;
@@ -74,11 +75,25 @@ public class PostDetailActivity extends AppCompatActivity {
         post_like_ref = post_ref.getRef().child("user_liked");
         System.out.println(post_like_ref);
 
+        post_ref.getRef().child("userID").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    post_owner_uid = String.valueOf(task.getResult().getValue());
+                }
+            }
+        });
+
         post_owner_bt = findViewById(R.id.postOwnerIcon);
         post_owner_bt.setOnClickListener(new View.OnClickListener() {
                                              @Override
                                              public void onClick(View view) {
                                                  Intent intent = new Intent(PostDetailActivity.this, userInfoActivity.class);
+                                                 intent.putExtra("postOwnerId", post_owner_uid);
                                                  //Starting of the Intent
                                                  startActivity(intent);
                                                  finish();

@@ -29,6 +29,9 @@ public class userInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_info);
 
+        Intent intent = getIntent();
+        UID = intent.getStringExtra("postOwnerId");
+
         TextView username = findViewById(R.id.account_user_name);
 
         // set post, following, follower numbers
@@ -55,9 +58,6 @@ public class userInfoActivity extends AppCompatActivity {
                                        }
                                    }
         );
-
-        // TODO change to the actual user's uid instead of current user
-        UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
         // the following listener will read the current user's username and upload to the page
