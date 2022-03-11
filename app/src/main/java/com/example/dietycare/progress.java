@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.auth.FirebaseAuth;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -65,10 +66,10 @@ public class progress extends AppCompatActivity {
     private ArrayList Cal_entries_ArrayList, Fat_entries_ArrayList, Ptn_entries_ArrayList, CHO_entries_ArrayList;
     private float Fat_consumed_total = 0, Ptn_consumed_total = 0, CHO_consumed_total = 0;
     private Spinner bar_graph_sp;
-    private String bar_selection = "calories";
+    private String bar_selection = "calories", user_id;;
     private TextView bar_chart_title;
-    private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    DateTimeFormatter Localformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-d");
+    DateTimeFormatter Localformatter = DateTimeFormatter.ofPattern("yyyy-M-d");
     private progressHandler handler;
     private LocalDate today;
     private String URLParam;
@@ -80,6 +81,9 @@ public class progress extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.progress);
+
+        user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         handler = new progress.progressHandler();
         today = LocalDate.now();
         System.out.println(today);
@@ -110,7 +114,7 @@ public class progress extends AppCompatActivity {
                 // in the logcat which is selected.
                 Date selectedDate = date.getTime();
                 begining_date.setText(formatter.format(selectedDate));
-                URLParam = String.format("start_date=%s&end_date=%s&user_id=123", formatter.format(selectedDate), today.format(Localformatter));
+                URLParam = String.format("start_date=%s&end_date=%s&user_id="+user_id, formatter.format(selectedDate), today.format(Localformatter));
                 URLParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/logGeneration?" + URLParam;
                 get_nutrient_info(handler, URLParam);
             }
@@ -147,8 +151,8 @@ public class progress extends AppCompatActivity {
         button_menu_creation();
         //chart creation
         LocalDate today = LocalDate.now();
-        LocalDate selectedDate = today.minusDays(7);
-        URLParam = String.format("start_date=%s&end_date=%s&user_id=123", selectedDate.format(Localformatter), today.format(Localformatter));
+        LocalDate selectedDate = today.minusDays(30);
+        URLParam = String.format("start_date=%s&end_date=%s&user_id="+user_id, selectedDate.format(Localformatter), today.format(Localformatter));
         URLParam = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com/logGeneration?" + URLParam;
         get_nutrient_info(handler, URLParam);
         setupPieChart();// this is not in the handler, thus need to call it
