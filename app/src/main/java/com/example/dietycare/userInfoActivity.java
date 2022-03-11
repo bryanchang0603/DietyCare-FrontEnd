@@ -14,9 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
@@ -28,6 +31,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 public class userInfoActivity extends AppCompatActivity {
     private ImageButton back_bt;
@@ -114,6 +118,24 @@ public class userInfoActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
+        realtimeDB.child("posts").orderByChild("userID").equalTo(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int counter = 3;
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                    if (counter == 0) break;
+                    String image_path = (String) postSnapshot.child("image_path").getValue();
+                    System.out.println(image_path);
+                    counter--;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
     private JSONObject getUser(String userId) throws Exception{
