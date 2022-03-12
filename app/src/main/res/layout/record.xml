@@ -53,7 +53,7 @@
         android:textSize="@dimen/_15ssp"
         android:textStyle="bold"
         android:layout_marginStart="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/food"/>
 
@@ -91,7 +91,7 @@
         android:textSize="@dimen/_15ssp"
         android:textStyle="bold"
         android:layout_marginStart="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectDate"/>
 
@@ -106,18 +106,17 @@
         app:layout_constraintStart_toEndOf="@+id/selectType"
         app:layout_constraintTop_toTopOf="@+id/selectType" />
 
-
     <TextView
-        android:id="@+id/enterAmount"
+        android:id="@+id/dishNumber"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_40sdp"
-        android:text="Enter Amount"
+        android:text="Dish Number"
         android:gravity="center"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/_15ssp"
         android:textStyle="bold"
         android:layout_marginStart="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectType"/>
 
@@ -133,6 +132,33 @@
         android:layout_marginStart="@dimen/_20sdp"
         app:layout_constraintStart_toEndOf="@id/enterAmount"
         app:layout_constraintTop_toTopOf="@id/enterAmount"/>
+
+    <TextView
+        android:id="@+id/enterAmount"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:text="Enter Amount"
+        android:gravity="center"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dishNumber"/>
+
+    <EditText
+        android:id="@+id/number"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:inputType="number"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_20sdp"
+        app:layout_constraintStart_toEndOf="@id/dishNumber"
+        app:layout_constraintTop_toTopOf="@id/dishNumber"/>
 
     <TextView
         android:id="@+id/unit"

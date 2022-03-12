@@ -33,6 +33,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".accountActivity" />
+        <activity android:name=".userInfoActivity" />
         <activity android:name=".editActivity" />
         <activity android:name=".progress" />
         <activity android:name=".FoodDetailActivity" />

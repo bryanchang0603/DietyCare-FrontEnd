@@ -8,7 +8,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class SingleRecord {
@@ -48,10 +50,14 @@ public class SingleRecord {
     }
 
 
-    public static ArrayList<SingleRecord> getRecords() throws Exception {
+    public static ArrayList<SingleRecord> getRecords(String user_id) throws Exception {
         String baseUrl = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com";
         String path = "/dishIntakeList?";
-        String params = "user_id=123&" + "intake_date=2022-01-14";
+        //get current date
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-M-d");
+        String formatted_date = format1.format(cal.getTime());
+        String params = "user_id="+user_id+"&" + "intake_date="+formatted_date;
         get(baseUrl + path + params);
         return records;
     }

@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -26,11 +28,14 @@ public class DietDiary extends AppCompatActivity {
     private ListView listview;
     private ArrayList<SingleRecord> records_arr = new ArrayList<SingleRecord>();
     private RecordAdapter adapter;
+    private String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diet_diary);
+
+        user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //Back Button
         back_bt = (ImageButton) findViewById(R.id.diaryBack);
@@ -52,7 +57,7 @@ public class DietDiary extends AppCompatActivity {
         Thread thread = new Thread() {
             public void run() {
                 try {
-                    records_arr = SingleRecord.getRecords();
+                    records_arr = SingleRecord.getRecords(user_id);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -110,7 +115,11 @@ public class DietDiary extends AppCompatActivity {
                     //Delete record in db
                     String baseUrl = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com";
                     String path = "/dishIntake?";
-                    String params = "user_id=123&" + "intake_date=2022-01-14&" + "meal_type=Lunch&" + "nth_dish_of_meal=2";
+                    String date = record_to_delete.getDate();
+                    String meal = record_to_delete.getMeal();
+                    String food = record_to_delete.getFood();
+                    String params = "user_id="+user_id+"&intake_date="+date+"&meal_type="+meal+"&food_name="+food;
+                   // String params = "user_id=123&" + "intake_date=2022-1-14&" + "meal_type=Lunch&" + "nth_dish_of_meal=2";
                     Thread thread = new Thread() {
                         public void run() {
                             try {

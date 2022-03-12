@@ -21,6 +21,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -32,10 +36,10 @@ public class RecordActivity extends AppCompatActivity {
     private Button cancel_bt, save_bt;
     private Integer cur_year, cur_month, cur_day;
     private Double cal_intake, pro_intake, fat_intake, carbo_intake;
-    private String meal_ty, result;
+    private String meal_ty, result, number, user_id, date;
     private ImageButton date_bt;
     private TextView food_tv, date_tv, cal_tv, amount_tv;
-    private EditText amount_et;
+    private EditText amount_et, number_et;
     private Spinner meal_type_sp;
 
     @Override
@@ -99,6 +103,26 @@ public class RecordActivity extends AppCompatActivity {
             }
         });
 
+        number_et = (EditText) findViewById(R.id.number);
+        number_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(number_et.getText().length() >= 0) {
+                    number = number_et.getText().toString();
+                }
+            }
+        });
+
+
         cal_tv = (TextView) findViewById(R.id.kal);
         cal_tv.setText("0");
         amount_tv=(TextView) findViewById(R.id.g);
@@ -130,8 +154,7 @@ public class RecordActivity extends AppCompatActivity {
         });
 
         //Save record
-        String user_id = "123";
-        String date = cur_year+"-"+cur_month+"-"+cur_day;
+        user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         save_bt = (Button) findViewById(R.id.save);
         save_bt.setOnClickListener(new View.OnClickListener() {
                                        @Override
@@ -139,7 +162,7 @@ public class RecordActivity extends AppCompatActivity {
                                            Thread thread = new Thread() {
                                                public void run() {
                                                    try {
-                                                       saveData(user_id, food_name, result, date, meal_ty,
+                                                       saveData(user_id, food_name, result, date, meal_ty, number,
                                                                cal_intake, pro_intake, fat_intake, carbo_intake);
                                                    } catch (Exception e) {
                                                        e.printStackTrace();
@@ -164,7 +187,7 @@ public class RecordActivity extends AppCompatActivity {
     }
     private void selectDate() {
         View view = LayoutInflater.from(this).inflate(R.layout.date_selection, null);
-        final DatePicker dateGet = (DatePicker) view.findViewById(R.id.st);
+        final DatePicker dateGet = (DatePicker) view.findViewById(R.id.st2);
         dateGet.updateDate(dateGet.getYear(), dateGet.getMonth(), 01);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Select");
@@ -173,11 +196,11 @@ public class RecordActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int month = dateGet.getMonth() + 1;
-                String st = "" + dateGet.getYear() + "." + month + "." + dateGet.getDayOfMonth();
+                date = "" + dateGet.getYear() + "-" + month + "-" + dateGet.getDayOfMonth();
                 cur_year = dateGet.getYear();
                 cur_month = month;
                 cur_day = dateGet.getDayOfMonth();
-                date_tv.setText(st);
+                date_tv.setText(date);
             }
         });
         builder.setNegativeButton("Cancel", null);
@@ -188,23 +211,17 @@ public class RecordActivity extends AppCompatActivity {
     }
 
     private void saveData(String user_id, String food_name, String amount, String date,
-                          String meal_ty, Double cal_intake, Double pro_intake,
+                          String meal_ty, String number, Double cal_intake, Double pro_intake,
                           Double fat_intake, Double carbo_intake) throws Exception {
         String baseUrl = "http://flask-env.eba-vyrxyu72.us-east-1.elasticbeanstalk.com";
         String path = "/dishIntake?";
-        /*String params = "user_id="+user_id+"&" + "food_name="+food_name+"&"
+
+       String params = "user_id="+user_id+"&" + "food_name="+food_name+"&"
                 + "food_intake_amount="+amount+"&" + "intake_date="+date
-                +"&"+ "meal_type"+meal_ty+"&"+ "cal_consumed="
-                +cal_intake+"&" + "pro_consumed="+pro_intake+"&"
-                + "fat_consumed="+fat_intake+"&" + "CHO_consumed="+carbo_intake;*/
-        String params = "user_id=123&" + "food_name="+food_name+"&"
-                + "food_intake_amount="+amount+"&" + "intake_date=2022-01-14&"
-                + "meal_type=Breakfast&"+ "cal_consumed="
-                +cal_intake+"&" + "pro_consumed="+pro_intake+"&"
+                +"&"+ "meal_type="+meal_ty+"&"+ "cal_consumed="
+                +cal_intake+"&" +"nth_dish_of_meal="+number+"&"+"pro_consumed="+pro_intake+"&"
                 + "fat_consumed="+fat_intake+"&" + "CHO_consumed="+carbo_intake;
         put(baseUrl + path + params);
-
-
     }
 
 
