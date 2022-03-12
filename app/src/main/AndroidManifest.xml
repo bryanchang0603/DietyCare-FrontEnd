@@ -18,7 +18,7 @@
         <activity
             android:name=".MessagePageActivity"
             android:exported="false"
-            android:theme="@style/Theme.DietyCare.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">
