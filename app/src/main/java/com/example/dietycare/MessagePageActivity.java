@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,13 +71,16 @@ public class MessagePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message_page);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        //setSupportActionBar(toolbar);
+        //getSupportActionBar().setTitle("");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //back button
+        ImageView btn_back = findViewById(R.id.chatList_return);
+
+        btn_back.setOnClickListener( new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                // and this
+            public void onClick(View v){
                 finish();
             }
         });

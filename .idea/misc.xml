@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/drawable/background_right.xml" value="0.2388888888888889" />
+        <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/drawable/background_sent_message.xml" value="0.2388888888888889" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/drawable/circle.xml" value="0.30277777777777776" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/drawable/ic_chat.xml" value="0.4046296296296296" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/drawable/ic_follow.xml" value="0.4046296296296296" />
@@ -14,7 +16,9 @@
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/activity_meal_plan.xml" value="0.2405149051490515" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/activity_meal_recommendation.xml" value="0.2798913043478261" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/activity_message.xml" value="0.21240942028985507" />
+        <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/activity_message_page.xml" value="0.21240942028985507" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/activity_user_info.xml" value="0.2798913043478261" />
+        <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/chat_item_right.xml" value="0.22453703703703703" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/community.xml" value="0.26992753623188404" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/community_item.xml" value="0.4930555555555556" />
         <entry key="..\:/GitHub/DietyCare-FrontEnd/app/src/main/res/layout/dialog_date.xml" value="0.2884259259259259" />

@@ -18,7 +18,7 @@
         <activity
             android:name=".MessagePageActivity"
             android:exported="false"
-            android:theme="@style/Theme.DietyCare.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -54,6 +54,22 @@
             android:name=".MealRecommendationActivity"
             android:exported="false" />
         <activity android:name=".postingActivity" />
+
+        <service android:name=".Notifications.MyFirebaseIdService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".Notifications.MyFirebaseMessaging"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="preloaded_fonts"

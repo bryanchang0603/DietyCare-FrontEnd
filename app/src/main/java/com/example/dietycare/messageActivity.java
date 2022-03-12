@@ -3,6 +3,11 @@ package com.example.dietycare;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,8 +43,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class messageActivity extends AppCompatActivity {
 
-    CircleImageView profile_image;
-    TextView username;
+    //CircleImageView profile_image;
+    //TextView username;
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
@@ -53,16 +58,27 @@ public class messageActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
 
-        profile_image = findViewById(R.id.profile_image);
-        username = findViewById(R.id.username);
+        //back button
+        ImageView btn_back = findViewById(R.id.chat_return);
+
+        btn_back.setOnClickListener( new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                finish();
+            }
+        });
+
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        //getSupportActionBar().setTitle("");
+
+        //username = findViewById(R.id.username);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
+        /*
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -82,6 +98,7 @@ public class messageActivity extends AppCompatActivity {
 
             }
         });
+        */
 
         final TabLayout tabLayout = findViewById(R.id.tab_layout);
         final ViewPager viewPager = findViewById(R.id.view_pager);
@@ -102,7 +119,7 @@ public class messageActivity extends AppCompatActivity {
                     viewPagerAdapter.addFragment(new ChatsFragment(), "("+unread+") Chats");
                 }
 
-                viewPagerAdapter.addFragment(new UsersFragment(), "Users");
+                viewPagerAdapter.addFragment(new UsersFragment(), "Search");
 
                 viewPager.setAdapter(viewPagerAdapter);
 
