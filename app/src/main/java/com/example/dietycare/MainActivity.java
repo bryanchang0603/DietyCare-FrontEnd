@@ -231,8 +231,13 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 double conCal = Double.parseDouble(textConsumedCal.getText().toString());
                 double sugCal = Double.parseDouble(textSuggestedCal.getText().toString());
-                leftCal = sugCal-conCal;
-                textLeftCal.setText(String.format("%.1f",leftCal));
+                leftCal = sugCal - conCal;
+                if (leftCal < 0){
+                    textLeftCal.setText(String.format("%.1f",0.0));
+                }else{
+                    textLeftCal.setText(String.format("%.1f",leftCal));
+                }
+
                 SPEditor.putLong("leftCal", Double.doubleToRawLongBits(leftCal));
                 SPEditor.commit();
             }
@@ -269,7 +274,11 @@ public class MainActivity extends AppCompatActivity {
                 double conCal = Double.parseDouble(textConsumedCal.getText().toString());
                 double sugCal = Double.parseDouble(textSuggestedCal.getText().toString());
                 leftCal = sugCal-conCal;
-                textLeftCal.setText(String.format("%.1f",leftCal));
+                if (leftCal < 0){
+                    textLeftCal.setText(String.format("%.1f",0.0));
+                }else{
+                    textLeftCal.setText(String.format("%.1f",leftCal));
+                }
                 SPEditor.putLong("leftCal", Double.doubleToRawLongBits(leftCal));
                 SPEditor.commit();
             }
@@ -324,7 +333,11 @@ public class MainActivity extends AppCompatActivity {
             long left = sharedPreferences.getLong("leftCal", 0);
             leftCal = Double.longBitsToDouble(left);
             textLeftCal = findViewById(R.id.text_val_left);
-            textLeftCal.setText(String.format("%.1f",leftCal));
+            if (leftCal < 0){
+                textLeftCal.setText(String.format("%.1f",0.0));
+            }else{
+                textLeftCal.setText(String.format("%.1f",leftCal));
+            }
 
             try {
                 JSONObject jobj = new JSONObject(outputStr);

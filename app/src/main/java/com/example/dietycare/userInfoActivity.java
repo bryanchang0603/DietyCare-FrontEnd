@@ -256,6 +256,17 @@ public class userInfoActivity extends AppCompatActivity {
             }
         });
 
+
+        //setup chat_button
+        chat_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (userInfoActivity.this, MessagePageActivity.class);
+                intent.putExtra("userid", UID);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void user_post_image_setup(){
