@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.dietycare.Model.SingleRecord;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.BufferedInputStream;
@@ -42,7 +43,7 @@ public class DietDiary extends AppCompatActivity {
         back_bt.setOnClickListener(new View.OnClickListener() {
                                        @Override
                                        public void onClick(View view) {
-                                           Intent intent = new Intent(DietDiary.this, progress.class);
+                                           Intent intent = new Intent(DietDiary.this, ProgressActivity.class);
                                            //Starting of the Intent
                                            startActivity(intent);
 

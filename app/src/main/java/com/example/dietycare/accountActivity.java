@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -65,7 +64,7 @@ public class accountActivity extends AppCompatActivity {
         Following_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(accountActivity.this, follow_activity.class);
+                Intent intent = new Intent(accountActivity.this, FollowActivity.class);
                 startActivity(intent);
             }
         });
@@ -108,7 +107,7 @@ public class accountActivity extends AppCompatActivity {
         progress_btn.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
-                                                Intent intent = new Intent(accountActivity.this, progress.class);
+                                                Intent intent = new Intent(accountActivity.this, ProgressActivity.class);
                                                 //Starting of the Intent
                                                 startActivity(intent);
                                                 finish();

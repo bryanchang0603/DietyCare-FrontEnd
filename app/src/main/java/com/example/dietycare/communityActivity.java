@@ -2,17 +2,11 @@ package com.example.dietycare;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.dietycare.Adapter.communityAdapter;
+import com.example.dietycare.Model.Post;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -83,7 +77,7 @@ public class communityActivity extends AppCompatActivity {
         progress_btn.setOnClickListener(new View.OnClickListener() {
                                              @Override
                                              public void onClick(View view) {
-                                                 Intent intent = new Intent(communityActivity.this, progress.class);
+                                                 Intent intent = new Intent(communityActivity.this, ProgressActivity.class);
                                                  //Starting of the Intent
                                                  startActivity(intent);
                                                  finish();

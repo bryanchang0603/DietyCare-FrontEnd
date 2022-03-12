@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dietycare.Adapter.FollowerAdapter;
 import com.example.dietycare.Adapter.FollowingAdapter;
-import com.example.dietycare.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,10 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 //TODO: setup SharedPreferences so both following and follower  can be pressed
-public class follow_activity extends AppCompatActivity {
+public class FollowActivity extends AppCompatActivity {
 
     private ImageButton back_btn;
     private TextView username, following, follow;
@@ -82,10 +79,10 @@ public class follow_activity extends AppCompatActivity {
                     follower_list.add(temp.getValue().toString());
                 }
                 follower_view.setHasFixedSize(true);
-                layoutManager = new LinearLayoutManager(follow_activity.this);
+                layoutManager = new LinearLayoutManager(FollowActivity.this);
                 follower_view.setLayoutManager(layoutManager);
 
-                followerAdapter = new FollowerAdapter(follow_activity.this, follower_list);
+                followerAdapter = new FollowerAdapter(FollowActivity.this, follower_list);
                 follower_view.setAdapter(followerAdapter);
             }
 
@@ -108,10 +105,10 @@ public class follow_activity extends AppCompatActivity {
                 }
 
                 following_view.setHasFixedSize(true);
-                layoutManager = new LinearLayoutManager(follow_activity.this);
+                layoutManager = new LinearLayoutManager(FollowActivity.this);
                 following_view.setLayoutManager(layoutManager);
 
-                followingAdapter = new FollowingAdapter(follow_activity.this, following_list);
+                followingAdapter = new FollowingAdapter(FollowActivity.this, following_list);
                 following_view.setAdapter(followingAdapter);
             }
 
@@ -127,7 +124,7 @@ public class follow_activity extends AppCompatActivity {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(follow_activity.this, accountActivity.class);
+                Intent intent= new Intent(FollowActivity.this, accountActivity.class);
                 startActivity(intent);
                 finish();
 

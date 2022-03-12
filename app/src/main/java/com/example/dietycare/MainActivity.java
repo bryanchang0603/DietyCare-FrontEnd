@@ -21,7 +21,6 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +30,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Scanner;
+
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -109,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         progress_btn.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
-                                                Intent intent = new Intent(MainActivity.this, progress.class);
+                                                Intent intent = new Intent(MainActivity.this, ProgressActivity.class);
                                                 //Starting of the Intent
                                                 startActivity(intent);
                                                 finish();

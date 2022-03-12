@@ -1,7 +1,6 @@
 package com.example.dietycare;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,13 +19,14 @@ import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
+import com.example.dietycare.Adapter.searchResultAdapter;
+import com.example.dietycare.Model.Food;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class searchResultActivity extends AppCompatActivity {
     private searchResultAdapter adapter;

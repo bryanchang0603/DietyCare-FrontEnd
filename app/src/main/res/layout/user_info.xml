@@ -285,41 +285,50 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
-            android:id="@+id/menu_btn_progress_account"
+            android:id="@+id/btn_progress"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_progress" />
 
         <ImageButton
-            android:id="@+id/menu_btn_meal_account"
+            android:id="@+id/btn_meal"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_meal" />
 
         <ImageButton
-            android:id="@+id/menu_btn_home_account"
+            android:id="@+id/btn_home"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_home" />
 
         <ImageButton
-            android:id="@+id/menu_btn_community_account"
+            android:id="@+id/btn_community"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_community" />
 
         <ImageButton
-            android:id="@+id/main_btn_account_account"
+            android:id="@+id/btn_account"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_account" />
 
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/community_remove_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/community_chat_button"
+        app:layout_constraintTop_toTopOf="@+id/community_chat_button"
+        app:srcCompat="@drawable/ic_unfollow" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,8 +21,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.JsonParser;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -176,7 +174,7 @@ public class MealRecommendationActivity extends AppCompatActivity {
         progress_btn.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
-                                                Intent intent = new Intent(MealRecommendationActivity.this, progress.class);
+                                                Intent intent = new Intent(MealRecommendationActivity.this, ProgressActivity.class);
                                                 //Starting of the Intent
                                                 startActivity(intent);
                                                 finish();

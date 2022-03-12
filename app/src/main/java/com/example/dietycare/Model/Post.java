@@ -1,4 +1,4 @@
-package com.example.dietycare;
+package com.example.dietycare.Model;
 
 import com.google.firebase.database.ServerValue;
 

@@ -29,13 +29,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".WalkThroughActivity" />
-        <activity android:name=".follow_activity" />
+        <activity android:name=".FollowActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".accountActivity" />
         <activity android:name=".userInfoActivity" />
         <activity android:name=".editActivity" />
-        <activity android:name=".progress" />
+        <activity android:name=".ProgressActivity" />
         <activity android:name=".FoodDetailActivity" />
         <activity android:name=".RecordActivity" />
         <activity android:name=".communityActivity" />
