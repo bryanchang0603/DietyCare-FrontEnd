@@ -307,6 +307,7 @@ public class MealRecommendationActivity extends AppCompatActivity {
     private void goToSearchResultPage(String keyword) {
         Intent intent = new Intent(MealRecommendationActivity.this, searchResultActivity.class);
         intent.putExtra("keyword", keyword);
+        intent.putExtra("fromMealRecPage", true);
         startActivity(intent);
         finish();
     }

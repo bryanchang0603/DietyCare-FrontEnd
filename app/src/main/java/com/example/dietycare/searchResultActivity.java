@@ -1,6 +1,7 @@
 package com.example.dietycare;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,11 +22,14 @@ import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
 import com.example.dietycare.Adapter.searchResultAdapter;
 import com.example.dietycare.Model.Food;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class searchResultActivity extends AppCompatActivity {
@@ -35,6 +39,11 @@ public class searchResultActivity extends AppCompatActivity {
     private TextView searchBox;
     private ImageButton backToMealPage;
     RecyclerView recycler;
+    private String keyword;
+    private Boolean fromMealRecPage;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+    private String foodInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +56,30 @@ public class searchResultActivity extends AppCompatActivity {
 
         goBackToMealPage();
 
+        sharedPref = getSharedPreferences("searchResults", 0);
+        editor = sharedPref.edit();
+
         Intent intent = getIntent();
-        String keyword = intent.getStringExtra("keyword");
+        fromMealRecPage = intent.getBooleanExtra("fromMealRecPage", false);
+
+        if (fromMealRecPage) {
+            keyword = intent.getStringExtra("keyword");
+            AlgoliaSearch(keyword);
+        } else {
+            keyword = sharedPref.getString("keyword", "");
+            foodInfo = sharedPref.getString("foodInfo", "");
+            ArrayList<Food> arrFood;
+            Gson gson1 = new Gson();
+            Type t = new TypeToken<ArrayList<Food>>(){}.getType();
+            arrFood = gson1.fromJson(foodInfo, t);
+            recycler = findViewById(R.id.recycleView);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(searchResultActivity.this);
+            recycler.setLayoutManager(linearLayoutManager);
+            searchResultAdapter adapter = new searchResultAdapter(arrFood, searchResultActivity.this);
+            recycler.setAdapter(adapter);
+        }
         searchBox = findViewById(R.id.search_box);
         searchBox.setText(keyword);
-
-        AlgoliaSearch(keyword);
 
         searchAgain();
     }
@@ -91,6 +118,13 @@ public class searchResultActivity extends AppCompatActivity {
                         double calorie = Double.parseDouble(arr.getJSONObject(i).get("Cal_100G").toString());
                         tempArr.add(new Food(foodName, protein, fat, carbo, calorie));
                     }
+                    //save information
+                    Gson gson = new Gson();
+                    foodInfo = gson.toJson(tempArr);
+                    editor.putString("foodInfo", foodInfo);
+                    editor.putString("keyword", keyword);
+                    editor.commit();
+
                     //update UI
                     recycler = findViewById(R.id.recycleView);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(searchResultActivity.this);

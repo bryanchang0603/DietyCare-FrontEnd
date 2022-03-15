@@ -155,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         userID = firebaseUser.getUid().toString();
-        System.out.println(userID);
         get_user_info(userID);
 
     }
