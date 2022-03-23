@@ -49,23 +49,11 @@ public class FoodDetailActivity extends AppCompatActivity {
                                            Intent intent = new Intent(FoodDetailActivity.this, searchResultActivity.class);
                                            //Starting of the Intent
                                            startActivity(intent);
+                                           finish();
 
                                        }
                                    }
         );
-
-        /*//More Button
-        more_bt = (Button) findViewById(R.id.moreButton);
-        more_bt.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View view) {
-                                           Intent intent = new Intent(FoodDetailActivity.this, MoreNutrientActivity.class);
-                                           //Starting of the Intent
-                                           startActivity(intent);
-                                           finish();
-                                       }
-                                   }
-        );*/
 
         //Record Button
         record_bt = (Button) findViewById(R.id.recordButton);

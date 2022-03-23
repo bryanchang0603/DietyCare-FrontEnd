@@ -214,19 +214,6 @@
         app:layout_constraintTop_toBottomOf="@id/fat" />
 
     <Button
-        android:id="@+id/moreButton"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:backgroundTint="@color/grey"
-        android:gravity="center"
-        android:text="More"
-        android:textColor="@color/secondary_text"
-        android:textSize="@dimen/_10ssp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/carbo"
-        app:layout_constraintTop_toBottomOf="@id/carbo" />
-
-    <Button
         android:id="@+id/recordButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
