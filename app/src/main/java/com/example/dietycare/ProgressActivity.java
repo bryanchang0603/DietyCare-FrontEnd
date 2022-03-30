@@ -127,7 +127,7 @@ public class ProgressActivity extends AppCompatActivity {
         line_chart = findViewById(R.id.latest_calorie_intake_LineChart);
 
         // Spinner
-        String[] bodyType = {"Calories", "Fat", "Protein", "Carbohydrate"};
+        String[] bodyType = {"Cal", "Fat", "Pro", "CHO"};
         bar_graph_sp = (Spinner) findViewById(R.id.spinner_bar_graph);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, bodyType);
         bar_graph_sp.setAdapter(adapter);
@@ -281,7 +281,7 @@ public class ProgressActivity extends AppCompatActivity {
     private void setup_line_chart_value(String graphType){
         bar_chart_title = findViewById(R.id.text_latest_intake);
         switch (graphType){
-            case "calories":
+            case "cal":
                 line_data_set = new LineDataSet(Cal_entries_ArrayList, "Unit: Kcal");
                 bar_chart_title.setText("Calories Intake");
                 break;
@@ -289,11 +289,11 @@ public class ProgressActivity extends AppCompatActivity {
                 line_data_set = new LineDataSet(Fat_entries_ArrayList, "Unit: Gram");
                 bar_chart_title.setText("Fat Intake");
                 break;
-            case "protein":
+            case "pro":
                 line_data_set = new LineDataSet(Ptn_entries_ArrayList, "Unit: Gram");
                 bar_chart_title.setText("Protein Intake");
                 break;
-            case "carbohydrate":
+            case "cho":
                 line_data_set = new LineDataSet(CHO_entries_ArrayList, "Unit:Gram");
                 bar_chart_title.setText("Carbohydrate Intake");
                 break;

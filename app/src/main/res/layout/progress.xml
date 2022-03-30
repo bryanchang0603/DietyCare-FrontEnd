@@ -140,14 +140,14 @@
 
     <Spinner
         android:id="@+id/spinner_bar_graph"
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_28sdp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/latest_calorie_intake_pie_chart" />
+        app:layout_constraintTop_toBottomOf="@+id/diaryBG" />
 
     <TextView
         android:id="@+id/line_graph_ending_date"
