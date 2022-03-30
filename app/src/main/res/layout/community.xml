@@ -56,7 +56,7 @@
                 android:id="@+id/community_add_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:backgroundTint="@color/white"
                 app:srcCompat="@drawable/ic_follow" />
