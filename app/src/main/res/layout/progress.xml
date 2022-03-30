@@ -17,7 +17,6 @@
         android:id="@+id/text_health_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_110sdp"
         android:layout_marginStart="@dimen/_95sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:fontFamily="@font/roboto_bold"
