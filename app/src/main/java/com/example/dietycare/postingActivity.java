@@ -1,7 +1,6 @@
 package com.example.dietycare;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -18,11 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.bumptech.glide.Glide;
+import com.example.dietycare.Model.Post;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.FirebaseAppCheck;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,9 +28,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.ArrayList;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 public class postingActivity extends AppCompatActivity {
 
@@ -134,10 +130,6 @@ public class postingActivity extends AppCompatActivity {
                                     String image_string = "community_images/"+image_name;
                                     Post post = new Post(text_field.getText().toString(), firebase_uri,
                                             FirebaseAuth.getInstance().getCurrentUser().getUid(), key, image_string, null, 0);
-/*                                    post.appendComment("123");
-                                    post.appendComment("456");
-                                    post.appendLikedUser("123");
-                                    post.appendLikedUser("456");*/
                                     my_ref.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
@@ -147,15 +139,6 @@ public class postingActivity extends AppCompatActivity {
                                             finish();
                                         }
                                     });
-
-                                    // the following code are for testing retriving modified
-/*                                    post.appendLikedUser("user 3");
-                                    DatabaseReference mDatabase = database.getReference();
-                                    mDatabase.child("posts").child(key).setValue(post);
-                                    ArrayList<String> test = new ArrayList<String>();
-                                    test.add("null");
-                                    post.setUser_liked(test);
-                                    mDatabase.child("posts").child(key).setValue(post);*/
                                 }
                             });
                         }

@@ -1,4 +1,4 @@
-package com.example.dietycare;
+package com.example.dietycare.Model;
 
 import com.google.firebase.database.ServerValue;
 
@@ -15,7 +15,6 @@ public class Post {
     private ArrayList<String> attached_comment;
     private String image_path;
     private int likedNum;
-
 
     public Post(String body_text, String image_uri, String userID, String postKey, String image_path, ArrayList<String> user_liked,int likedNum) {
         this.body_text = body_text;

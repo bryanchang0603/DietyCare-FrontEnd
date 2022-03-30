@@ -1,4 +1,4 @@
-package com.example.dietycare;
+package com.example.dietycare.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Array;
+import com.example.dietycare.FoodDetailActivity;
+import com.example.dietycare.Model.Food;
+import com.example.dietycare.R;
+
 import java.util.ArrayList;
 
 public class searchResultAdapter extends RecyclerView.Adapter<searchResultAdapter.Holder> {

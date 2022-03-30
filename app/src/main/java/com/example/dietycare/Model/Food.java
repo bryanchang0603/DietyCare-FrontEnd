@@ -1,4 +1,4 @@
-package com.example.dietycare;
+package com.example.dietycare.Model;
 
 public class Food {
     private String foodName;

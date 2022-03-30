@@ -3,12 +3,9 @@ package com.example.dietycare;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -56,7 +53,7 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class progress extends AppCompatActivity {
+public class ProgressActivity extends AppCompatActivity {
 
     private PieChart pie_chart;
     private PieData pie_data;
@@ -84,7 +81,7 @@ public class progress extends AppCompatActivity {
 
         user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        handler = new progress.progressHandler();
+        handler = new ProgressActivity.progressHandler();
         today = LocalDate.now();
         System.out.println(today);
 
@@ -173,7 +170,7 @@ public class progress extends AppCompatActivity {
         home_btn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            Intent intent = new Intent(progress.this, MainActivity.class);
+                                            Intent intent = new Intent(ProgressActivity.this, MainActivity.class);
                                             //Starting of the Intent
                                             startActivity(intent);
                                             finish();
@@ -184,7 +181,7 @@ public class progress extends AppCompatActivity {
         meal_btn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            Intent intent = new Intent(progress.this, MealRecommendationActivity.class);
+                                            Intent intent = new Intent(ProgressActivity.this, MealRecommendationActivity.class);
                                             //Starting of the Intent
                                             startActivity(intent);
                                             finish();
@@ -195,7 +192,7 @@ public class progress extends AppCompatActivity {
         community_btn.setOnClickListener(new View.OnClickListener() {
                                              @Override
                                              public void onClick(View view) {
-                                                 Intent intent = new Intent(progress.this, communityActivity.class);
+                                                 Intent intent = new Intent(ProgressActivity.this, communityActivity.class);
                                                  //Starting of the Intent
                                                  startActivity(intent);
                                                  finish();
@@ -206,7 +203,7 @@ public class progress extends AppCompatActivity {
         account_btn.setOnClickListener(new View.OnClickListener() {
                                            @Override
                                            public void onClick(View view) {
-                                               Intent intent = new Intent(progress.this, accountActivity.class);
+                                               Intent intent = new Intent(ProgressActivity.this, accountActivity.class);
                                                //Starting of the Intent
                                                startActivity(intent);
                                                finish();
@@ -218,7 +215,7 @@ public class progress extends AppCompatActivity {
         bt_dietDiary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(progress.this, DietDiary.class);
+                Intent intent = new Intent(ProgressActivity.this, DietDiary.class);
                 startActivity(intent);
             }
         });
@@ -356,7 +353,7 @@ public class progress extends AppCompatActivity {
         return "None";
     }
 
-    private void get_nutrient_info(progress.progressHandler handler, String paramURL){
+    private void get_nutrient_info(ProgressActivity.progressHandler handler, String paramURL){
 
         Fat_consumed_total = 0;
         Ptn_consumed_total = 0;

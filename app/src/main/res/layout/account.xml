@@ -27,7 +27,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_15sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintTop_toBottomOf="@+id/PostNum" />
 
     <TextView
         android:id="@+id/textView23"
@@ -101,7 +101,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/following"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -113,51 +113,51 @@
         app:layout_constraintTop_toTopOf="@+id/textView16" />
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/follower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
         android:text="Followers"
         android:textColor="@color/black"
         android:textSize="16dp"
-        app:layout_constraintStart_toEndOf="@+id/textView18"
+        app:layout_constraintStart_toEndOf="@+id/following"
         app:layout_constraintTop_toTopOf="@+id/textView16" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/PostNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="63dp"
         android:layout_marginTop="5dp"
-        android:text="3"
+        android:text="0"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/followingNum"
+        android:layout_width="10dp"
+        android:layout_height="16dp"
         android:layout_marginStart="108dp"
         android:layout_marginTop="5dp"
-        android:text="6"
+        android:text="0"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toEndOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintStart_toEndOf="@+id/PostNum"
+        app:layout_constraintTop_toBottomOf="@+id/following" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/followerNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="116dp"
         android:layout_marginTop="5dp"
-        android:text="9"
+        android:text="0"
         android:textColor="@color/black"
         android:textSize="16dp"
-        app:layout_constraintStart_toEndOf="@+id/textView19"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintStart_toEndOf="@+id/followingNum"
+        app:layout_constraintTop_toBottomOf="@+id/follower" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -175,7 +175,7 @@
         android:layout_marginTop="16dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintTop_toBottomOf="@+id/PostNum" />
 
     <View
         android:id="@+id/view"
@@ -229,7 +229,7 @@
         android:layout_marginTop="59dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20"
+        app:layout_constraintTop_toBottomOf="@+id/follower"
         app:srcCompat="@drawable/getin" />
 
     <ImageView

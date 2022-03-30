@@ -1,14 +1,12 @@
-package com.example.dietycare;
+package com.example.dietycare.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.dietycare.Model.Post;
+import com.example.dietycare.PostDetailActivity;
+import com.example.dietycare.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -101,9 +102,9 @@ public class communityAdapter extends RecyclerView.Adapter<communityAdapter.Hold
 
         if (2 * (position + 1) <= postsArr.size()) {
             holder.textView2.setText(twoPostsAsAGroup.get(position).get(1).getBody_text());
-            String UID2 = twoPostsAsAGroup.get(position).get(0).getUserID();
+            String UID2 = twoPostsAsAGroup.get(position).get(1).getUserID();
             // the following listener will read the current user's username
-            realtimeDB.child("Users").child(UID1).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            realtimeDB.child("Users").child(UID2).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                     if (!task.isSuccessful()) {

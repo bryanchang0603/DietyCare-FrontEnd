@@ -2,6 +2,7 @@ package com.example.dietycare;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -21,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -41,6 +43,9 @@ public class MealRecommendationActivity extends AppCompatActivity {
     private String meal_selection = "breakfast";
     private JSONObject meal_plan;
     private ImageButton home_btn, meal_btn, community_btn, account_btn, progress_btn;
+    private SharedPreferences mealRecStates;
+    private SharedPreferences.Editor editor;
+    private String meal_detail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,17 +66,34 @@ public class MealRecommendationActivity extends AppCompatActivity {
 
         }
 
+        mealRecStates = getSharedPreferences("mealRecStates", 0);
+        editor = mealRecStates.edit();
+        String mPlan = mealRecStates.getString("mealPlan", "");
+
+        meal_selection = mealRecStates.getString("mealSelection", "");
+
         HashMap<String, String> suggestion_nutrients = readSuggestionNutrients();
         Integer target_calories = (int) Double.parseDouble(suggestion_nutrients.get("suggestedCal"));
-        try {
-            meal_plan = getMealRecommendation(target_calories);
-            String meal_detail = extractMealPlan(meal_plan, meal_selection);
-            set_meal_plan_tv(meal_detail);
-        } catch (Exception e) {
-            e.printStackTrace();
-            set_meal_plan_tv("Something went wrong.");
-        }
 
+        if (!mPlan.equals("")){
+            try {
+                meal_plan = new JSONObject(mPlan);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else if (mPlan.equals("")) {
+            try {
+                meal_plan = getMealRecommendation(target_calories);
+                meal_detail = extractMealPlan(meal_plan, meal_selection);
+                editor.putString("mealDetail", meal_detail);
+                editor.putString("mealPlan", meal_plan.toString());
+                editor.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+                set_meal_plan_tv("Something went wrong.");
+            }
+        }
+        set_meal_plan_tv(meal_detail);
         uploadPhoto(this);
 
         regenerate_btw = (Button) findViewById(R.id.regenerate);
@@ -80,7 +102,10 @@ public class MealRecommendationActivity extends AppCompatActivity {
             public void onClick(View v){
                 try {
                     meal_plan = getMealRecommendation(target_calories);
-                    String meal_detail = extractMealPlan(meal_plan, meal_selection);
+                    meal_detail = extractMealPlan(meal_plan, meal_selection);
+                    editor.putString("mealDetail", meal_detail);
+                    editor.putString("mealPlan", meal_plan.toString());
+                    editor.commit();
                     set_meal_plan_tv(meal_detail);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -89,29 +114,42 @@ public class MealRecommendationActivity extends AppCompatActivity {
             }
         });
 
-        // Spiner
+        // Spinner
         String[] bodyType = {"Breakfast", "Lunch", "Dinner"};
         meal_selection_sp = (Spinner) findViewById(R.id.mealSelection);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, bodyType);
         meal_selection_sp.setAdapter(adapter);
         meal_selection_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 meal_selection = (String) parent.getItemAtPosition(position);
+                editor.putString("mealSelection", meal_selection);
+                editor.commit();
                 meal_selection = meal_selection.toLowerCase();
                 try {
-                    String meal_detail = extractMealPlan(meal_plan, meal_selection);
+                    meal_detail = extractMealPlan(meal_plan, meal_selection);
                     set_meal_plan_tv(meal_detail);
                 } catch (Exception e) {
                     e.printStackTrace();
                     set_meal_plan_tv("Something went wrong.");
                 }
-
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        if (!meal_selection.equals("")){
+
+            if (meal_selection.equals("Breakfast")) {
+                meal_selection_sp.setSelection(0);
+            } else if (meal_selection.equals("Lunch")) {
+                meal_selection_sp.setSelection(1);
+            } else if (meal_selection.equals("Dinner")) {
+                meal_selection_sp.setSelection(2);
+            }
+        }
 
         //Algolia Seach
         //AlgoliaSearch();
@@ -136,7 +174,7 @@ public class MealRecommendationActivity extends AppCompatActivity {
         progress_btn.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
-                                                Intent intent = new Intent(MealRecommendationActivity.this, progress.class);
+                                                Intent intent = new Intent(MealRecommendationActivity.this, ProgressActivity.class);
                                                 //Starting of the Intent
                                                 startActivity(intent);
                                                 finish();
@@ -269,6 +307,7 @@ public class MealRecommendationActivity extends AppCompatActivity {
     private void goToSearchResultPage(String keyword) {
         Intent intent = new Intent(MealRecommendationActivity.this, searchResultActivity.class);
         intent.putExtra("keyword", keyword);
+        intent.putExtra("fromMealRecPage", true);
         startActivity(intent);
         finish();
     }

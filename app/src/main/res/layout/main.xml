@@ -88,39 +88,38 @@
         android:id="@+id/text_protein"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:alpha="53"
         android:text="Protein"
         android:textColor="#87000000"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/protein_"
+        app:layout_constraintStart_toStartOf="@+id/protein_"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <TextView
         android:id="@+id/text_fat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_58sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:alpha="53"
         android:text="Fat"
         android:textColor="#87000000"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/text_protein"
+        app:layout_constraintEnd_toEndOf="@+id/fat_"
+        app:layout_constraintStart_toStartOf="@+id/fat_"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <TextView
         android:id="@+id/text_carbo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_50sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:alpha="53"
         android:text="Carbohydrate"
         android:textColor="#87000000"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/text_fat"
+        app:layout_constraintStart_toStartOf="@+id/carbo_"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <View
