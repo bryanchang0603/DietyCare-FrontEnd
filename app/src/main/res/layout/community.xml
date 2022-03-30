@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:orientation="horizontal">
+
             <ImageButton
                 android:id="@+id/community_search"
                 android:layout_width="wrap_content"
@@ -35,7 +36,7 @@
                 android:id="@+id/community_recommend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Suggest"
                 android:textColor="@color/black"
@@ -55,11 +56,12 @@
                 android:id="@+id/community_add_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_25sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:backgroundTint="@color/white"
                 app:srcCompat="@drawable/ic_follow" />
         </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/community_recyclerView"
             android:layout_width="match_parent"
