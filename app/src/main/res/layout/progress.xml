@@ -42,7 +42,6 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_100sdp"
         android:fontFamily="@font/cambay"
-        android:text="Latest Calorie Intake"
         android:textColor="#6C4DC2"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
