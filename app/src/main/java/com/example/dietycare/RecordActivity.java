@@ -67,6 +67,7 @@ public class RecordActivity extends AppCompatActivity {
                                            intent.putExtra("carbo", food_fat);
                                            intent.putExtra("calorie", food_cal);
                                            startActivity(intent);
+                                           finish();
 
                                        }
                                    }
@@ -178,6 +179,7 @@ public class RecordActivity extends AppCompatActivity {
                                            intent.putExtra("carbo", food_fat);
                                            intent.putExtra("calorie", food_cal);
                                            startActivity(intent);
+                                           finish();
                                        }
 
                                    }

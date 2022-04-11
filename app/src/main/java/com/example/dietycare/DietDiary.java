@@ -49,6 +49,7 @@ public class DietDiary extends AppCompatActivity {
 
                                            //Prevent overlapping records
                                            adapter.clear();
+                                           finish();
                                        }
                                    }
         );
