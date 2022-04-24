@@ -209,9 +209,9 @@ public class MainActivity extends AppCompatActivity {
         TextView textSuggestedCarbo = findViewById(R.id.text_val_carbo);
 
         textSuggestedCal.setText(String.format("%.1f",suggestedCal));
-        textSuggestedProtein.setText(String.format("%.1f",suggestedProtein));
-        textSuggestedFat.setText(String.format("%.1f",suggestedFat));
-        textSuggestedCarbo.setText(String.format("%.1f",suggestedCarbo));
+        textSuggestedProtein.setText(String.format("%.1fg",suggestedProtein));
+        textSuggestedFat.setText(String.format("%.1fg",suggestedFat));
+        textSuggestedCarbo.setText(String.format("%.1fg",suggestedCarbo));
 
         TextView textConsumedCal = findViewById(R.id.text_val_intake);
         TextView textLeftCal = findViewById(R.id.text_val_left);
